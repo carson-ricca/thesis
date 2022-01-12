@@ -1,0 +1,6 @@
+joblib==1.1.0
+networkx==2.6.3
+numpy==1.22.0
+pomegranate==0.14.7
+PyYAML==6.0
+scipy==1.7.3
