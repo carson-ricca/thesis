@@ -1,7 +1,7 @@
 from pomegranate import *
 
 
-def generate_bayesian_network():
+def generate_parent_categories_bayesian_network():
     basics = _get_basics_probability()
     conditionals = _get_conditionals_probability(basics)
     pre_defined_classes = _get_pre_defined_classes_probability(basics)
@@ -30,7 +30,7 @@ def _get_conditionals_probability(basics):
         ['Success', 'Failure', 0.25],
         ['Failure', 'Success', 0.25],
         ['Failure', 'Failure', 0.75]
-    ], basics)
+    ], [basics])
 
 
 def _get_pre_defined_classes_probability(basics):
@@ -44,7 +44,7 @@ def _get_pre_defined_classes_probability(basics):
         ['Success', 'Failure', 0.25],
         ['Failure', 'Success', 0.25],
         ['Failure', 'Failure', 0.75]
-    ], basics)
+    ], [basics])
 
 
 def _get_loops_probability(conditionals):
@@ -58,7 +58,7 @@ def _get_loops_probability(conditionals):
         ['Success', 'Failure', 0.25],
         ['Failure', 'Success', 0.25],
         ['Failure', 'Failure', 0.75]
-    ], conditionals)
+    ], [conditionals])
 
 
 def _get_arrays_probability(loops):
@@ -72,7 +72,7 @@ def _get_arrays_probability(loops):
         ['Success', 'Failure', 0.25],
         ['Failure', 'Success', 0.25],
         ['Failure', 'Failure', 0.75]
-    ], loops)
+    ], [loops])
 
 
 def _get_methods_probability(loops):
@@ -86,7 +86,7 @@ def _get_methods_probability(loops):
         ['Success', 'Failure', 0.25],
         ['Failure', 'Success', 0.25],
         ['Failure', 'Failure', 0.75]
-    ], loops)
+    ], [loops])
 
 
 def _get_oop_probability(arrays, methods, pre_defined_classes):
@@ -110,4 +110,4 @@ def _get_oop_probability(arrays, methods, pre_defined_classes):
         ['Failure', 'Success', 'Failure', 'Failure', 0.6],
         ['Failure', 'Success', 'Success', 'Success', 0.75],
         ['Failure', 'Success', 'Success', 'Failure', 0.25],
-    ], arrays, methods, pre_defined_classes)
+    ], [arrays, methods, pre_defined_classes])
