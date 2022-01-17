@@ -1,1 +1,2 @@
 from .perfomance_bayes_net import generate_performance_bayesian_network
+from .parent_categories_bayes_net import generate_parent_categories_bayesian_network

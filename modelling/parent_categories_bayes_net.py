@@ -2,6 +2,10 @@ from pomegranate import *
 
 
 def generate_parent_categories_bayesian_network():
+    """
+    Creates the Bayesian Network for the parent categories.
+    :return: The complete Bayesian Network.
+    """
     basics = _get_basics_probability()
     conditionals = _get_conditionals_probability(basics)
     pre_defined_classes = _get_pre_defined_classes_probability(basics)
@@ -9,6 +13,27 @@ def generate_parent_categories_bayesian_network():
     arrays = _get_arrays_probability(loops)
     methods = _get_methods_probability(loops)
     oop = _get_oop_probability(arrays, methods, pre_defined_classes)
+
+    s1 = Node(basics, name='Basics')
+    s2 = Node(conditionals, name='Conditionals')
+    s3 = Node(pre_defined_classes, name='Pre-Defined Classes')
+    s4 = Node(loops, name='Loops')
+    s5 = Node(arrays, name='Arrays')
+    s6 = Node(methods, name='Methods')
+    s7 = Node(oop, name='OOP')
+
+    model = BayesianNetwork('Parent Categories')
+    model.add_states(s1, s2, s3, s4, s5, s6, s7)
+    model.add_edge(s1, s2)
+    model.add_edge(s1, s3)
+    model.add_edge(s2, s4)
+    model.add_edge(s4, s5)
+    model.add_edge(s4, s6)
+    model.add_edge(s5, s7)
+    model.add_edge(s6, s7)
+    model.add_edge(s3, s7)
+    model.bake()
+    return model
 
 
 def _get_basics_probability():
