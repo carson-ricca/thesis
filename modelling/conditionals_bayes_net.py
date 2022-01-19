@@ -1,4 +1,5 @@
 from pomegranate import *
+from constants import success, failure
 
 
 def generate_conditionals_bayesian_network():
@@ -43,123 +44,123 @@ def generate_conditionals_bayesian_network():
 
 
 def _get_conditionals_probability():
-    return DiscreteDistribution({'Success': 0.5, 'Failure': 0.5})
+    return DiscreteDistribution({success: 0.5, failure: 0.5})
 
 
 def _get_boolean_probability(conditionals):
     return ConditionalProbabilityTable([
-        ['Success', 'Success', 0.8],
-        ['Success', 'Failure', 0.2],
-        ['Failure', 'Success', 0.3],
-        ['Failure', 'Failure', 0.7]
+        [success, success, 0.8],
+        [success, failure, 0.2],
+        [failure, success, 0.3],
+        [failure, failure, 0.7]
     ], [conditionals])
 
 
 def _get_decision_probability(conditionals, boolean):
     return ConditionalProbabilityTable([
-        ['Success', 'Success', 'Success', 0.9],
-        ['Success', 'Success', 'Failure', 0.1],
-        ['Success', 'Failure', 'Success', 0.7],
-        ['Success', 'Failure', 'Failure', 0.3],
-        ['Failure', 'Success', 'Success', 0.6],
-        ['Failure', 'Success', 'Failure', 0.4],
-        ['Failure', 'Failure', 'Success', 0.2],
-        ['Failure', 'Failure', 'Failure', 0.8]
+        [success, success, success, 0.9],
+        [success, success, failure, 0.1],
+        [success, failure, success, 0.7],
+        [success, failure, failure, 0.3],
+        [failure, success, success, 0.6],
+        [failure, success, failure, 0.4],
+        [failure, failure, success, 0.2],
+        [failure, failure, failure, 0.8]
     ], [conditionals, boolean])
 
 
 def _get_operators_probability(conditionals, boolean):
     return ConditionalProbabilityTable([
-        ['Success', 'Success', 'Success', 0.9],
-        ['Success', 'Success', 'Failure', 0.1],
-        ['Success', 'Failure', 'Success', 0.7],
-        ['Success', 'Failure', 'Failure', 0.3],
-        ['Failure', 'Success', 'Success', 0.6],
-        ['Failure', 'Success', 'Failure', 0.4],
-        ['Failure', 'Failure', 'Success', 0.2],
-        ['Failure', 'Failure', 'Failure', 0.8]
+        [success, success, success, 0.9],
+        [success, success, failure, 0.1],
+        [success, failure, success, 0.7],
+        [success, failure, failure, 0.3],
+        [failure, success, success, 0.6],
+        [failure, success, failure, 0.4],
+        [failure, failure, success, 0.2],
+        [failure, failure, failure, 0.8]
     ], [conditionals, boolean])
 
 
 def _get_conditional_statements_probability(conditionals, decision, operators, boolean):
     return ConditionalProbabilityTable([
-        ['Success', 'Success', 'Success', 'Success', 'Success', 0.95],
-        ['Success', 'Success', 'Success', 'Success', 'Failure', 0.05],
-        ['Success', 'Success', 'Success', 'Failure', 'Success', 0.8],
-        ['Success', 'Success', 'Success', 'Failure', 'Failure', 0.2],
-        ['Success', 'Success', 'Failure', 'Failure', 'Success', 0.6],
-        ['Success', 'Success', 'Failure', 'Failure', 'Failure', 0.4],
-        ['Success', 'Failure', 'Failure', 'Failure', 'Success', 0.2],
-        ['Success', 'Failure', 'Failure', 'Failure', 'Failure', 0.8],
-        ['Success', 'Failure', 'Failure', 'Success', 'Success', 0.5],
-        ['Success', 'Failure', 'Failure', 'Success', 'Failure', 0.5],
-        ['Success', 'Failure', 'Success', 'Success', 'Success', 0.7],
-        ['Success', 'Failure', 'Success', 'Success', 'Failure', 0.3],
-        ['Success', 'Success', 'Failure', 'Success', 'Success', 0.6],
-        ['Success', 'Success', 'Failure', 'Success', 'Failure', 0.4],
-        ['Success', 'Failure', 'Success', 'Failure', 'Success', 0.6],
-        ['Success', 'Failure', 'Success', 'Failure', 'Failure', 0.4],
-        ['Failure', 'Success', 'Success', 'Success', 'Success', 0.8],
-        ['Failure', 'Success', 'Success', 'Success', 'Failure', 0.2],
-        ['Failure', 'Success', 'Success', 'Failure', 'Success', 0.6],
-        ['Failure', 'Success', 'Success', 'Failure', 'Failure', 0.4],
-        ['Failure', 'Success', 'Failure', 'Failure', 'Success', 0.2],
-        ['Failure', 'Success', 'Failure', 'Failure', 'Failure', 0.8],
-        ['Failure', 'Failure', 'Failure', 'Failure', 'Success', 0.05],
-        ['Failure', 'Failure', 'Failure', 'Failure', 'Failure', 0.95],
-        ['Failure', 'Failure', 'Failure', 'Success', 'Success', 0.2],
-        ['Failure', 'Failure', 'Failure', 'Success', 'Failure', 0.8],
-        ['Failure', 'Failure', 'Success', 'Success', 'Success', 0.4],
-        ['Failure', 'Failure', 'Success', 'Success', 'Failure', 0.6],
-        ['Failure', 'Failure', 'Success', 'Failure', 'Success', 0.2],
-        ['Failure', 'Failure', 'Success', 'Failure', 'Failure', 0.8],
-        ['Failure', 'Success', 'Failure', 'Success', 'Success', 0.4],
-        ['Failure', 'Success', 'Failure', 'Success', 'Failure', 0.6],
+        [success, success, success, success, success, 0.95],
+        [success, success, success, success, failure, 0.05],
+        [success, success, success, failure, success, 0.8],
+        [success, success, success, failure, failure, 0.2],
+        [success, success, failure, failure, success, 0.6],
+        [success, success, failure, failure, failure, 0.4],
+        [success, failure, failure, failure, success, 0.2],
+        [success, failure, failure, failure, failure, 0.8],
+        [success, failure, failure, success, success, 0.5],
+        [success, failure, failure, success, failure, 0.5],
+        [success, failure, success, success, success, 0.7],
+        [success, failure, success, success, failure, 0.3],
+        [success, success, failure, success, success, 0.6],
+        [success, success, failure, success, failure, 0.4],
+        [success, failure, success, failure, success, 0.6],
+        [success, failure, success, failure, failure, 0.4],
+        [failure, success, success, success, success, 0.8],
+        [failure, success, success, success, failure, 0.2],
+        [failure, success, success, failure, success, 0.6],
+        [failure, success, success, failure, failure, 0.4],
+        [failure, success, failure, failure, success, 0.2],
+        [failure, success, failure, failure, failure, 0.8],
+        [failure, failure, failure, failure, success, 0.05],
+        [failure, failure, failure, failure, failure, 0.95],
+        [failure, failure, failure, success, success, 0.2],
+        [failure, failure, failure, success, failure, 0.8],
+        [failure, failure, success, success, success, 0.4],
+        [failure, failure, success, success, failure, 0.6],
+        [failure, failure, success, failure, success, 0.2],
+        [failure, failure, success, failure, failure, 0.8],
+        [failure, success, failure, success, success, 0.4],
+        [failure, success, failure, success, failure, 0.6],
     ], [conditionals, decision, operators, boolean])
 
 
 def _get_nested_conditional_probability(conditionals, conditional_statements):
     return ConditionalProbabilityTable([
-        ['Success', 'Success', 'Success', 0.9],
-        ['Success', 'Success', 'Failure', 0.1],
-        ['Success', 'Failure', 'Success', 0.4],
-        ['Success', 'Failure', 'Failure', 0.6],
-        ['Failure', 'Success', 'Success', 0.7],
-        ['Failure', 'Success', 'Failure', 0.3],
-        ['Failure', 'Failure', 'Success', 0.2],
-        ['Failure', 'Failure', 'Failure', 0.8]
+        [success, success, success, 0.9],
+        [success, success, failure, 0.1],
+        [success, failure, success, 0.4],
+        [success, failure, failure, 0.6],
+        [failure, success, success, 0.7],
+        [failure, success, failure, 0.3],
+        [failure, failure, success, 0.2],
+        [failure, failure, failure, 0.8]
     ], [conditionals, conditional_statements])
 
 
 def _get_simple_programs_probability(conditionals, conditional_statements):
     return ConditionalProbabilityTable([
-        ['Success', 'Success', 'Success', 0.9],
-        ['Success', 'Success', 'Failure', 0.1],
-        ['Success', 'Failure', 'Success', 0.5],
-        ['Success', 'Failure', 'Failure', 0.5],
-        ['Failure', 'Success', 'Success', 0.7],
-        ['Failure', 'Success', 'Failure', 0.3],
-        ['Failure', 'Failure', 'Success', 0.1],
-        ['Failure', 'Failure', 'Failure', 0.9]
+        [success, success, success, 0.9],
+        [success, success, failure, 0.1],
+        [success, failure, success, 0.5],
+        [success, failure, failure, 0.5],
+        [failure, success, success, 0.7],
+        [failure, success, failure, 0.3],
+        [failure, failure, success, 0.1],
+        [failure, failure, failure, 0.9]
     ], [conditionals, conditional_statements])
 
 
 def _get_programs_probability(conditionals, nested_conditionals, simple_programs):
     return ConditionalProbabilityTable([
-        ['Success', 'Success', 'Success', 'Success', 0.9],
-        ['Success', 'Success', 'Success', 'Failure', 0.1],
-        ['Success', 'Success', 'Failure', 'Success', 0.7],
-        ['Success', 'Success', 'Failure', 'Failure', 0.3],
-        ['Success', 'Failure', 'Failure', 'Success', 0.3],
-        ['Success', 'Failure', 'Failure', 'Failure', 0.7],
-        ['Success', 'Failure', 'Success', 'Success', 0.5],
-        ['Success', 'Failure', 'Success', 'Failure', 0.5],
-        ['Failure', 'Success', 'Success', 'Success', 0.7],
-        ['Failure', 'Success', 'Success', 'Failure', 0.3],
-        ['Failure', 'Success', 'Failure', 'Success', 0.4],
-        ['Failure', 'Success', 'Failure', 'Failure', 0.6],
-        ['Failure', 'Failure', 'Success', 'Success', 0.2],
-        ['Failure', 'Failure', 'Success', 'Failure', 0.8],
-        ['Failure', 'Failure', 'Failure', 'Success', 0.1],
-        ['Failure', 'Failure', 'Failure', 'Failure', 0.9],
+        [success, success, success, success, 0.9],
+        [success, success, success, failure, 0.1],
+        [success, success, failure, success, 0.7],
+        [success, success, failure, failure, 0.3],
+        [success, failure, failure, success, 0.3],
+        [success, failure, failure, failure, 0.7],
+        [success, failure, success, success, 0.5],
+        [success, failure, success, failure, 0.5],
+        [failure, success, success, success, 0.7],
+        [failure, success, success, failure, 0.3],
+        [failure, success, failure, success, 0.4],
+        [failure, success, failure, failure, 0.6],
+        [failure, failure, success, success, 0.2],
+        [failure, failure, success, failure, 0.8],
+        [failure, failure, failure, success, 0.1],
+        [failure, failure, failure, failure, 0.9],
     ], [conditionals, nested_conditionals, simple_programs])

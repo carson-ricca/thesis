@@ -1,4 +1,5 @@
 from pomegranate import *
+from constants import success, failure
 
 
 def generate_parent_categories_bayesian_network():
@@ -41,7 +42,7 @@ def _get_basics_probability():
     Gets the probability for the Basics node.
     :return: The probability of the Basics node.
     """
-    return DiscreteDistribution({'Success': 0.5, 'Failure': 0.5})
+    return DiscreteDistribution({success: 0.5, failure: 0.5})
 
 
 def _get_conditionals_probability(basics):
@@ -51,10 +52,10 @@ def _get_conditionals_probability(basics):
     :return: The probability for the Conditionals node.
     """
     return ConditionalProbabilityTable([
-        ['Success', 'Success', 0.75],
-        ['Success', 'Failure', 0.25],
-        ['Failure', 'Success', 0.25],
-        ['Failure', 'Failure', 0.75]
+        [success, success, 0.75],
+        [success, failure, 0.25],
+        [failure, success, 0.25],
+        [failure, failure, 0.75]
     ], [basics])
 
 
@@ -65,10 +66,10 @@ def _get_pre_defined_classes_probability(basics):
     :return: The probability for the Pre-Defined Classes node.
     """
     return ConditionalProbabilityTable([
-        ['Success', 'Success', 0.75],
-        ['Success', 'Failure', 0.25],
-        ['Failure', 'Success', 0.25],
-        ['Failure', 'Failure', 0.75]
+        [success, success, 0.75],
+        [success, failure, 0.25],
+        [failure, success, 0.25],
+        [failure, failure, 0.75]
     ], [basics])
 
 
@@ -79,10 +80,10 @@ def _get_loops_probability(conditionals):
     :return: The probability for the Loops node.
     """
     return ConditionalProbabilityTable([
-        ['Success', 'Success', 0.75],
-        ['Success', 'Failure', 0.25],
-        ['Failure', 'Success', 0.25],
-        ['Failure', 'Failure', 0.75]
+        [success, success, 0.75],
+        [success, failure, 0.25],
+        [failure, success, 0.25],
+        [failure, failure, 0.75]
     ], [conditionals])
 
 
@@ -93,10 +94,10 @@ def _get_arrays_probability(loops):
     :return: The probability for the Arrays node.
     """
     return ConditionalProbabilityTable([
-        ['Success', 'Success', 0.75],
-        ['Success', 'Failure', 0.25],
-        ['Failure', 'Success', 0.25],
-        ['Failure', 'Failure', 0.75]
+        [success, success, 0.75],
+        [success, failure, 0.25],
+        [failure, success, 0.25],
+        [failure, failure, 0.75]
     ], [loops])
 
 
@@ -107,10 +108,10 @@ def _get_methods_probability(loops):
     :return: The probability for the Methods node.
     """
     return ConditionalProbabilityTable([
-        ['Success', 'Success', 0.75],
-        ['Success', 'Failure', 0.25],
-        ['Failure', 'Success', 0.25],
-        ['Failure', 'Failure', 0.75]
+        [success, success, 0.75],
+        [success, failure, 0.25],
+        [failure, success, 0.25],
+        [failure, failure, 0.75]
     ], [loops])
 
 
@@ -123,20 +124,20 @@ def _get_oop_probability(arrays, methods, pre_defined_classes):
     :return: The probability for the OOP node.
     """
     return ConditionalProbabilityTable([
-        ['Success', 'Success', 'Success', 'Success', 0.9],
-        ['Success', 'Success', 'Success', 'Failure', 0.1],
-        ['Success', 'Success', 'Failure', 'Success', 0.75],
-        ['Success', 'Success', 'Failure', 'Failure', 0.25],
-        ['Success', 'Failure', 'Success', 'Success', 0.6],
-        ['Success', 'Failure', 'Success', 'Failure', 0.4],
-        ['Success', 'Failure', 'Failure', 'Success', 0.4],
-        ['Success', 'Failure', 'Failure', 'Failure', 0.6],
-        ['Failure', 'Failure', 'Failure', 'Success', 0.1],
-        ['Failure', 'Failure', 'Failure', 'Failure', 0.9],
-        ['Failure', 'Failure', 'Success', 'Success', 0.2],
-        ['Failure', 'Failure', 'Success', 'Failure', 0.8],
-        ['Failure', 'Success', 'Failure', 'Success', 0.4],
-        ['Failure', 'Success', 'Failure', 'Failure', 0.6],
-        ['Failure', 'Success', 'Success', 'Success', 0.75],
-        ['Failure', 'Success', 'Success', 'Failure', 0.25],
+        [success, success, success, success, 0.9],
+        [success, success, success, failure, 0.1],
+        [success, success, failure, success, 0.75],
+        [success, success, failure, failure, 0.25],
+        [success, failure, success, success, 0.6],
+        [success, failure, success, failure, 0.4],
+        [success, failure, failure, success, 0.4],
+        [success, failure, failure, failure, 0.6],
+        [failure, failure, failure, success, 0.1],
+        [failure, failure, failure, failure, 0.9],
+        [failure, failure, success, success, 0.2],
+        [failure, failure, success, failure, 0.8],
+        [failure, success, failure, success, 0.4],
+        [failure, success, failure, failure, 0.6],
+        [failure, success, success, success, 0.75],
+        [failure, success, success, failure, 0.25],
     ], [arrays, methods, pre_defined_classes])

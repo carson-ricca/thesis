@@ -1,2 +1,7 @@
 success = 'Success'
 failure = 'Failure'
+high = 'High'
+medium = 'Medium'
+low = 'Low'
+long = 'Long'
+short = 'Short'
