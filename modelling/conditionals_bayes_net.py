@@ -11,33 +11,33 @@ def generate_conditionals_bayesian_network():
     simple_programs = _get_simple_programs_probability(conditionals, conditional_statements)
     programs = _get_programs_probability(conditionals, nested_conditional_statements, simple_programs)
 
-    s1 = Node(conditionals, name='Conditionals')
-    s2 = Node(boolean, name='Boolean')
-    s3 = Node(decision, name='Decision')
-    s4 = Node(operators, name='Operators')
-    s5 = Node(conditional_statements, name='Conditional Statements')
-    s6 = Node(nested_conditional_statements, name='Nested Conditional Statements')
-    s7 = Node(simple_programs, name='Simple Programs')
-    s8 = Node(programs, name='Programs')
+    c = Node(conditionals, name='Conditionals')
+    b = Node(boolean, name='Boolean')
+    d = Node(decision, name='Decision')
+    o = Node(operators, name='Operators')
+    cs = Node(conditional_statements, name='Conditional Statements')
+    ncs = Node(nested_conditional_statements, name='Nested Conditional Statements')
+    sp = Node(simple_programs, name='Simple Programs')
+    p = Node(programs, name='Programs')
 
     model = BayesianNetwork('Conditionals')
-    model.add_states(s1, s2, s3, s4, s5, s6, s7, s8)
-    model.add_edge(s1, s2)
-    model.add_edge(s1, s3)
-    model.add_edge(s1, s4)
-    model.add_edge(s1, s5)
-    model.add_edge(s1, s6)
-    model.add_edge(s1, s7)
-    model.add_edge(s1, s8)
-    model.add_edge(s2, s3)
-    model.add_edge(s2, s4)
-    model.add_edge(s2, s5)
-    model.add_edge(s3, s5)
-    model.add_edge(s4, s5)
-    model.add_edge(s5, s6)
-    model.add_edge(s5, s7)
-    model.add_edge(s6, s8)
-    model.add_edge(s7, s8)
+    model.add_states(c, b, d, o, cs, ncs, sp, p)
+    model.add_edge(c, b)
+    model.add_edge(c, d)
+    model.add_edge(c, o)
+    model.add_edge(c, cs)
+    model.add_edge(c, ncs)
+    model.add_edge(c, sp)
+    model.add_edge(c, p)
+    model.add_edge(b, d)
+    model.add_edge(b, o)
+    model.add_edge(b, cs)
+    model.add_edge(d, cs)
+    model.add_edge(o, cs)
+    model.add_edge(cs, ncs)
+    model.add_edge(cs, sp)
+    model.add_edge(ncs, p)
+    model.add_edge(sp, p)
     model.bake()
     return model
 
@@ -91,6 +91,14 @@ def _get_conditional_statements_probability(conditionals, decision, operators, b
         ['Success', 'Success', 'Failure', 'Failure', 'Failure', 0.4],
         ['Success', 'Failure', 'Failure', 'Failure', 'Success', 0.2],
         ['Success', 'Failure', 'Failure', 'Failure', 'Failure', 0.8],
+        ['Success', 'Failure', 'Failure', 'Success', 'Success', 0.5],
+        ['Success', 'Failure', 'Failure', 'Success', 'Failure', 0.5],
+        ['Success', 'Failure', 'Success', 'Success', 'Success', 0.7],
+        ['Success', 'Failure', 'Success', 'Success', 'Failure', 0.3],
+        ['Success', 'Success', 'Failure', 'Success', 'Success', 0.6],
+        ['Success', 'Success', 'Failure', 'Success', 'Failure', 0.4],
+        ['Success', 'Failure', 'Success', 'Failure', 'Success', 0.6],
+        ['Success', 'Failure', 'Success', 'Failure', 'Failure', 0.4],
         ['Failure', 'Success', 'Success', 'Success', 'Success', 0.8],
         ['Failure', 'Success', 'Success', 'Success', 'Failure', 0.2],
         ['Failure', 'Success', 'Success', 'Failure', 'Success', 0.6],
@@ -99,6 +107,14 @@ def _get_conditional_statements_probability(conditionals, decision, operators, b
         ['Failure', 'Success', 'Failure', 'Failure', 'Failure', 0.8],
         ['Failure', 'Failure', 'Failure', 'Failure', 'Success', 0.05],
         ['Failure', 'Failure', 'Failure', 'Failure', 'Failure', 0.95],
+        ['Failure', 'Failure', 'Failure', 'Success', 'Success', 0.2],
+        ['Failure', 'Failure', 'Failure', 'Success', 'Failure', 0.8],
+        ['Failure', 'Failure', 'Success', 'Success', 'Success', 0.4],
+        ['Failure', 'Failure', 'Success', 'Success', 'Failure', 0.6],
+        ['Failure', 'Failure', 'Success', 'Failure', 'Success', 0.2],
+        ['Failure', 'Failure', 'Success', 'Failure', 'Failure', 0.8],
+        ['Failure', 'Success', 'Failure', 'Success', 'Success', 0.4],
+        ['Failure', 'Success', 'Failure', 'Success', 'Failure', 0.6],
     ], [conditionals, decision, operators, boolean])
 
 
@@ -136,10 +152,14 @@ def _get_programs_probability(conditionals, nested_conditionals, simple_programs
         ['Success', 'Success', 'Failure', 'Failure', 0.3],
         ['Success', 'Failure', 'Failure', 'Success', 0.3],
         ['Success', 'Failure', 'Failure', 'Failure', 0.7],
+        ['Success', 'Failure', 'Success', 'Success', 0.5],
+        ['Success', 'Failure', 'Success', 'Failure', 0.5],
         ['Failure', 'Success', 'Success', 'Success', 0.7],
         ['Failure', 'Success', 'Success', 'Failure', 0.3],
         ['Failure', 'Success', 'Failure', 'Success', 0.4],
         ['Failure', 'Success', 'Failure', 'Failure', 0.6],
+        ['Failure', 'Failure', 'Success', 'Success', 0.2],
+        ['Failure', 'Failure', 'Success', 'Failure', 0.8],
         ['Failure', 'Failure', 'Failure', 'Success', 0.1],
         ['Failure', 'Failure', 'Failure', 'Failure', 0.9],
     ], [conditionals, nested_conditionals, simple_programs])
