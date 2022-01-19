@@ -1,0 +1,2 @@
+success = 'Success'
+failure = 'Failure'
