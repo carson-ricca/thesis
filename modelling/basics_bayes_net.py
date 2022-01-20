@@ -114,7 +114,7 @@ def _get_arithmetic_operators_probability(basics, data_types, statements):
         [failure, failure, success, failure, 0.8],
         [failure, failure, failure, success, 0.1],
         [failure, failure, failure, failure, 0.9]
-    ], basics, data_types, statements)
+    ], [basics, data_types, statements])
 
 
 def _get_casting_probability(basics, data_types):
@@ -127,7 +127,7 @@ def _get_casting_probability(basics, data_types):
         [failure, success, failure, 0.3],
         [failure, failure, success, 0.2],
         [failure, failure, failure, 0.8]
-    ], basics, data_types)
+    ], [basics, data_types])
 
 
 def _get_simple_calculation_problems_probability(basics, data_types, arithmetic_operators, constants):
@@ -164,4 +164,4 @@ def _get_simple_calculation_problems_probability(basics, data_types, arithmetic_
         [failure, failure, failure, success, failure, 0.7],
         [failure, failure, failure, failure, success, 0.1],
         [failure, failure, failure, failure, failure, 0.9],
-    ], basics, data_types, arithmetic_operators, constants)
+    ], [basics, data_types, arithmetic_operators, constants])

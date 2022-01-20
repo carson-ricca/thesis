@@ -1,3 +1,4 @@
 from .perfomance_bayes_net import generate_performance_bayesian_network
 from .parent_categories_bayes_net import generate_parent_categories_bayesian_network
 from .conditionals_bayes_net import generate_conditionals_bayesian_network
+from .basics_bayes_net import generate_basics_bayesian_network
