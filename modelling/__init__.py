@@ -3,3 +3,4 @@ from .parent_categories_bayes_net import generate_parent_categories_bayesian_net
 from .conditionals_bayes_net import generate_conditionals_bayesian_network
 from .basics_bayes_net import generate_basics_bayesian_network
 from .loops_bayes_net import generate_loops_bayesian_network
+from .arrays_bayes_net import generate_arrays_bayesian_network
