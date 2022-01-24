@@ -12,16 +12,16 @@ def generate_performance_bayesian_network():
     skip_questions = _get_skip_questions_probability(overall_performance)
     time_taken = _get_time_taken_probability(overall_performance)
 
-    s1 = Node(overall_performance, name='Overall Performance')
-    s2 = Node(average_success, name='Average Success')
-    s3 = Node(skip_questions, name='Skip Questions')
-    s4 = Node(time_taken, name='Time Taken')
+    overall_performance_node = State(overall_performance, name='Overall Performance')
+    average_success_node = State(average_success, name='Average Success')
+    skip_questions_node = State(skip_questions, name='Skip Questions')
+    time_taken_node = State(time_taken, name='Time Taken')
 
     model = BayesianNetwork('Student Performance')
-    model.add_states(s1, s2, s3, s4)
-    model.add_edge(s1, s2)
-    model.add_edge(s1, s3)
-    model.add_edge(s1, s4)
+    model.add_states(overall_performance_node, average_success_node, skip_questions_node, time_taken_node)
+    model.add_edge(overall_performance_node, average_success_node)
+    model.add_edge(overall_performance_node, skip_questions_node)
+    model.add_edge(overall_performance_node, time_taken_node)
     model.bake()
     return model
 
