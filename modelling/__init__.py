@@ -4,3 +4,4 @@ from .conditionals_bayes_net import generate_conditionals_bayesian_network
 from .basics_bayes_net import generate_basics_bayesian_network
 from .loops_bayes_net import generate_loops_bayesian_network
 from .arrays_bayes_net import generate_arrays_bayesian_network
+from .methods_bayes_net import generate_methods_bayesian_network
