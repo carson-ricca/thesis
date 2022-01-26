@@ -61,7 +61,7 @@ def _get_repetition_probability(loops):
         [success, success, 0.9],
         [success, failure, 0.1],
         [failure, success, 0.1],
-        [failure, failure, 0.1]
+        [failure, failure, 0.9]
     ], [loops])
 
 
@@ -148,7 +148,7 @@ def _get_simple_programs_probability(loops, while_loops, for_loops, variable_sco
         [success, failure, failure, failure, success, 0.3],
         [success, failure, failure, failure, failure, 0.7],
         [failure, success, success, success, success, 0.8],
-        [failure, success, success, success, failure, 0.3],
+        [failure, success, success, success, failure, 0.2],
         [failure, success, success, failure, success, 0.6],
         [failure, success, success, failure, failure, 0.4],
         [failure, success, failure, success, success, 0.6],
@@ -185,7 +185,7 @@ def _get_nested_loops_probability(loops, while_loops, for_loops, variable_scope)
         [success, failure, failure, failure, success, 0.3],
         [success, failure, failure, failure, failure, 0.7],
         [failure, success, success, success, success, 0.8],
-        [failure, success, success, success, failure, 0.3],
+        [failure, success, success, success, failure, 0.2],
         [failure, success, success, failure, success, 0.6],
         [failure, success, success, failure, failure, 0.4],
         [failure, success, failure, success, success, 0.6],
