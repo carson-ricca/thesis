@@ -23,7 +23,7 @@ def generate_pre_defined_classes_bayesian_network():
     math_node = State(math, name='Math')
     random_node = State(random, name='Random')
     math_programs_node = State(math_programs, name='Math Programs')
-    changing_behaviour_programs_node = State(changing_behaviour_programs, name='Changing Behaviours Programs')
+    changing_behaviour_programs_node = State(changing_behaviour_programs, name='Changing Behaviour Programs')
     simple_programs_node = State(simple_programs, name='Simple Programs')
     string_node = State(string, name='String')
     programs_node = State(programs, name='Programs')
