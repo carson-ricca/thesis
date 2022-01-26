@@ -2,13 +2,15 @@ from constants import success, failure
 from modelling import generate_basics_bayesian_network
 import matplotlib.pyplot as plt
 
+
 def test_basics():
     model = generate_basics_bayesian_network()
-    model.plot()
-    plt.show()
-    # # All nodes are success.
-    # _predict_success_in_basics(model, success, success, success, success, success, success, success)
-    # # All nodes are failure.
+    # model.plot()
+    # plt.show()
+
+    # All nodes are success.
+    _predict_success_in_basics(model, success, success, success, success, success, success, success)
+    # All nodes are failure.
     # _predict_success_in_basics(model, failure, failure, failure, failure, failure, failure, failure)
     # # Test more successful than failure (failure in more complex topics).
     # _predict_success_in_basics(model, success, success, success, success, failure, failure, failure)
@@ -20,26 +22,26 @@ def test_basics():
     # _predict_success_in_basics(model, failure, failure, failure, failure, success, success, success)
 
 
-# def _predict_success_in_basics(model, variables, data_types, statements, constants, arithmetic_operators, casting,
-#                                simple_calculation_problems):
-#     predictions = model.predict_proba({
-#         'Variables': variables,
-#         'Data Types': data_types,
-#         'Statements': statements,
-#         'Constants': constants,
-#         'Arithmetic Operators': arithmetic_operators,
-#         'Casting': casting,
-#         'Simple Calculation Problems': simple_calculation_problems
-#     })
-#     overall_success = predictions[0].parameters[0]
-#     print((
-#         f'Variables: {variables}, Data Types: {data_types}, Statements: {statements}, '
-#         f'Constants: {constants}, \n'
-#         f'Arithmetic Operators: {arithmetic_operators}, '
-#         f'Casting: {casting}, Simple Calculation Problems: {simple_calculation_problems}'
-#     ))
-#     print(f'Success: {overall_success["Success"]}, Failure: {overall_success["Failure"]}')
-#     print('-' * 150)
+def _predict_success_in_basics(model, variables, data_types, statements, constants, arithmetic_operators, casting,
+                               simple_calculation_problems):
+    predictions = model.predict_proba({
+        'Variables': variables,
+        'Data Types': data_types,
+        'Statements': statements,
+        'Constants': constants,
+        'Arithmetic Operators': arithmetic_operators,
+        'Casting': casting,
+        'Simple Calculation Problems': simple_calculation_problems
+    })
+    overall_success = predictions[0].parameters[0]
+    print((
+        f'Variables: {variables}, Data Types: {data_types}, Statements: {statements}, '
+        f'Constants: {constants}, \n'
+        f'Arithmetic Operators: {arithmetic_operators}, '
+        f'Casting: {casting}, Simple Calculation Problems: {simple_calculation_problems}'
+    ))
+    print(f'Basics Success: {overall_success["Success"]}, Basics Failure: {overall_success["Failure"]}')
+    print('-' * 150)
 
 
 if __name__ == "__main__":

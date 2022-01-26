@@ -108,7 +108,7 @@ def _get_arithmetic_operators_probability(basics, data_types, statements):
         [success, failure, failure, success, 0.6],
         [success, failure, failure, failure, 0.4],
         [failure, success, success, success, 0.7],
-        [failure, success, success, failure, 0.4],
+        [failure, success, success, failure, 0.3],
         [failure, success, failure, success, 0.3],
         [failure, success, failure, failure, 0.7],
         [failure, failure, success, success, 0.2],
