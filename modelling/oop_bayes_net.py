@@ -27,7 +27,7 @@ def generate_oop_bayesian_network():
     object_interactions_node = State(object_interactions, name='Object Interactions')
     object_independence_node = State(object_independence, name='Object Independence')
     special_class_method_node = State(special_class_method, name='Special Class Method')
-    simple_programs_node = State(simple_programs, name='Simple Programs Node')
+    simple_programs_node = State(simple_programs, name='Simple Programs')
     static_modifier_node = State(static_modifier, name='Static Modifier')
     programs_node = State(programs, name='Programs')
 
