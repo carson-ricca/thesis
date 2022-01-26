@@ -1,9 +1,14 @@
+import matplotlib.pyplot as plt
+
 from modelling import generate_parent_categories_bayesian_network
 from constants import success, failure
 
 
 def test_parent_categories():
     model = generate_parent_categories_bayesian_network()
+    # model.plot()
+    # plt.show()
+
     _make_prediction(model, success, success, success, success, success, success)
     _make_prediction(model, failure, failure, failure, failure, failure, failure)
     _make_prediction(model, failure, failure, failure, success, success, success)
