@@ -48,7 +48,10 @@ def _predict_pre_defined_classes_success(model, oop_overview, scanner, character
         f'Changing Behaviour Programs: {changing_behaviour_programs}, Simple Programs: {simple_programs}, '
         f'String: {string}, Programs: {programs}'
     ))
-    print(f'Arrays Success: {overall_success["Success"]}, Arrays Failure: {overall_success["Failure"]}')
+    print((
+        f'Pre-Defined Classes Success: {overall_success["Success"]}, '
+        f'Pre-Defined Classes Failure: {overall_success["Failure"]}'
+    ))
     print('-' * 150)
 
 
