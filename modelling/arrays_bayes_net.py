@@ -23,7 +23,7 @@ def generate_arrays_bayesian_network():
     defining_arrays_node = State(defining_arrays, name='Defining Arrays')
     referencing_arrays_node = State(referencing_arrays, name='Referencing Arrays')
     multidimensional_arrays_node = State(multidimensional_arrays, name='Multidimensional Arrays')
-    array_with_methods_node = State(array_with_methods, name='Arrays with Methods')
+    array_with_methods_node = State(array_with_methods, name='Array with Methods')
     programs_with_data_sequences_node = State(programs_with_data_sequences, name='Programs with Data Sequences')
     programs_with_multidimensional_data_node = State(programs_with_multidimensional_data,
                                                      name='Programs with Multidimensional Data')
