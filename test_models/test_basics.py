@@ -11,15 +11,15 @@ def test_basics():
     # All nodes are success.
     _predict_success_in_basics(model, success, success, success, success, success, success, success)
     # All nodes are failure.
-    # _predict_success_in_basics(model, failure, failure, failure, failure, failure, failure, failure)
-    # # Test more successful than failure (failure in more complex topics).
-    # _predict_success_in_basics(model, success, success, success, success, failure, failure, failure)
-    # # Test more successful than failure (failure in easier topics).
-    # _predict_success_in_basics(model, failure, failure, failure, success, success, success, success)
-    # # Test more failure than success (complex topics).
-    # _predict_success_in_basics(model, success, success, success, failure, failure, failure, failure)
-    # # Test more failure than success (easier topics).
-    # _predict_success_in_basics(model, failure, failure, failure, failure, success, success, success)
+    _predict_success_in_basics(model, failure, failure, failure, failure, failure, failure, failure)
+    # Test more successful than failure (failure in more complex topics).
+    _predict_success_in_basics(model, success, success, success, success, failure, failure, failure)
+    # Test more successful than failure (failure in easier topics).
+    _predict_success_in_basics(model, failure, failure, failure, success, success, success, success)
+    # Test more failure than success (complex topics).
+    _predict_success_in_basics(model, success, success, success, failure, failure, failure, failure)
+    # Test more failure than success (easier topics).
+    _predict_success_in_basics(model, failure, failure, failure, failure, success, success, success)
 
 
 def _predict_success_in_basics(model, variables, data_types, statements, constants, arithmetic_operators, casting,

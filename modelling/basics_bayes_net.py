@@ -8,7 +8,7 @@ def generate_basics_bayesian_network():
     data_types = _get_data_types_probability(basics, variables)
     statements = _get_statements_probability(basics, variables)
     constants = _get_constants_probability(basics, variables)
-    arithmetic_operators = _get_arithmetic_operators_probability(variables, data_types, statements)
+    arithmetic_operators = _get_arithmetic_operators_probability(basics, data_types, statements)
     casting = _get_casting_probability(basics, data_types)
     simple_calculation_problems = _get_simple_calculation_problems_probability(basics, data_types, arithmetic_operators,
                                                                                constants)
@@ -54,7 +54,7 @@ def _get_variables_probability(basics):
         [success, success, 0.9],
         [success, failure, 0.1],
         [failure, success, 0.1],
-        [failure, failure, 0.9]
+        [failure, failure, 0.9],
     ], [basics])
 
 
@@ -67,7 +67,7 @@ def _get_data_types_probability(basics, variables):
         [failure, success, success, 0.6],
         [failure, success, failure, 0.4],
         [failure, failure, success, 0.2],
-        [failure, failure, failure, 0.8]
+        [failure, failure, failure, 0.8],
     ], [basics, variables])
 
 
@@ -79,8 +79,8 @@ def _get_statements_probability(basics, variables):
         [success, failure, failure, 0.4],
         [failure, success, success, 0.6],
         [failure, success, failure, 0.4],
-        [failure, failure, success, 0.2],
-        [failure, failure, failure, 0.8]
+        [failure, failure, success, 0.1],
+        [failure, failure, failure, 0.9],
     ], [basics, variables])
 
 
@@ -92,8 +92,8 @@ def _get_constants_probability(basics, variables):
         [success, failure, failure, 0.4],
         [failure, success, success, 0.6],
         [failure, success, failure, 0.4],
-        [failure, failure, success, 0.2],
-        [failure, failure, failure, 0.8]
+        [failure, failure, success, 0.1],
+        [failure, failure, failure, 0.9],
     ], [basics, variables])
 
 
@@ -114,7 +114,7 @@ def _get_arithmetic_operators_probability(basics, data_types, statements):
         [failure, failure, success, success, 0.2],
         [failure, failure, success, failure, 0.8],
         [failure, failure, failure, success, 0.1],
-        [failure, failure, failure, failure, 0.9]
+        [failure, failure, failure, failure, 0.9],
     ], [basics, data_types, statements])
 
 
@@ -127,7 +127,7 @@ def _get_casting_probability(basics, data_types):
         [failure, success, success, 0.7],
         [failure, success, failure, 0.3],
         [failure, failure, success, 0.2],
-        [failure, failure, failure, 0.8]
+        [failure, failure, failure, 0.8],
     ], [basics, data_types])
 
 
