@@ -4,7 +4,7 @@ from modelling import generate_loops_bayesian_network
 from constants import success, failure
 
 
-def test_conditionals():
+def test_loops():
     model = generate_loops_bayesian_network()
     model.plot()
     plt.show()
@@ -46,4 +46,4 @@ def _predict_success_in_loops(model, repetition, decision_diagrams, while_loops,
 
 
 if __name__ == "__main__":
-    test_conditionals()
+    test_loops()
