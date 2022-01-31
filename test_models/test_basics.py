@@ -2,6 +2,8 @@ from constants import success, failure
 from modelling import generate_basics_bayesian_network
 import matplotlib.pyplot as plt
 
+from util import Timer
+
 
 def test_basics():
     model = generate_basics_bayesian_network()
@@ -24,6 +26,8 @@ def test_basics():
 
 def _predict_success_in_basics(model, variables, data_types, statements, constants, arithmetic_operators, casting,
                                simple_calculation_problems):
+    timer = Timer()
+    timer.start()
     predictions = model.predict_proba({
         'Variables': variables,
         'Data Types': data_types,
@@ -41,6 +45,7 @@ def _predict_success_in_basics(model, variables, data_types, statements, constan
         f'Casting: {casting}, Simple Calculation Problems: {simple_calculation_problems}'
     ))
     print(f'Basics Success: {overall_success["Success"]}, Basics Failure: {overall_success["Failure"]}')
+    timer.stop()
     print('-' * 150)
 
 

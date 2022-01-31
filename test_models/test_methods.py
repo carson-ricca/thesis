@@ -2,6 +2,7 @@ from matplotlib import pyplot as plt
 
 from constants import success, failure
 from modelling import generate_methods_bayesian_network
+from util import Timer
 
 
 def test_methods():
@@ -19,6 +20,8 @@ def test_methods():
 
 def _predict_success_in_loops(model, abstraction, variable_scope, using_methods, defining_methods, method_overloading,
                               modular_programs):
+    timer = Timer()
+    timer.start()
     predictions = model.predict_proba({
         'Abstraction': abstraction,
         'Variable Scope': variable_scope,
@@ -34,6 +37,7 @@ def _predict_success_in_loops(model, abstraction, variable_scope, using_methods,
         f'Method Overloading: {method_overloading}, Modular Programs: {modular_programs}'
     ))
     print(f'Methods Success: {overall_success["Success"]}, Methods Failure: {overall_success["Failure"]}')
+    timer.stop()
     print('-' * 150)
 
 

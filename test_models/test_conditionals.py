@@ -1,5 +1,6 @@
 from modelling import generate_conditionals_bayesian_network
 from constants import success, failure
+from util import Timer
 
 
 def test_conditionals():
@@ -20,6 +21,8 @@ def test_conditionals():
 
 def _predict_success_in_conditionals(model, boolean, decision, operators, conditional_statements,
                                      nested_conditional_statements, simple_programs, programs):
+    timer = Timer()
+    timer.start()
     predictions = model.predict_proba({
         'Boolean': boolean,
         'Decision': decision,
@@ -37,6 +40,7 @@ def _predict_success_in_conditionals(model, boolean, decision, operators, condit
         f'Simple Programs: {simple_programs}, Programs: {programs}'
     ))
     print(f'Success: {overall_success["Success"]}, Failure: {overall_success["Failure"]}')
+    timer.stop()
     print('-' * 150)
 
 

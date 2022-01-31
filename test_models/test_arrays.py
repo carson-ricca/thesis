@@ -2,6 +2,7 @@ from matplotlib import pyplot as plt
 
 from constants import success, failure
 from modelling import generate_arrays_bayesian_network
+from util import Timer
 
 
 def test_arrays():
@@ -21,6 +22,8 @@ def test_arrays():
 def _predict_success_in_arrays(model, data_representation, defining_arrays, referencing_arrays,
                                multidimensional_arrays, array_with_methods, programs_with_data_sequences,
                                programs_with_multidimensional_data):
+    timer = Timer()
+    timer.start()
     predictions = model.predict_proba({
         'Data Representation': data_representation,
         'Defining Arrays': defining_arrays,
@@ -38,6 +41,7 @@ def _predict_success_in_arrays(model, data_representation, defining_arrays, refe
         f'Programs with Multidimensional Data: {programs_with_multidimensional_data}'
     ))
     print(f'Arrays Success: {overall_success["Success"]}, Arrays Failure: {overall_success["Failure"]}')
+    timer.stop()
     print('-' * 150)
 
 

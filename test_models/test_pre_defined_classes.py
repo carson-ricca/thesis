@@ -2,6 +2,7 @@ from matplotlib import pyplot as plt
 
 from constants import success, failure
 from modelling import generate_pre_defined_classes_bayesian_network
+from util import Timer
 
 
 def test_pre_defined_classes():
@@ -28,6 +29,8 @@ def test_pre_defined_classes():
 def _predict_pre_defined_classes_success(model, oop_overview, scanner, character, math, random,
                                          math_programs, changing_behaviour_programs, simple_programs,
                                          string, programs):
+    timer = Timer()
+    timer.start()
     predictions = model.predict_proba({
         'OOP Overview': oop_overview,
         'Scanner': scanner,
@@ -52,6 +55,7 @@ def _predict_pre_defined_classes_success(model, oop_overview, scanner, character
         f'Pre-Defined Classes Success: {overall_success["Success"]}, '
         f'Pre-Defined Classes Failure: {overall_success["Failure"]}'
     ))
+    timer.stop()
     print('-' * 150)
 
 

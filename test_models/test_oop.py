@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 
 from constants import success, failure
 from modelling import generate_oop_bayesian_network
+from util import Timer
 
 
 def test_oop():
@@ -27,6 +28,8 @@ def test_oop():
 def _predict_oop_success(model, variable_scope, oop_overview, multiple_classes, user_defined_classes, creating_objects,
                          object_interactions, object_independence, special_class_method, simple_programs,
                          static_modifier, programs):
+    timer = Timer()
+    timer.start()
     predictions = model.predict_proba({
         'Variable Scope': variable_scope,
         'OOP Overview': oop_overview,
@@ -49,6 +52,7 @@ def _predict_oop_success(model, variable_scope, oop_overview, multiple_classes, 
         f'Simple Programs: {simple_programs}, Static Modifier: {static_modifier}, Programs: {programs}'
     ))
     print(f'OOP Success: {overall_success["Success"]}, OOP Failure: {overall_success["Failure"]}')
+    timer.stop()
     print('-' * 150)
 
 

@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 
 from modelling import generate_parent_categories_bayesian_network
 from constants import success, failure
+from util import Timer
 
 
 def test_parent_categories():
@@ -18,6 +19,8 @@ def test_parent_categories():
 
 
 def _make_prediction(model, basics, conditionals, pre_defined_classes, loops, arrays, methods):
+    timer = Timer()
+    timer.start()
     predictions = model.predict_proba({
         'Basics': basics,
         'Conditionals': conditionals,
@@ -34,6 +37,7 @@ def _make_prediction(model, basics, conditionals, pre_defined_classes, loops, ar
         f'Arrays: {arrays}, Methods: {methods}'
     ))
     print(f'OOP Success: {probable_success}, OOP Failure: {probable_failure}')
+    timer.stop()
     print('-' * 150)
 
 
