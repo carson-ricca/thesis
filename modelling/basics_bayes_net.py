@@ -3,6 +3,10 @@ from constants import success, failure
 
 
 def generate_basics_bayesian_network():
+    """
+    Creates the Bayesian Network for the Basics sub-category.
+    :return: The complete Bayesian Network.
+    """
     basics = _get_basics_probability()
     variables = _get_variables_probability(basics)
     data_types = _get_data_types_probability(basics, variables)
@@ -46,10 +50,19 @@ def generate_basics_bayesian_network():
 
 
 def _get_basics_probability():
+    """
+    Gets the probability of the Basics node.
+    :return: The probability of the Basics node.
+    """
     return DiscreteDistribution({success: 0.5, failure: 0.5})
 
 
 def _get_variables_probability(basics):
+    """
+    Gets the probability of the Variables node.
+    :param basics: The probability of the Basics node.
+    :return: The probability of the Variables node.
+    """
     return ConditionalProbabilityTable([
         [success, success, 0.9],
         [success, failure, 0.1],
@@ -59,6 +72,12 @@ def _get_variables_probability(basics):
 
 
 def _get_data_types_probability(basics, variables):
+    """
+    Gets the probability of the Data Types node.
+    :param basics: The probability of the Basics node.
+    :param variables: The probability of the Variables node.
+    :return: The probability of the Data Types node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -72,6 +91,12 @@ def _get_data_types_probability(basics, variables):
 
 
 def _get_statements_probability(basics, variables):
+    """
+    Gets the probability of the Statements node.
+    :param basics: The probability of the Basics node.
+    :param variables: The probability of the Variables node.
+    :return: The probability of the Statements node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -85,6 +110,12 @@ def _get_statements_probability(basics, variables):
 
 
 def _get_constants_probability(basics, variables):
+    """
+    Gets the probability of the Constants node.
+    :param basics: The probability of the Basics node.
+    :param variables: The probability of the Variables node.
+    :return: The probability of the Constants node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -98,6 +129,13 @@ def _get_constants_probability(basics, variables):
 
 
 def _get_arithmetic_operators_probability(basics, data_types, statements):
+    """
+    Gets the probability of the Arithmetic Operators node.
+    :param basics: The probability of the Basics node.
+    :param data_types: The probability of the Data Types node.
+    :param statements: The probability of the Statements node.
+    :return: The probability of the Arithmetic Operators node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, 0.95],
         [success, success, success, failure, 0.05],
@@ -119,6 +157,12 @@ def _get_arithmetic_operators_probability(basics, data_types, statements):
 
 
 def _get_casting_probability(basics, data_types):
+    """
+    Gets the probability of the Casting node.
+    :param basics: The probability of the Basics node.
+    :param data_types: The probability of the Data Types node.
+    :return: The probability of the Casting node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -132,6 +176,14 @@ def _get_casting_probability(basics, data_types):
 
 
 def _get_simple_calculation_problems_probability(basics, data_types, arithmetic_operators, constants):
+    """
+    Gets the probability of the Simple Calculation Problems node.
+    :param basics: The probability of the Basics node.
+    :param data_types: The probability of the Data Types node.
+    :param arithmetic_operators: The probability of the Arithmetic Operators node.
+    :param constants: The probability of the Constants node.
+    :return: The probability of the Simple Calculation Problems node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, success, 0.9],
         [success, success, success, success, failure, 0.1],

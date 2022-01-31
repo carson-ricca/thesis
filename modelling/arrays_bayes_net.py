@@ -4,6 +4,10 @@ from constants import success, failure
 
 
 def generate_arrays_bayesian_network():
+    """
+    Creates the Bayesian Network for the Arrays sub-category.
+    :return: The complete Bayesian Network.
+    """
     arrays = _get_arrays_probability()
     data_representation = _get_data_representation_probability(arrays)
     defining_arrays = _get_defining_arrays_probability(arrays, data_representation)
@@ -56,10 +60,19 @@ def generate_arrays_bayesian_network():
 
 
 def _get_arrays_probability():
+    """
+    Gets the probability for the Arrays node.
+    :return: The probability for the Arrays node.
+    """
     return DiscreteDistribution({success: 0.5, failure: 0.5})
 
 
 def _get_data_representation_probability(arrays):
+    """
+    Gets the probability for the Data Representation node.
+    :param arrays: The probability of the Arrays node.
+    :return: The probability for the Data Representation node.
+    """
     return ConditionalProbabilityTable([
         [success, success, 0.9],
         [success, failure, 0.1],
@@ -69,6 +82,12 @@ def _get_data_representation_probability(arrays):
 
 
 def _get_defining_arrays_probability(arrays, data_representation):
+    """
+    Gets the probability for the Defining Arrays node.
+    :param arrays: The probability of the Arrays node.
+    :param data_representation: The probability of the Data Representation node.
+    :return: The probability for the Defining Arrays node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -82,6 +101,13 @@ def _get_defining_arrays_probability(arrays, data_representation):
 
 
 def _get_referencing_arrays_probability(arrays, defining_arrays, data_representation):
+    """
+    Gets the probability for the Referencing Arrays node.
+    :param arrays: The probability of the Arrays node.
+    :param defining_arrays: The probability of the Defining Arrays node.
+    :param data_representation: The probability of the Data Representation node.
+    :return: The probability for the Referencing Arrays node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, 0.9],
         [success, success, success, failure, 0.1],
@@ -103,6 +129,13 @@ def _get_referencing_arrays_probability(arrays, defining_arrays, data_representa
 
 
 def _get_multidimensional_arrays_probability(arrays, defining_arrays, data_representation):
+    """
+    Gets the probability for the Multidimensional Arrays node.
+    :param arrays: The probability of the Arrays node.
+    :param defining_arrays: The probability of the Defining Arrays node.
+    :param data_representation: The probability of the Data Representation node.
+    :return: The probability for the Multidimensional Arrays node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, 0.9],
         [success, success, success, failure, 0.1],
@@ -124,6 +157,13 @@ def _get_multidimensional_arrays_probability(arrays, defining_arrays, data_repre
 
 
 def _get_array_with_methods_probability(arrays, referencing_arrays, multidimensional_arrays):
+    """
+    Gets the probability for the Array with Methods node.
+    :param arrays: The probability of the Arrays node.
+    :param referencing_arrays: The probability of the Referencing Arrays node.
+    :param multidimensional_arrays: The probability of the Multidimensional Arrays node.
+    :return: The probability for the Arrays with Methods node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, 0.9],
         [success, success, success, failure, 0.1],
@@ -145,6 +185,13 @@ def _get_array_with_methods_probability(arrays, referencing_arrays, multidimensi
 
 
 def _get_programs_with_data_sequences_probability(arrays, referencing_arrays, array_with_methods):
+    """
+    Gets the probability for the Programs with Data Sequences node.
+    :param arrays: The probability of the Arrays node.
+    :param referencing_arrays: The probability of the Referencing Arrays node.
+    :param array_with_methods: The probability of the Arrays with Methods node.
+    :return: The probability for the Programs with Data Sequences node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, 0.9],
         [success, success, success, failure, 0.1],
@@ -167,6 +214,14 @@ def _get_programs_with_data_sequences_probability(arrays, referencing_arrays, ar
 
 def _get_programs_with_multidimensional_data_probability(arrays, programs_with_data_sequences, arrays_with_methods,
                                                          multidimensional_arrays):
+    """
+    Gets the probability for the Multidimensional Arrays node.
+    :param arrays: The probability of the Arrays node.
+    :param programs_with_data_sequences: The probability of the Programs with Data Sequences node.
+    :param arrays_with_methods: The probability of the Arrays with Methods node.
+    :param multidimensional_arrays: THe probability of the Multidimensional Arrays node.
+    :return: The probability for the Multidimensional Arrays node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, success, 0.95],
         [success, success, success, success, failure, 0.05],
