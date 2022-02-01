@@ -2,7 +2,9 @@ import time
 
 
 class TimerError(Exception):
-    """A custom exception used to report errors of the Timer class."""
+    """
+    A custom exception used to report errors of the Timer class.
+    """
 
 
 class Timer:
@@ -10,14 +12,18 @@ class Timer:
         self._start_time = None
 
     def start(self):
-        """Starts a new timer"""
+        """
+        Starts a new timer
+        """
         if self._start_time is not None:
             raise TimerError('Timer is running. Use .stop() to stop it.')
 
         self._start_time = time.perf_counter()
 
     def stop(self):
-        """Stop the timer, and report elapsed time."""
+        """
+        Stop the timer, and report elapsed time.
+        """
         if self._start_time is None:
             raise TimerError('Timer is not running. Use .start() to start it.')
 
