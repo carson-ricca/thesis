@@ -5,7 +5,7 @@ from constants import success, failure
 
 def generate_arrays_bayesian_network():
     """
-    Creates the Bayesian Network for the Arrays sub-category.
+    Creates the Bayesian Network for the Arrays sub-categories.
     :return: The complete Bayesian Network.
     """
     arrays = _get_arrays_probability()

@@ -5,7 +5,7 @@ from constants import success, failure
 
 def generate_methods_bayesian_network():
     """
-    Creates the Bayesian Network for the Methods sub-category.
+    Creates the Bayesian Network for the Methods sub-categories.
     :return: The complete Bayesian Network.
     """
     methods = _get_methods_probability()

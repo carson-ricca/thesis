@@ -4,7 +4,7 @@ from constants import success, failure
 
 def generate_conditionals_bayesian_network():
     """
-    Creates the Bayesian Network for the Conditionals sub-category.
+    Creates the Bayesian Network for the Conditionals sub-categories.
     :return: The complete Bayesian Network.
     """
     conditionals = _get_conditionals_probability()

@@ -4,7 +4,7 @@ from constants import success, failure
 
 def generate_basics_bayesian_network():
     """
-    Creates the Bayesian Network for the Basics sub-category.
+    Creates the Bayesian Network for the Basics sub-categories.
     :return: The complete Bayesian Network.
     """
     basics = _get_basics_probability()

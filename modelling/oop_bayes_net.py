@@ -4,9 +4,13 @@ from constants import success, failure
 
 
 def generate_oop_bayesian_network():
+    """
+    Creates the Bayesian Network for the OOP sub-categories.
+    :return: The complete Bayesian Network.
+    """
     oop = _get_oop_probability()
     variable_scope = _get_variable_scope_probability(oop)
-    oop_overview = _get_oop_overview_scope_probability(oop)
+    oop_overview = _get_oop_overview_probability(oop)
     multiple_classes = _get_multiple_classes_probability(oop, variable_scope, oop_overview)
     user_defined_classes = _get_user_defined_classes_probability(oop, variable_scope, oop_overview)
     creating_objects = _get_creating_objects_probability(oop, multiple_classes, user_defined_classes)
@@ -64,10 +68,19 @@ def generate_oop_bayesian_network():
 
 
 def _get_oop_probability():
+    """
+    Gets the probability for the OOP node.
+    :return: The probability of the OOP node.
+    """
     return DiscreteDistribution({success: 0.5, failure: 0.5})
 
 
 def _get_variable_scope_probability(oop):
+    """
+    Gets the probability of the Variable Scope node.
+    :param oop: The probability of the OOP node.
+    :return: The probability of the Variable Scope node.
+    """
     return ConditionalProbabilityTable([
         [success, success, 0.9],
         [success, failure, 0.1],
@@ -76,7 +89,12 @@ def _get_variable_scope_probability(oop):
     ], [oop])
 
 
-def _get_oop_overview_scope_probability(oop):
+def _get_oop_overview_probability(oop):
+    """
+    Gets the probability of the OOP Overview node.
+    :param oop: The probability of the OOP node.
+    :return: The probability of the OOP Overview node.
+    """
     return ConditionalProbabilityTable([
         [success, success, 0.9],
         [success, failure, 0.1],
@@ -86,6 +104,13 @@ def _get_oop_overview_scope_probability(oop):
 
 
 def _get_multiple_classes_probability(oop, variable_scope, oop_overview):
+    """
+    Gets the probability of the Multiple Classes node.
+    :param oop: The probability of the OOP node.
+    :param variable_scope: The probability of the Variable Scope node.
+    :param oop_overview: The probability of the OOP Overview node.
+    :return: The probability of the Multiple Classes node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, 0.95],
         [success, success, success, failure, 0.05],
@@ -107,6 +132,13 @@ def _get_multiple_classes_probability(oop, variable_scope, oop_overview):
 
 
 def _get_user_defined_classes_probability(oop, variable_scope, oop_overview):
+    """
+    Gets the probability of the User Defined Classes node.
+    :param oop: The probability of the OOP node.
+    :param variable_scope: The probability of the Variable Scope node.
+    :param oop_overview: The probability of the OOP Overview node.
+    :return: The probability of the User Defined Classes node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, 0.95],
         [success, success, success, failure, 0.05],
@@ -128,6 +160,13 @@ def _get_user_defined_classes_probability(oop, variable_scope, oop_overview):
 
 
 def _get_creating_objects_probability(oop, multiple_classes, user_defined_classes):
+    """
+    Gets the probability of the Creating Objects node.
+    :param oop: The probability of the OOP node.
+    :param multiple_classes: The probability of the Multiple Classes node.
+    :param user_defined_classes: The probability of the User Defined Classes node.
+    :return: The probability of the Creating Objects node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, 0.95],
         [success, success, success, failure, 0.05],
@@ -149,6 +188,11 @@ def _get_creating_objects_probability(oop, multiple_classes, user_defined_classe
 
 
 def _get_object_interactions_probability(oop):
+    """
+    Gets the probability of the Object Interactions node.
+    :param oop: The probability of the OOP node.
+    :return: The probability of the Object Interactions node.
+    """
     return ConditionalProbabilityTable([
         [success, success, 0.9],
         [success, failure, 0.1],
@@ -158,6 +202,12 @@ def _get_object_interactions_probability(oop):
 
 
 def _get_object_independence_probability(oop, creating_objects):
+    """
+    Gets the probability of the Object Independence node.
+    :param oop: The probability of the OOP node.
+    :param creating_objects: The probability of the Creating Objects node.
+    :return: The probability of the Object Independence node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -171,6 +221,12 @@ def _get_object_independence_probability(oop, creating_objects):
 
 
 def _get_special_class_method_probability(oop, user_defined_classes):
+    """
+    Gets the probability of the Special Class Method node.
+    :param oop: The probability of the OOP node.
+    :param user_defined_classes: The probability of the User Defined Classes node.
+    :return: The probability of the Special Class Method node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -184,6 +240,14 @@ def _get_special_class_method_probability(oop, user_defined_classes):
 
 
 def _get_simple_programs_probability(oop, object_interactions, object_independence, special_class_method):
+    """
+    Gets the probability of the Simple Programs node.
+    :param oop: The probability of the OOP node.
+    :param object_interactions: The probability of the Object Interactions node.
+    :param object_independence: The probability of the Object Independence node.
+    :param special_class_method: The probability of the Special Class Method node.
+    :return: The probability of the Simple Programs node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, success, 0.95],
         [success, success, success, success, failure, 0.05],
@@ -221,6 +285,11 @@ def _get_simple_programs_probability(oop, object_interactions, object_independen
 
 
 def _get_static_modifier_probability(oop):
+    """
+    Gets the probability of the Static Modifier node.
+    :param oop: The probability of the OOP node.
+    :return: The probability of the Static Modifier node.
+    """
     return ConditionalProbabilityTable([
         [success, success, 0.9],
         [success, failure, 0.1],
@@ -230,6 +299,13 @@ def _get_static_modifier_probability(oop):
 
 
 def _get_programs_probability(oop, simple_programs, static_modifier):
+    """
+    Gets the probability of the Programs node.
+    :param oop: The probability of the OOP node.
+    :param simple_programs: The probability of the Simple Programs node.
+    :param static_modifier: The probability of the Static Modifier node.
+    :return: The probability of the Programs node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, 0.95],
         [success, success, success, failure, 0.05],
