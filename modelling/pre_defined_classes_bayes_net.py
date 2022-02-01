@@ -4,6 +4,10 @@ from constants import success, failure
 
 
 def generate_pre_defined_classes_bayesian_network():
+    """
+    Creates the Bayesian Network for the Pre-Defined Classes sub-categories.
+    :return: The complete Bayesian Network.
+    """
     pre_defined_classes = _get_pre_defined_classes_probability()
     oop_overview = _get_oop_overview_probability(pre_defined_classes)
     scanner = _get_scanner_probability(pre_defined_classes, oop_overview)
@@ -58,10 +62,19 @@ def generate_pre_defined_classes_bayesian_network():
 
 
 def _get_pre_defined_classes_probability():
+    """
+    Gets the probability of the Pre-Defined Classes node.
+    :return: The probability of the Pre-Defined Classes node.
+    """
     return DiscreteDistribution({success: 0.5, failure: 0.5})
 
 
 def _get_oop_overview_probability(pre_defined_classes):
+    """
+    Gets the probability of the OOP Overview node.
+    :param pre_defined_classes: The probability of the Pre-Defined Classes node.
+    :return: The probability of the OOP Overview node.
+    """
     return ConditionalProbabilityTable([
         [success, success, 0.9],
         [success, failure, 0.1],
@@ -71,6 +84,12 @@ def _get_oop_overview_probability(pre_defined_classes):
 
 
 def _get_scanner_probability(pre_defined_classes, oop_overview):
+    """
+    Gets the probability of the Scanner node.
+    :param pre_defined_classes: The probability of the Pre-Defined Classes node.
+    :param oop_overview: The probability of the OOP Overview node.
+    :return: The probability of the Scanner node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -84,6 +103,12 @@ def _get_scanner_probability(pre_defined_classes, oop_overview):
 
 
 def _get_character_probability(pre_defined_classes, oop_overview):
+    """
+    Gets the probability of the Character node.
+    :param pre_defined_classes: The probability of the Pre-Defined Classes node.
+    :param oop_overview: The probability of the OOP Overview node.
+    :return: The probability of the Character node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -97,6 +122,12 @@ def _get_character_probability(pre_defined_classes, oop_overview):
 
 
 def _get_math_probability(pre_defined_classes, oop_overview):
+    """
+    Gets the probability of the Math node.
+    :param pre_defined_classes: The probability of the Pre-Defined Classes node.
+    :param oop_overview: The probability of the OOP Overview node.
+    :return: The probability of the Math node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -110,6 +141,12 @@ def _get_math_probability(pre_defined_classes, oop_overview):
 
 
 def _get_random_probability(pre_defined_classes, oop_overview):
+    """
+    Gets the probability of the Random node.
+    :param pre_defined_classes: The probability of the Pre-Defined Classes node.
+    :param oop_overview: The probability of the OOP Overview node.
+    :return: The probability of the Random node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -123,6 +160,12 @@ def _get_random_probability(pre_defined_classes, oop_overview):
 
 
 def _get_math_programs_probability(pre_defined_classes, math):
+    """
+    Gets the probability of the Math Programs node.
+    :param pre_defined_classes: The probability of the Pre-Defined Classes node.
+    :param math: The probability of the Math node.
+    :return: The probability of the Math Programs node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -136,6 +179,12 @@ def _get_math_programs_probability(pre_defined_classes, math):
 
 
 def _get_changing_behaviour_programs_probability(pre_defined_classes, random):
+    """
+    Gets the probability of the Changing Behaviour Programs node.
+    :param pre_defined_classes: The probability of the Pre-Defined Classes node.
+    :param random: The probability of the Math node.
+    :return: The probability of the Changing Behaviour Programs node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -149,6 +198,13 @@ def _get_changing_behaviour_programs_probability(pre_defined_classes, random):
 
 
 def _get_simple_programs_probability(pre_defined_classes, scanner, character):
+    """
+    Gets the probability of the Simple Programs node.
+    :param pre_defined_classes: The probability of the Pre-Defined Classes node.
+    :param scanner: The probability of the Scanner node.
+    :param character: The probability of the Character node.
+    :return: The probability of the Simple Programs node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, 0.9],
         [success, success, success, failure, 0.1],
@@ -170,6 +226,12 @@ def _get_simple_programs_probability(pre_defined_classes, scanner, character):
 
 
 def _get_string_probability(pre_defined_classes, character):
+    """
+    Gets the probability of the String node.
+    :param pre_defined_classes: The probability of the Pre-Defined Classes node.
+    :param character: The probability of the Character node.
+    :return: The probability of the String node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -183,6 +245,13 @@ def _get_string_probability(pre_defined_classes, character):
 
 
 def _get_programs_probability(pre_defined_classes, simple_programs, string):
+    """
+    Gets the probability of the Programs node.
+    :param pre_defined_classes: The probability of the Pre-Defined Classes node.
+    :param simple_programs: The probability of the Simple Programs node.
+    :param string: The probability of the String node.
+    :return: The probability of the Programs node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, 0.9],
         [success, success, success, failure, 0.1],
