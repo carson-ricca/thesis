@@ -3,6 +3,10 @@ from constants import success, failure
 
 
 def generate_conditionals_bayesian_network():
+    """
+    Creates the Bayesian Network for the Conditionals sub-category.
+    :return: The complete Bayesian Network.
+    """
     conditionals = _get_conditionals_probability()
     boolean = _get_boolean_probability(conditionals)
     decision = _get_decision_probability(conditionals, boolean)
@@ -45,10 +49,19 @@ def generate_conditionals_bayesian_network():
 
 
 def _get_conditionals_probability():
+    """
+    Gets the probability of the Conditionals node.
+    :return: The probability of the Conditionals node.
+    """
     return DiscreteDistribution({success: 0.5, failure: 0.5})
 
 
 def _get_boolean_probability(conditionals):
+    """
+    Gets the probability of the Boolean node.
+    :param conditionals: The probability of the Conditionals node.
+    :return: The probability of the Boolean node.
+    """
     return ConditionalProbabilityTable([
         [success, success, 0.8],
         [success, failure, 0.2],
@@ -58,6 +71,12 @@ def _get_boolean_probability(conditionals):
 
 
 def _get_decision_probability(conditionals, boolean):
+    """
+    Gets the probability of the Decision node.
+    :param conditionals: The probability of the Conditionals node.
+    :param boolean: The probability of the Boolean node.
+    :return: The probability of the Decision node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -71,6 +90,12 @@ def _get_decision_probability(conditionals, boolean):
 
 
 def _get_operators_probability(conditionals, boolean):
+    """
+    Gets the probability of the Operators node.
+    :param conditionals: The probability of the Conditionals node.
+    :param boolean: The probability of the Boolean node.
+    :return: The probability of the Operators node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -84,6 +109,14 @@ def _get_operators_probability(conditionals, boolean):
 
 
 def _get_conditional_statements_probability(conditionals, decision, operators, boolean):
+    """
+    Gets the probability of the Conditional Statements node.
+    :param conditionals: The probability of the Conditionals node.
+    :param decision: The probability of the Decision node.
+    :param operators: The probability of the Operators node.
+    :param boolean: The probability of the Boolean node.
+    :return:
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, success, 0.95],
         [success, success, success, success, failure, 0.05],
@@ -121,6 +154,12 @@ def _get_conditional_statements_probability(conditionals, decision, operators, b
 
 
 def _get_nested_conditional_probability(conditionals, conditional_statements):
+    """
+    Gets the probability of the Nested Conditional node.
+    :param conditionals: The probability of the Conditionals node.
+    :param conditional_statements: The probability of the Conditionals Statements node.
+    :return: The probability of the Nested Conditional node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -134,6 +173,12 @@ def _get_nested_conditional_probability(conditionals, conditional_statements):
 
 
 def _get_simple_programs_probability(conditionals, conditional_statements):
+    """
+    Gets the probability of the Simple Programs node.
+    :param conditionals: The probability of the Conditionals node.
+    :param conditional_statements: The probability of the Conditionals Statements node.
+    :return: The probability of the Simple Programs node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
         [success, success, failure, 0.1],
@@ -147,6 +192,13 @@ def _get_simple_programs_probability(conditionals, conditional_statements):
 
 
 def _get_programs_probability(conditionals, nested_conditionals, simple_programs):
+    """
+    Gets the probability of the Programs node.
+    :param conditionals: The probability of the Conditionals node.
+    :param nested_conditionals: The probability of the Nested Conditionals node.
+    :param simple_programs: The probability of the Simple Programs node.
+    :return: The probability of the Programs node.
+    """
     return ConditionalProbabilityTable([
         [success, success, success, success, 0.9],
         [success, success, success, failure, 0.1],
