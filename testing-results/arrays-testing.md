@@ -1,4 +1,4 @@
-# Array Test Results
+# Arrays Test Results
 
 ```
 print('Programs with Multidimensional Data')
