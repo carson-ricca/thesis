@@ -4,6 +4,17 @@ import matplotlib.pyplot as plt
 
 from util import Timer
 
+NODE_ORDER = {
+    'Basics': 0,
+    'Variables': 1,
+    'Data Types': 2,
+    'Statements': 3,
+    'Constants': 4,
+    'Arithmetic Operators': 5,
+    'Casting': 6,
+    'Simple Calculation Problems': 7
+}
+
 
 def test_basics():
     model = generate_basics_bayesian_network()
@@ -22,6 +33,56 @@ def test_basics():
     _predict_success_in_basics(model, success, success, success, failure, failure, failure, failure)
     # Test more failure than success (easier topics).
     _predict_success_in_basics(model, failure, failure, failure, failure, success, success, success)
+
+    print('Basics')
+    _run_inference(model, {
+        'Variables': success,
+        'Data Types': failure,
+        'Statements': success,
+        'Constants': failure,
+        'Arithmetic Operators': success,
+        'Casting': success,
+        'Simple Calculation Problems': success
+    }, 'Basics')
+
+    print('Simple Calculation Problems')
+    _run_inference(model, {
+        'Basics': success,
+        'Variables': success,
+        'Data Types': success,
+        'Statements': failure,
+        'Constants': success,
+        'Arithmetic Operators': failure,
+        'Casting': success,
+    }, 'Simple Calculation Problems')
+
+    print('Constants')
+    _run_inference(model, {
+        'Basics': failure,
+        'Variables': failure,
+        'Data Types': success,
+        'Statements': success,
+    }, 'Constants')
+
+    print('Casting')
+    _run_inference(model, {
+        'Basics': success,
+        'Variables': success,
+        'Data Types': failure,
+        'Statements': failure,
+        'Constants': failure,
+        'Arithmetic Operators': failure,
+        'Simple Calculation Problems': success
+    }, 'Casting')
+
+
+def _run_inference(model, data, estimated_node):
+    timer = Timer()
+    timer.start()
+    predictions = model.predict_proba(data)
+    timer.stop()
+    print(predictions[NODE_ORDER.get(estimated_node)].parameters[0][success])
+    print('-' * 150)
 
 
 def _predict_success_in_basics(model, variables, data_types, statements, constants, arithmetic_operators, casting,
