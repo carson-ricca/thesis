@@ -4,6 +4,21 @@ from constants import success, failure
 from modelling import generate_oop_bayesian_network
 from util import Timer
 
+NODE_ORDER = {
+    'OOP': 0,
+    'Variable Scope': 1,
+    'OOP Overview': 2,
+    'Multiple Classes': 3,
+    'User Defined Classes': 4,
+    'Creating Objects': 5,
+    'Object Interactions': 6,
+    'Object Independence': 7,
+    'Special Class Method': 8,
+    'Simple Programs': 9,
+    'Static Modifier': 10,
+    'Programs': 11
+}
+
 
 def test_oop():
     model = generate_oop_bayesian_network()
@@ -23,6 +38,67 @@ def test_oop():
                          failure, failure)
     _predict_oop_success(model, success, success, success, failure, failure, failure, failure, success, success,
                          success, success)
+
+    print('OOP')
+    _run_inference(model, {
+        'Variable Scope': success,
+        'OOP Overview': success,
+        'Multiple Classes': success,
+        'User Defined Classes': success,
+        'Creating Objects': success,
+        'Object Interactions': success,
+        'Object Independence': success,
+        'Special Class Method': success,
+        'Simple Programs': success,
+        'Static Modifier': success,
+        'Programs': success
+    }, 'OOP')
+
+    print('Programs')
+    _run_inference(model, {
+        'OOP': success,
+        'Variable Scope': failure,
+        'OOP Overview': success,
+        'Multiple Classes': success,
+        'User Defined Classes': failure,
+        'Creating Objects': success,
+        'Object Interactions': success,
+        'Object Independence': failure,
+        'Special Class Method': success,
+        'Simple Programs': success,
+        'Static Modifier': success,
+    }, 'Programs')
+
+    print('Multiple Classes')
+    _run_inference(model, {
+        'OOP': success,
+        'Variable Scope': success,
+        'OOP Overview': success
+    }, 'Multiple Classes')
+
+    print('Static Modifier')
+    _run_inference(model, {
+        'OOP': failure,
+        'Variable Scope': failure,
+        'OOP Overview': failure,
+        'Multiple Classes': success,
+        'User Defined Classes': success,
+        'Creating Objects': failure,
+        'Object Interactions': failure,
+        'Object Independence': failure,
+        'Special Class Method': failure,
+        'Simple Programs': success,
+        'Programs': failure
+    }, 'Static Modifier')
+
+
+def _run_inference(model, data, estimated_node):
+    timer = Timer()
+    timer.start()
+    predictions = model.predict_proba(data)
+    timer.stop()
+    print(predictions[NODE_ORDER.get(estimated_node)].parameters[0][success])
+    print('-' * 150)
 
 
 def _predict_oop_success(model, variable_scope, oop_overview, multiple_classes, user_defined_classes, creating_objects,

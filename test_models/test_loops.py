@@ -2,6 +2,7 @@ from matplotlib import pyplot as plt
 
 from modelling import generate_loops_bayesian_network
 from constants import success, failure
+from util import Timer
 
 
 def test_loops():
@@ -24,6 +25,8 @@ def test_loops():
 
 def _predict_success_in_loops(model, repetition, decision_diagrams, while_loops, for_loops, variable_scope,
                               simple_programs, nested_loops, programs):
+    timer = Timer()
+    timer.start()
     predictions = model.predict_proba({
         'Repetition': repetition,
         'Decision Diagrams': decision_diagrams,
@@ -42,6 +45,7 @@ def _predict_success_in_loops(model, repetition, decision_diagrams, while_loops,
         f'Simple Programs: {simple_programs}, Programs: {programs}'
     ))
     print(f'Success: {overall_success["Success"]}, Failure: {overall_success["Failure"]}')
+    timer.stop()
     print('-' * 150)
 
 
