@@ -4,6 +4,16 @@ from modelling import generate_parent_categories_bayesian_network
 from constants import success, failure
 from util import Timer
 
+NODE_ORDER = {
+    'Basics': 0,
+    'Conditionals': 1,
+    'Pre-Defined Classes': 2,
+    'Loops': 3,
+    'Arrays': 4,
+    'Methods': 5,
+    'OOP': 6
+}
+
 
 def test_parent_categories():
     model = generate_parent_categories_bayesian_network()
@@ -16,6 +26,50 @@ def test_parent_categories():
     _make_prediction(model, success, success, success, failure, failure, failure)
     _make_prediction(model, success, failure, success, failure, success, failure)
     _make_prediction(model, failure, success, success, success, success, failure)
+
+    print('OOP')
+    _run_inference(model, {
+        'Basics': success,
+        'Conditionals': success,
+        'Pre-Defined Classes': success,
+        'Loops': success,
+        'Arrays': success,
+        'Methods': success,
+    }, 'OOP')
+
+    print('OOP')
+    _run_inference(model, {
+        'Basics': success,
+        'Conditionals': success,
+    }, 'OOP')
+
+    print('Loops')
+    _run_inference(model, {
+        'Basics': success,
+        'Conditionals': failure,
+        'Pre-Defined Classes': success,
+        'Arrays': success,
+        'Methods': success,
+        'OOP': failure
+    }, 'Loops')
+
+    print('Methods')
+    _run_inference(model, {
+        'Basics': failure,
+        'Conditionals': failure,
+        'Loops': success,
+        'Arrays': success,
+        'OOP': failure
+    }, 'Methods')
+
+
+def _run_inference(model, data, estimated_node):
+    timer = Timer()
+    timer.start()
+    predictions = model.predict_proba(data)
+    timer.stop()
+    print(predictions[NODE_ORDER.get(estimated_node)].parameters[0][success])
+    print('-' * 150)
 
 
 def _make_prediction(model, basics, conditionals, pre_defined_classes, loops, arrays, methods):
