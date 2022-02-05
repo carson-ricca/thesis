@@ -4,6 +4,20 @@ from constants import success, failure
 from modelling import generate_pre_defined_classes_bayesian_network
 from util import Timer
 
+NODE_ORDER = {
+    'Pre-Defined Classes': 0,
+    'OOP Overview': 1,
+    'Scanner': 2,
+    'Character': 3,
+    'Math': 4,
+    'Random': 5,
+    'Math Programs': 6,
+    'Changing Behaviour Programs': 7,
+    'Simple Programs': 8,
+    'String': 9,
+    'Programs': 10
+}
+
 
 def test_pre_defined_classes():
     model = generate_pre_defined_classes_bayesian_network()
@@ -24,6 +38,66 @@ def test_pre_defined_classes():
                                          failure, failure)
     _predict_pre_defined_classes_success(model, success, success, success, failure, failure, failure, success, success,
                                          success, success)
+
+    print('Pre-Defined Classes')
+    _run_inference(model, {
+        'OOP Overview': success,
+        'Scanner': success,
+        'Character': success,
+        'Math': success,
+        'Random': failure,
+        'Math Programs': success,
+        'Changing Behaviour Programs': success,
+        'Simple Programs': success,
+        'String': failure,
+        'Programs': success
+    }, 'Pre-Defined Classes')
+
+    print('Programs')
+    _run_inference(model, {
+        'Pre-Defined Classes': failure,
+        'OOP Overview': failure,
+        'Scanner': failure,
+        'Character': success,
+        'Math': success,
+        'Random': success,
+        'Math Programs': failure,
+        'Changing Behaviour Programs': success,
+        'Simple Programs': success,
+        'String': success,
+    }, 'Programs')
+
+    print('Scanner')
+    _run_inference(model, {
+        'Pre-Defined Classes': failure,
+        'OOP Overview': success,
+        'Character': success,
+        'Math': success,
+        'Random': failure,
+    }, 'Scanner')
+
+    print('Math Programs')
+    _run_inference(model, {
+        'Pre-Defined Classes': success,
+        'OOP Overview': failure,
+        'Scanner': success,
+        'Character': success,
+        'Math': failure,
+        'Random': success,
+        'Changing Behaviour Programs': success,
+        'Simple Programs': success,
+        'String': success,
+        'Programs': failure
+    }, 'Math Programs')
+
+
+def _run_inference(model, data, estimated_node):
+    timer = Timer()
+    timer.start()
+    predictions = model.predict_proba(data)
+    timer.stop()
+    print(predictions[NODE_ORDER.get(estimated_node)].parameters[0][success])
+    print('-' * 150)
 
 
 def _predict_pre_defined_classes_success(model, oop_overview, scanner, character, math, random,
