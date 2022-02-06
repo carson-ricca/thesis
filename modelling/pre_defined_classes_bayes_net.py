@@ -3,12 +3,12 @@ from pomegranate import *
 from constants import success, failure
 
 
-def generate_pre_defined_classes_bayesian_network():
+def get_nodes(pre_defined_classes):
     """
-    Creates the Bayesian Network for the Pre-Defined Classes sub-categories.
-    :return: The complete Bayesian Network.
+    Gets the probabilities for each node and returns the nodes.
+    :param pre_defined_classes: The root Pre-Defined Classes' probability.
+    :return: The nodes for the rest of the model.
     """
-    pre_defined_classes = _get_pre_defined_classes_probability()
     oop_overview = _get_oop_overview_probability(pre_defined_classes)
     scanner = _get_scanner_probability(pre_defined_classes, oop_overview)
     character = _get_character_probability(pre_defined_classes, oop_overview)
@@ -20,7 +20,6 @@ def generate_pre_defined_classes_bayesian_network():
     string = _get_string_probability(pre_defined_classes, character)
     programs = _get_programs_probability(pre_defined_classes, simple_programs, string)
 
-    pre_defined_classes_node = State(pre_defined_classes, name='Pre-Defined Classes')
     oop_overview_node = State(oop_overview, name='OOP Overview')
     scanner_node = State(scanner, name='Scanner')
     character_node = State(character, name='Character')
@@ -31,6 +30,28 @@ def generate_pre_defined_classes_bayesian_network():
     simple_programs_node = State(simple_programs, name='Simple Programs')
     string_node = State(string, name='String')
     programs_node = State(programs, name='Programs')
+    return [oop_overview_node, scanner_node, character_node, math_node, random_node, math_programs_node,
+            changing_behaviour_programs_node, simple_programs_node, string_node, programs_node]
+
+
+def generate_pre_defined_classes_bayesian_network():
+    """
+    Creates the Bayesian Network for the Pre-Defined Classes sub-categories.
+    :return: The complete Bayesian Network.
+    """
+    pre_defined_classes = _get_pre_defined_classes_probability()
+    pre_defined_classes_node = State(pre_defined_classes, name='Pre-Defined Classes')
+    nodes = get_nodes(pre_defined_classes)
+    oop_overview_node = nodes[0]
+    scanner_node = nodes[1]
+    character_node = nodes[2]
+    math_node = nodes[3]
+    random_node = nodes[4]
+    math_programs_node = nodes[5]
+    changing_behaviour_programs_node = nodes[6]
+    simple_programs_node = nodes[7]
+    string_node = nodes[8]
+    programs_node = nodes[9]
 
     model = BayesianNetwork('Pre-Defined Classes')
     model.add_states(pre_defined_classes_node, oop_overview_node, scanner_node, character_node, math_node, random_node,

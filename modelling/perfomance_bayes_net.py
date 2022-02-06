@@ -2,10 +2,10 @@ from pomegranate import *
 from constants import high, medium, low, long, short, success, failure
 
 
-def generate_performance_bayesian_network():
+def get_nodes():
     """
-    Creates the Bayesian Network for the student's performance within a sub-category.
-    :return: The complete Bayesian Network.
+    Gets the probabilities for each node and returns the nodes.
+    :return: The nodes for the model.
     """
     overall_performance = _get_overall_performance_probability()
     average_success = _get_average_success_probability(overall_performance)
@@ -16,6 +16,19 @@ def generate_performance_bayesian_network():
     average_success_node = State(average_success, name='Average Success')
     skip_questions_node = State(skip_questions, name='Skip Questions')
     time_taken_node = State(time_taken, name='Time Taken')
+    return [overall_performance_node, average_success_node, skip_questions_node, time_taken_node]
+
+
+def generate_performance_bayesian_network():
+    """
+    Creates the Bayesian Network for the student's performance within a sub-category.
+    :return: The complete Bayesian Network.
+    """
+    nodes = get_nodes()
+    overall_performance_node = nodes[0]
+    average_success_node = nodes[1]
+    skip_questions_node = nodes[2]
+    time_taken_node = nodes[3]
 
     model = BayesianNetwork('Student Performance')
     model.add_states(overall_performance_node, average_success_node, skip_questions_node, time_taken_node)

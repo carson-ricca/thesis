@@ -2,10 +2,10 @@ from pomegranate import *
 from constants import success, failure
 
 
-def generate_parent_categories_bayesian_network():
+def get_nodes():
     """
-    Creates the Bayesian Network for the parent categories.
-    :return: The complete Bayesian Network.
+    Gets the probabilities for each node and returns the nodes.
+    :return: The nodes for the model.
     """
     basics = _get_basics_probability()
     conditionals = _get_conditionals_probability(basics)
@@ -22,6 +22,22 @@ def generate_parent_categories_bayesian_network():
     arrays_node = State(arrays, name='Arrays')
     methods_node = State(methods, name='Methods')
     oop_node = State(oop, name='OOP')
+    return [basics_node, conditionals_node, pre_defined_classes_node, loops_node, arrays_node, methods_node, oop_node]
+
+
+def generate_parent_categories_bayesian_network():
+    """
+    Creates the Bayesian Network for the parent categories.
+    :return: The complete Bayesian Network.
+    """
+    nodes = get_nodes()
+    basics_node = nodes[0]
+    conditionals_node = nodes[1]
+    pre_defined_classes_node = nodes[2]
+    loops_node = nodes[3]
+    arrays_node = nodes[4]
+    methods_node = nodes[5]
+    oop_node = nodes[6]
 
     model = BayesianNetwork('Parent Categories')
     model.add_states(basics_node, conditionals_node, pre_defined_classes_node, loops_node, arrays_node, methods_node,

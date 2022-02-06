@@ -3,12 +3,12 @@ from pomegranate import *
 from constants import success, failure
 
 
-def generate_methods_bayesian_network():
+def get_nodes(methods):
     """
-    Creates the Bayesian Network for the Methods sub-categories.
-    :return: The complete Bayesian Network.
+    Gets the probabilities for each node and returns the nodes.
+    :param methods: The root Methods' probability.
+    :return: The nodes for the rest of the model.
     """
-    methods = _get_methods_probability()
     abstraction = _get_abstraction_probability(methods)
     variable_scope = _get_variable_scope_probability(methods)
     using_methods = _get_using_methods_probability(methods, abstraction)
@@ -16,13 +16,30 @@ def generate_methods_bayesian_network():
     method_overloading = _get_method_overloading_probability(methods, defining_methods)
     modular_programs = _get_modular_programs_probability(methods, defining_methods, method_overloading)
 
-    methods_node = State(methods, name='Methods')
     abstraction_node = State(abstraction, name='Abstraction')
     variable_scope_node = State(variable_scope, name='Variable Scope')
     using_methods_node = State(using_methods, name='Using Methods')
     defining_methods_node = State(defining_methods, name='Defining Methods')
     method_overloading_node = State(method_overloading, name='Method Overloading')
     modular_programs_node = State(modular_programs, name='Modular Programs')
+    return [abstraction_node, variable_scope_node, using_methods_node, defining_methods_node, method_overloading_node,
+            modular_programs_node]
+
+
+def generate_methods_bayesian_network():
+    """
+    Creates the Bayesian Network for the Methods sub-categories.
+    :return: The complete Bayesian Network.
+    """
+    methods = _get_methods_probability()
+    methods_node = State(methods, name='Methods')
+    nodes = get_nodes(methods)
+    abstraction_node = nodes[0]
+    variable_scope_node = nodes[1]
+    using_methods_node = nodes[2]
+    defining_methods_node = nodes[3]
+    method_overloading_node = nodes[4]
+    modular_programs_node = nodes[5]
 
     model = BayesianNetwork('Methods')
     model.add_states(methods_node, abstraction_node, variable_scope_node, using_methods_node, defining_methods_node,

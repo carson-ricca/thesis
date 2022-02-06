@@ -3,12 +3,12 @@ from pomegranate import *
 from constants import success, failure
 
 
-def generate_arrays_bayesian_network():
+def get_nodes(arrays):
     """
-    Creates the Bayesian Network for the Arrays sub-categories.
-    :return: The complete Bayesian Network.
+    Gets the probabilities for each node and returns the nodes.
+    :param arrays: The root Arrays' probability.
+    :return: The nodes for the rest of the model.
     """
-    arrays = _get_arrays_probability()
     data_representation = _get_data_representation_probability(arrays)
     defining_arrays = _get_defining_arrays_probability(arrays, data_representation)
     referencing_arrays = _get_referencing_arrays_probability(arrays, defining_arrays, data_representation)
@@ -22,7 +22,6 @@ def generate_arrays_bayesian_network():
         array_with_methods,
         multidimensional_arrays)
 
-    arrays_node = State(arrays, name='Arrays')
     data_representation_node = State(data_representation, name='Data Representation')
     defining_arrays_node = State(defining_arrays, name='Defining Arrays')
     referencing_arrays_node = State(referencing_arrays, name='Referencing Arrays')
@@ -31,6 +30,25 @@ def generate_arrays_bayesian_network():
     programs_with_data_sequences_node = State(programs_with_data_sequences, name='Programs with Data Sequences')
     programs_with_multidimensional_data_node = State(programs_with_multidimensional_data,
                                                      name='Programs with Multidimensional Data')
+    return [data_representation_node, defining_arrays_node, referencing_arrays_node, multidimensional_arrays_node,
+            array_with_methods_node, programs_with_data_sequences_node, programs_with_multidimensional_data_node]
+
+
+def generate_arrays_bayesian_network():
+    """
+    Creates the Bayesian Network for the Arrays sub-categories.
+    :return: The complete Bayesian Network.
+    """
+    arrays = _get_arrays_probability()
+    arrays_node = State(arrays, name='Arrays')
+    nodes = get_nodes(arrays)
+    data_representation_node = nodes[0]
+    defining_arrays_node = nodes[1]
+    referencing_arrays_node = nodes[2]
+    multidimensional_arrays_node = nodes[3]
+    array_with_methods_node = nodes[4]
+    programs_with_data_sequences_node = nodes[5]
+    programs_with_multidimensional_data_node = nodes[6]
 
     model = BayesianNetwork('Arrays')
     model.add_states(arrays_node, data_representation_node, defining_arrays_node, referencing_arrays_node,

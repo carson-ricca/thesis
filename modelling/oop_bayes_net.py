@@ -3,12 +3,12 @@ from pomegranate import *
 from constants import success, failure
 
 
-def generate_oop_bayesian_network():
+def get_nodes(oop):
     """
-    Creates the Bayesian Network for the OOP sub-categories.
-    :return: The complete Bayesian Network.
+    Gets the probabilities for each node and returns the nodes.
+    :param oop: The root OOP probability.
+    :return: The nodes for the rest of the model.
     """
-    oop = _get_oop_probability()
     variable_scope = _get_variable_scope_probability(oop)
     oop_overview = _get_oop_overview_probability(oop)
     multiple_classes = _get_multiple_classes_probability(oop, variable_scope, oop_overview)
@@ -22,7 +22,6 @@ def generate_oop_bayesian_network():
     static_modifier = _get_static_modifier_probability(oop)
     programs = _get_programs_probability(oop, simple_programs, static_modifier)
 
-    oop_node = State(oop, name='OOP')
     variable_scope_node = State(variable_scope, name='Variable Scope')
     oop_overview_node = State(oop_overview, name='OOP Overview')
     multiple_classes_node = State(multiple_classes, name='Multiple Classes')
@@ -34,6 +33,30 @@ def generate_oop_bayesian_network():
     simple_programs_node = State(simple_programs, name='Simple Programs')
     static_modifier_node = State(static_modifier, name='Static Modifier')
     programs_node = State(programs, name='Programs')
+    return [variable_scope_node, oop_overview_node, multiple_classes_node, user_defined_classes_node,
+            creating_objects_node, object_interactions_node, object_independence_node, special_class_method_node,
+            simple_programs_node, static_modifier_node, programs_node]
+
+
+def generate_oop_bayesian_network():
+    """
+    Creates the Bayesian Network for the OOP sub-categories.
+    :return: The complete Bayesian Network.
+    """
+    oop = _get_oop_probability()
+    oop_node = State(oop, name='OOP')
+    nodes = get_nodes(oop)
+    variable_scope_node = nodes[0]
+    oop_overview_node = nodes[1]
+    multiple_classes_node = nodes[2]
+    user_defined_classes_node = nodes[3]
+    creating_objects_node = nodes[4]
+    object_interactions_node = nodes[5]
+    object_independence_node = nodes[6]
+    special_class_method_node = nodes[7]
+    simple_programs_node = nodes[8]
+    static_modifier_node = nodes[9]
+    programs_node = nodes[10]
 
     model = BayesianNetwork('OOP')
     model.add_states(oop_node, variable_scope_node, oop_overview_node, multiple_classes_node, user_defined_classes_node,

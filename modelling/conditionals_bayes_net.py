@@ -2,12 +2,12 @@ from pomegranate import *
 from constants import success, failure
 
 
-def generate_conditionals_bayesian_network():
+def get_nodes(conditionals):
     """
-    Creates the Bayesian Network for the Conditionals sub-categories.
-    :return: The complete Bayesian Network.
+    Gets the probabilities for each node and returns the nodes.
+    :param conditionals: The root conditionals' probability.
+    :return: The nodes for the rest of the model.
     """
-    conditionals = _get_conditionals_probability()
     boolean = _get_boolean_probability(conditionals)
     decision = _get_decision_probability(conditionals, boolean)
     operators = _get_operators_probability(conditionals, boolean)
@@ -16,7 +16,6 @@ def generate_conditionals_bayesian_network():
     simple_programs = _get_simple_programs_probability(conditionals, conditional_statements)
     programs = _get_programs_probability(conditionals, nested_conditional_statements, simple_programs)
 
-    conditionals_node = State(conditionals, name='Conditionals')
     boolean_node = State(boolean, name='Boolean')
     decision_node = State(decision, name='Decision')
     operators_node = State(operators, name='Operators')
@@ -24,6 +23,26 @@ def generate_conditionals_bayesian_network():
     nested_conditional_statements_node = State(nested_conditional_statements, name='Nested Conditional Statements')
     simple_programs_node = State(simple_programs, name='Simple Programs')
     programs_node = State(programs, name='Programs')
+
+    return [boolean_node, decision_node, operators_node, conditional_statements_node,
+            nested_conditional_statements_node, simple_programs_node, programs_node]
+
+
+def generate_conditionals_bayesian_network():
+    """
+    Creates the Bayesian Network for the Conditionals sub-categories.
+    :return: The complete Bayesian Network.
+    """
+    conditionals = _get_conditionals_probability()
+    conditionals_node = State(conditionals, name='Conditionals')
+    nodes = get_nodes(conditionals)
+    boolean_node = nodes[0]
+    decision_node = nodes[1]
+    operators_node = nodes[2]
+    conditional_statements_node = nodes[3]
+    nested_conditional_statements_node = nodes[4]
+    simple_programs_node = nodes[5]
+    programs_node = nodes[6]
 
     model = BayesianNetwork('Conditionals')
     model.add_states(conditionals_node, boolean_node, decision_node, operators_node, conditional_statements_node,

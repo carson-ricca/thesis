@@ -2,12 +2,12 @@ from pomegranate import *
 from constants import success, failure
 
 
-def generate_basics_bayesian_network():
+def get_nodes(basics):
     """
-    Creates the Bayesian Network for the Basics sub-categories.
-    :return: The complete Bayesian Network.
+    Gets the probabilities for each node and returns the nodes.
+    :param basics: The root Basics' probability.
+    :return: The nodes for the rest of the model.
     """
-    basics = _get_basics_probability()
     variables = _get_variables_probability(basics)
     data_types = _get_data_types_probability(basics, variables)
     statements = _get_statements_probability(basics, variables)
@@ -17,7 +17,6 @@ def generate_basics_bayesian_network():
     simple_calculation_problems = _get_simple_calculation_problems_probability(basics, data_types, arithmetic_operators,
                                                                                constants)
 
-    basics_node = State(basics, name='Basics')
     variables_node = State(variables, name='Variables')
     data_types_node = State(data_types, name='Data Types')
     statements_node = State(statements, name='Statements')
@@ -25,6 +24,26 @@ def generate_basics_bayesian_network():
     arithmetic_operators_node = State(arithmetic_operators, name='Arithmetic Operators')
     casting_node = State(casting, name='Casting')
     simple_calculation_problems_node = State(simple_calculation_problems, name='Simple Calculation Problems')
+
+    return [variables_node, data_types_node, statements_node, constants_node, arithmetic_operators_node, casting_node,
+            simple_calculation_problems_node]
+
+
+def generate_basics_bayesian_network():
+    """
+    Creates the Bayesian Network for the Basics sub-categories.
+    :return: The complete Bayesian Network.
+    """
+    basics = _get_basics_probability()
+    basics_node = State(basics, name='Basics')
+    nodes = get_nodes(basics)
+    variables_node = nodes[0]
+    data_types_node = nodes[1]
+    statements_node = nodes[2]
+    constants_node = nodes[3]
+    arithmetic_operators_node = nodes[4]
+    casting_node = nodes[5]
+    simple_calculation_problems_node = nodes[6]
 
     model = BayesianNetwork('Basics')
     model.add_states(basics_node, variables_node, data_types_node, statements_node, constants_node,
