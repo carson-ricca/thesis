@@ -1,6 +1,13 @@
 from modelling import generate_performance_bayesian_network
-from constants import high, medium, low, short, long
+from constants import high, medium, low, short, long, success, failure
 from util import Timer
+
+NODE_ORDER = {
+    'Overall Performance': 0,
+    'Average Success': 1,
+    'Skip Questions': 2,
+    'Time Taken': 3
+}
 
 
 def test_overall_performance():
@@ -20,6 +27,43 @@ def test_overall_performance():
     # Medium average success, high skip questions, long time taken.
     _make_prediction(model, medium, high, low)
 
+    print('Overall Performance')
+    _run_inference(model, {
+        'Average Success': high,
+        'Skip Questions': low,
+        'Time Taken': short
+    }, 'Overall Performance')
+
+    print('Overall Performance')
+    _run_inference(model, {
+        'Average Success': high,
+        'Skip Questions': high,
+        'Time Taken': long
+    }, 'Overall Performance')
+
+    print('Overall Performance')
+    _run_inference(model, {
+        'Average Success': low,
+        'Skip Questions': medium,
+        'Time Taken': medium
+    }, 'Overall Performance')
+
+    print('Overall Performance')
+    _run_inference(model, {
+        'Average Success': high,
+        'Skip Questions': high,
+        'Time Taken': short
+    }, 'Overall Performance')
+
+
+def _run_inference(model, data, estimated_node):
+    timer = Timer()
+    timer.start()
+    predictions = model.predict_proba(data)
+    timer.stop()
+    print(predictions[NODE_ORDER.get(estimated_node)].parameters[0][success])
+    print('-' * 150)
+
 
 def _make_prediction(model, average_success, skip_questions, time_taken):
     timer = Timer()
@@ -30,11 +74,8 @@ def _make_prediction(model, average_success, skip_questions, time_taken):
         'Time Taken': time_taken
     })
     overall_success = predictions[0].parameters[0]
-    high_success = overall_success[high]
-    medium_success = overall_success[medium]
-    low_success = overall_success[low]
     print(f'Average Success: {average_success}, Skip Questions: {skip_questions}, Time Taken: {time_taken}')
-    print(f'High Success: {high_success}, Medium Success: {medium_success}, Low Success: {low_success}')
+    print(f'Success: {overall_success[success]}, Failure: {overall_success[failure]}')
     timer.stop()
     print('-' * 150)
 

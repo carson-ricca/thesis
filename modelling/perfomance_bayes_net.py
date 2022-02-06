@@ -1,5 +1,5 @@
 from pomegranate import *
-from constants import high, medium, low, long, short
+from constants import high, medium, low, long, short, success, failure
 
 
 def generate_performance_bayesian_network():
@@ -31,7 +31,7 @@ def _get_overall_performance_probability():
     Gets the probability for the Overall Performance node.
     :return: The probability for the Overall Performance node.
     """
-    return DiscreteDistribution({high: 1 / 3, medium: 1 / 3, low: 1 / 3})
+    return DiscreteDistribution({success: 0.5, failure: 0.5})
 
 
 def _get_average_success_probability(overall_performance):
@@ -41,15 +41,12 @@ def _get_average_success_probability(overall_performance):
     :return: The probability for the Average Success node.
     """
     return ConditionalProbabilityTable([
-        [high, high, 0.75],
-        [high, medium, 0.2],
-        [high, low, 0.05],
-        [medium, high, 0.5],
-        [medium, medium, 0.4],
-        [medium, low, 0.1],
-        [low, high, 0.1],
-        [low, medium, 0.3],
-        [low, low, 0.6],
+        [success, high, 0.75],
+        [success, medium, 0.2],
+        [success, low, 0.05],
+        [failure, high, 0.2],
+        [failure, medium, 0.2],
+        [failure, low, 0.6],
     ], [overall_performance])
 
 
@@ -60,15 +57,12 @@ def _get_skip_questions_probability(overall_performance):
     :return: The probability for the Skip Questions node.
     """
     return ConditionalProbabilityTable([
-        [high, high, 0.1],
-        [high, medium, 0.2],
-        [high, low, 0.7],
-        [medium, high, 0.2],
-        [medium, medium, 0.4],
-        [medium, low, 0.4],
-        [low, high, 0.5],
-        [low, medium, 0.3],
-        [low, low, 0.2],
+        [success, high, 0.1],
+        [success, medium, 0.2],
+        [success, low, 0.7],
+        [failure, high, 0.4],
+        [failure, medium, 0.4],
+        [failure, low, 0.2],
     ], [overall_performance])
 
 
@@ -79,13 +73,10 @@ def _get_time_taken_probability(overall_performance):
     :return: The probability for the Time Taken node.
     """
     return ConditionalProbabilityTable([
-        [high, long, 0.1],
-        [high, medium, 0.3],
-        [high, short, 0.6],
-        [medium, long, 0.2],
-        [medium, medium, 0.5],
-        [medium, short, 0.3],
-        [low, long, 0.5],
-        [low, medium, 0.4],
-        [low, short, 0.1],
+        [success, long, 0.1],
+        [success, medium, 0.3],
+        [success, short, 0.6],
+        [failure, long, 0.4],
+        [failure, medium, 0.4],
+        [failure, short, 0.2],
     ], [overall_performance])
