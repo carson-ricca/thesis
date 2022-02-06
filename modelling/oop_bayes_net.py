@@ -3,7 +3,7 @@ from pomegranate import *
 from constants import success, failure
 
 
-def get_nodes(oop):
+def get_oop_nodes(oop):
     """
     Gets the probabilities for each node and returns the nodes.
     :param oop: The root OOP probability.
@@ -45,7 +45,7 @@ def generate_oop_bayesian_network():
     """
     oop = _get_oop_probability()
     oop_node = State(oop, name='OOP')
-    nodes = get_nodes(oop)
+    nodes = get_oop_nodes(oop)
     variable_scope_node = nodes[0]
     oop_overview_node = nodes[1]
     multiple_classes_node = nodes[2]

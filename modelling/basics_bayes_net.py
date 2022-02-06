@@ -2,7 +2,7 @@ from pomegranate import *
 from constants import success, failure
 
 
-def get_nodes(basics):
+def get_basics_nodes(basics):
     """
     Gets the probabilities for each node and returns the nodes.
     :param basics: The root Basics' probability.
@@ -36,7 +36,7 @@ def generate_basics_bayesian_network():
     """
     basics = _get_basics_probability()
     basics_node = State(basics, name='Basics')
-    nodes = get_nodes(basics)
+    nodes = get_basics_nodes(basics)
     variables_node = nodes[0]
     data_types_node = nodes[1]
     statements_node = nodes[2]

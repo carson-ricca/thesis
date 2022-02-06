@@ -2,7 +2,7 @@ from pomegranate import *
 from constants import success, failure
 
 
-def get_nodes(conditionals):
+def get_conditionals_nodes(conditionals):
     """
     Gets the probabilities for each node and returns the nodes.
     :param conditionals: The root conditionals' probability.
@@ -35,7 +35,7 @@ def generate_conditionals_bayesian_network():
     """
     conditionals = _get_conditionals_probability()
     conditionals_node = State(conditionals, name='Conditionals')
-    nodes = get_nodes(conditionals)
+    nodes = get_conditionals_nodes(conditionals)
     boolean_node = nodes[0]
     decision_node = nodes[1]
     operators_node = nodes[2]

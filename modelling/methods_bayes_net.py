@@ -3,7 +3,7 @@ from pomegranate import *
 from constants import success, failure
 
 
-def get_nodes(methods):
+def get_methods_nodes(methods):
     """
     Gets the probabilities for each node and returns the nodes.
     :param methods: The root Methods' probability.
@@ -33,7 +33,7 @@ def generate_methods_bayesian_network():
     """
     methods = _get_methods_probability()
     methods_node = State(methods, name='Methods')
-    nodes = get_nodes(methods)
+    nodes = get_methods_nodes(methods)
     abstraction_node = nodes[0]
     variable_scope_node = nodes[1]
     using_methods_node = nodes[2]

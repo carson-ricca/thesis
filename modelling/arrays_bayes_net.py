@@ -3,7 +3,7 @@ from pomegranate import *
 from constants import success, failure
 
 
-def get_nodes(arrays):
+def get_arrays_nodes(arrays):
     """
     Gets the probabilities for each node and returns the nodes.
     :param arrays: The root Arrays' probability.
@@ -41,7 +41,7 @@ def generate_arrays_bayesian_network():
     """
     arrays = _get_arrays_probability()
     arrays_node = State(arrays, name='Arrays')
-    nodes = get_nodes(arrays)
+    nodes = get_arrays_nodes(arrays)
     data_representation_node = nodes[0]
     defining_arrays_node = nodes[1]
     referencing_arrays_node = nodes[2]

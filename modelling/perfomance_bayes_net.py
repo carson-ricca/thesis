@@ -2,7 +2,7 @@ from pomegranate import *
 from constants import high, medium, low, long, short, success, failure
 
 
-def get_nodes():
+def get_performance_nodes():
     """
     Gets the probabilities for each node and returns the nodes.
     :return: The nodes for the model.
@@ -24,7 +24,7 @@ def generate_performance_bayesian_network():
     Creates the Bayesian Network for the student's performance within a sub-category.
     :return: The complete Bayesian Network.
     """
-    nodes = get_nodes()
+    nodes = get_performance_nodes()
     overall_performance_node = nodes[0]
     average_success_node = nodes[1]
     skip_questions_node = nodes[2]

@@ -3,7 +3,7 @@ from pomegranate import *
 from constants import success, failure
 
 
-def get_nodes(pre_defined_classes):
+def get_pre_defined_classes_nodes(pre_defined_classes):
     """
     Gets the probabilities for each node and returns the nodes.
     :param pre_defined_classes: The root Pre-Defined Classes' probability.
@@ -41,7 +41,7 @@ def generate_pre_defined_classes_bayesian_network():
     """
     pre_defined_classes = _get_pre_defined_classes_probability()
     pre_defined_classes_node = State(pre_defined_classes, name='Pre-Defined Classes')
-    nodes = get_nodes(pre_defined_classes)
+    nodes = get_pre_defined_classes_nodes(pre_defined_classes)
     oop_overview_node = nodes[0]
     scanner_node = nodes[1]
     character_node = nodes[2]
