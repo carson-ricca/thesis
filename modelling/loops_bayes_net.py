@@ -65,6 +65,15 @@ def _get_repetition_probability(loops):
     ], [loops])
 
 
+def _get_variable_scope_probability(loops):
+    return ConditionalProbabilityTable([
+        [success, success, 0.9],
+        [success, failure, 0.1],
+        [failure, success, 0.1],
+        [failure, failure, 0.9],
+    ], [loops])
+
+
 def _get_decision_diagrams_probability(loops, repetition):
     return ConditionalProbabilityTable([
         [success, success, success, 0.9],
@@ -118,15 +127,6 @@ def _get_for_loops_probability(loops, repetition, decision_diagrams):
         [failure, failure, failure, success, 0.1],
         [failure, failure, failure, failure, 0.9],
     ], [loops, repetition, decision_diagrams])
-
-
-def _get_variable_scope_probability(loops):
-    return ConditionalProbabilityTable([
-        [success, success, 0.9],
-        [success, failure, 0.1],
-        [failure, success, 0.1],
-        [failure, failure, 0.9],
-    ], [loops])
 
 
 def _get_simple_programs_probability(loops, while_loops, for_loops, variable_scope):
