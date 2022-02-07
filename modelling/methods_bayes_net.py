@@ -1,6 +1,6 @@
 from pomegranate import *
 
-from constants import success, failure
+from constants import ParentCategories, Methods, success, failure
 
 
 def get_methods_nodes(methods):
@@ -16,12 +16,12 @@ def get_methods_nodes(methods):
     method_overloading = _get_method_overloading_probability(methods, defining_methods)
     modular_programs = _get_modular_programs_probability(methods, defining_methods, method_overloading)
 
-    abstraction_node = State(abstraction, name='Abstraction')
-    variable_scope_node = State(variable_scope, name='Variable Scope')
-    using_methods_node = State(using_methods, name='Using Methods')
-    defining_methods_node = State(defining_methods, name='Defining Methods')
-    method_overloading_node = State(method_overloading, name='Method Overloading')
-    modular_programs_node = State(modular_programs, name='Modular Programs')
+    abstraction_node = State(abstraction, name=Methods.ABSTRACTION)
+    variable_scope_node = State(variable_scope, name=Methods.VARIABLE_SCOPE)
+    using_methods_node = State(using_methods, name=Methods.USING_METHODS)
+    defining_methods_node = State(defining_methods, name=Methods.DEFINING_METHODS)
+    method_overloading_node = State(method_overloading, name=Methods.METHOD_OVERLOADING)
+    modular_programs_node = State(modular_programs, name=Methods.MODULAR_PROGRAMS)
     return [abstraction_node, variable_scope_node, using_methods_node, defining_methods_node, method_overloading_node,
             modular_programs_node]
 
@@ -32,7 +32,7 @@ def generate_methods_bayesian_network():
     :return: The complete Bayesian Network.
     """
     methods = _get_methods_probability()
-    methods_node = State(methods, name='Methods')
+    methods_node = State(methods, name=ParentCategories.METHODS)
     nodes = get_methods_nodes(methods)
     abstraction_node = nodes[0]
     variable_scope_node = nodes[1]

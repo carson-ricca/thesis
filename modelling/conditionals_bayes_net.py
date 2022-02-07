@@ -1,5 +1,5 @@
 from pomegranate import *
-from constants import success, failure
+from constants import ParentCategories, Conditionals, success, failure
 
 
 def get_conditionals_nodes(conditionals):
@@ -16,13 +16,13 @@ def get_conditionals_nodes(conditionals):
     simple_programs = _get_simple_programs_probability(conditionals, conditional_statements)
     programs = _get_programs_probability(conditionals, nested_conditional_statements, simple_programs)
 
-    boolean_node = State(boolean, name='Boolean')
-    decision_node = State(decision, name='Decision')
-    operators_node = State(operators, name='Operators')
-    conditional_statements_node = State(conditional_statements, name='Conditional Statements')
-    nested_conditional_statements_node = State(nested_conditional_statements, name='Nested Conditional Statements')
-    simple_programs_node = State(simple_programs, name='Simple Programs')
-    programs_node = State(programs, name='Programs')
+    boolean_node = State(boolean, name=Conditionals.BOOLEAN)
+    decision_node = State(decision, name=Conditionals.DECISION)
+    operators_node = State(operators, name=Conditionals.OPERATORS)
+    conditional_statements_node = State(conditional_statements, name=Conditionals.CONDITIONAL_STATEMENTS)
+    nested_conditional_statements_node = State(nested_conditional_statements, name=Conditionals.NESTED_CONDITIONAL_STATEMENTS)
+    simple_programs_node = State(simple_programs, name=Conditionals.SIMPLE_PROGRAMS)
+    programs_node = State(programs, name=Conditionals.PROGRAMS)
 
     return [boolean_node, decision_node, operators_node, conditional_statements_node,
             nested_conditional_statements_node, simple_programs_node, programs_node]
@@ -34,7 +34,7 @@ def generate_conditionals_bayesian_network():
     :return: The complete Bayesian Network.
     """
     conditionals = _get_conditionals_probability()
-    conditionals_node = State(conditionals, name='Conditionals')
+    conditionals_node = State(conditionals, name=ParentCategories.CONDITIONALS)
     nodes = get_conditionals_nodes(conditionals)
     boolean_node = nodes[0]
     decision_node = nodes[1]

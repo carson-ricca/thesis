@@ -1,5 +1,5 @@
 from pomegranate import *
-
+from constants import ParentCategories
 from modelling import get_arrays_nodes, get_basics_nodes, get_conditionals_nodes, get_methods_nodes, get_oop_nodes, \
     get_pre_defined_classes_nodes, get_loops_nodes
 from modelling.parent_categories_bayes_net import _get_basics_probability, _get_conditionals_probability, \
@@ -20,13 +20,13 @@ def generate_complete_bayesian_network():
     methods = _get_methods_probability(loops)
     oop = _get_oop_probability(arrays, methods, pre_defined_classes)
 
-    basics_node = State(basics, name='Basics')
-    conditionals_node = State(conditionals, name='Conditionals')
-    pre_defined_classes_node = State(pre_defined_classes, name='Pre-Defined Classes')
-    loops_node = State(loops, name='Loops')
-    arrays_node = State(arrays, name='Arrays')
-    methods_node = State(methods, name='Methods')
-    oop_node = State(oop, name='OOP')
+    basics_node = State(basics, name=ParentCategories.BASICS)
+    conditionals_node = State(conditionals, name=ParentCategories.CONDITIONALS)
+    pre_defined_classes_node = State(pre_defined_classes, name=ParentCategories.PRE_DEFINED_CLASSES)
+    loops_node = State(loops, name=ParentCategories.LOOPS)
+    arrays_node = State(arrays, name=ParentCategories.ARRAYS)
+    methods_node = State(methods, name=ParentCategories.METHODS)
+    oop_node = State(oop, name=ParentCategories.OOP)
 
     basics_nodes = get_basics_nodes(basics)
     basics_variables_node = basics_nodes[0]

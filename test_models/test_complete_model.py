@@ -11,12 +11,14 @@ def test_complete_model():
     # model.plot()
     # plt.show()
 
+
+def _run_inference(model, data, estimated_node):
     timer = Timer()
     timer.start()
-    predictions = model.predict_proba({'Basics': success})
+    predictions = model.predict_proba(data)
     timer.stop()
-    print(len(predictions))
-    print(predictions)
+    print(predictions[NODE_ORDER.get(estimated_node)].parameters[0][success])
+    print('-' * 150)
 
 
 if __name__ == '__main__':

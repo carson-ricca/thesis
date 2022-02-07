@@ -1,6 +1,6 @@
 from pomegranate import *
 
-from constants import success, failure
+from constants import ParentCategories, Arrays, success, failure
 
 
 def get_arrays_nodes(arrays):
@@ -22,14 +22,14 @@ def get_arrays_nodes(arrays):
         array_with_methods,
         multidimensional_arrays)
 
-    data_representation_node = State(data_representation, name='Data Representation')
-    defining_arrays_node = State(defining_arrays, name='Defining Arrays')
-    referencing_arrays_node = State(referencing_arrays, name='Referencing Arrays')
-    multidimensional_arrays_node = State(multidimensional_arrays, name='Multidimensional Arrays')
-    array_with_methods_node = State(array_with_methods, name='Array with Methods')
-    programs_with_data_sequences_node = State(programs_with_data_sequences, name='Programs with Data Sequences')
+    data_representation_node = State(data_representation, name=Arrays.DATA_REPRESENTATION)
+    defining_arrays_node = State(defining_arrays, name=Arrays.DEFINING_ARRAYS)
+    referencing_arrays_node = State(referencing_arrays, name=Arrays.REFERENCING_ARRAYS)
+    multidimensional_arrays_node = State(multidimensional_arrays, name=Arrays.MULTIDIMENSIONAL_ARRAYS)
+    array_with_methods_node = State(array_with_methods, name=Arrays.ARRAYS_WITH_METHODS)
+    programs_with_data_sequences_node = State(programs_with_data_sequences, name=Arrays.PROGRAMS_WITH_DATA_SEQUENCES)
     programs_with_multidimensional_data_node = State(programs_with_multidimensional_data,
-                                                     name='Programs with Multidimensional Data')
+                                                     name=Arrays.PROGRAMS_WITH_MULTIDIMENSIONAL_DATA)
     return [data_representation_node, defining_arrays_node, referencing_arrays_node, multidimensional_arrays_node,
             array_with_methods_node, programs_with_data_sequences_node, programs_with_multidimensional_data_node]
 
@@ -40,7 +40,7 @@ def generate_arrays_bayesian_network():
     :return: The complete Bayesian Network.
     """
     arrays = _get_arrays_probability()
-    arrays_node = State(arrays, name='Arrays')
+    arrays_node = State(arrays, name=ParentCategories.ARRAYS)
     nodes = get_arrays_nodes(arrays)
     data_representation_node = nodes[0]
     defining_arrays_node = nodes[1]

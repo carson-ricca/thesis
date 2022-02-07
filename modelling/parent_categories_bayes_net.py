@@ -1,5 +1,5 @@
 from pomegranate import *
-from constants import success, failure
+from constants import ParentCategories, success, failure
 
 
 def generate_parent_categories_bayesian_network():
@@ -15,13 +15,13 @@ def generate_parent_categories_bayesian_network():
     methods = _get_methods_probability(loops)
     oop = _get_oop_probability(arrays, methods, pre_defined_classes)
 
-    basics_node = State(basics, name='Basics')
-    conditionals_node = State(conditionals, name='Conditionals')
-    pre_defined_classes_node = State(pre_defined_classes, name='Pre-Defined Classes')
-    loops_node = State(loops, name='Loops')
-    arrays_node = State(arrays, name='Arrays')
-    methods_node = State(methods, name='Methods')
-    oop_node = State(oop, name='OOP')
+    basics_node = State(basics, name=ParentCategories.BASICS)
+    conditionals_node = State(conditionals, name=ParentCategories.CONDITIONALS)
+    pre_defined_classes_node = State(pre_defined_classes, name=ParentCategories.PRE_DEFINED_CLASSES)
+    loops_node = State(loops, name=ParentCategories.LOOPS)
+    arrays_node = State(arrays, name=ParentCategories.ARRAYS)
+    methods_node = State(methods, name=ParentCategories.METHODS)
+    oop_node = State(oop, name=ParentCategories.OOP)
 
     model = BayesianNetwork('Parent Categories')
     model.add_states(basics_node, conditionals_node, pre_defined_classes_node, loops_node, arrays_node, methods_node,

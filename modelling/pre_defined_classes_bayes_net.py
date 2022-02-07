@@ -1,6 +1,6 @@
 from pomegranate import *
 
-from constants import success, failure
+from constants import ParentCategories, PreDefinedClasses, success, failure
 
 
 def get_pre_defined_classes_nodes(pre_defined_classes):
@@ -20,16 +20,17 @@ def get_pre_defined_classes_nodes(pre_defined_classes):
     string = _get_string_probability(pre_defined_classes, character)
     programs = _get_programs_probability(pre_defined_classes, simple_programs, string)
 
-    oop_overview_node = State(oop_overview, name='OOP Overview')
-    scanner_node = State(scanner, name='Scanner')
-    character_node = State(character, name='Character')
-    math_node = State(math, name='Math')
-    random_node = State(random, name='Random')
-    math_programs_node = State(math_programs, name='Math Programs')
-    changing_behaviour_programs_node = State(changing_behaviour_programs, name='Changing Behaviour Programs')
-    simple_programs_node = State(simple_programs, name='Simple Programs')
-    string_node = State(string, name='String')
-    programs_node = State(programs, name='Programs')
+    oop_overview_node = State(oop_overview, name=PreDefinedClasses.OOP_OVERVIEW)
+    scanner_node = State(scanner, name=PreDefinedClasses.SCANNER)
+    character_node = State(character, name=PreDefinedClasses.CHARACTER)
+    math_node = State(math, name=PreDefinedClasses.MATH)
+    random_node = State(random, name=PreDefinedClasses.RANDOM)
+    math_programs_node = State(math_programs, name=PreDefinedClasses.MATH_PROGRAMS)
+    changing_behaviour_programs_node = State(changing_behaviour_programs,
+                                             name=PreDefinedClasses.CHANGING_BEHAVIOUR_PROGRAMS)
+    simple_programs_node = State(simple_programs, name=PreDefinedClasses.SIMPLE_PROGRAMS)
+    string_node = State(string, name=PreDefinedClasses.STRING)
+    programs_node = State(programs, name=PreDefinedClasses.PROGRAMS)
     return [oop_overview_node, scanner_node, character_node, math_node, random_node, math_programs_node,
             changing_behaviour_programs_node, simple_programs_node, string_node, programs_node]
 
@@ -40,7 +41,7 @@ def generate_pre_defined_classes_bayesian_network():
     :return: The complete Bayesian Network.
     """
     pre_defined_classes = _get_pre_defined_classes_probability()
-    pre_defined_classes_node = State(pre_defined_classes, name='Pre-Defined Classes')
+    pre_defined_classes_node = State(pre_defined_classes, name=ParentCategories.PRE_DEFINED_CLASSES)
     nodes = get_pre_defined_classes_nodes(pre_defined_classes)
     oop_overview_node = nodes[0]
     scanner_node = nodes[1]

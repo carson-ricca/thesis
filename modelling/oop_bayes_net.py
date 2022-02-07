@@ -1,6 +1,6 @@
 from pomegranate import *
 
-from constants import success, failure
+from constants import ParentCategories, OOP, success, failure
 
 
 def get_oop_nodes(oop):
@@ -22,17 +22,17 @@ def get_oop_nodes(oop):
     static_modifier = _get_static_modifier_probability(oop)
     programs = _get_programs_probability(oop, simple_programs, static_modifier)
 
-    variable_scope_node = State(variable_scope, name='Variable Scope')
-    oop_overview_node = State(oop_overview, name='OOP Overview')
-    multiple_classes_node = State(multiple_classes, name='Multiple Classes')
-    user_defined_classes_node = State(user_defined_classes, name='User Defined Classes')
-    creating_objects_node = State(creating_objects, name='Creating Objects')
-    object_interactions_node = State(object_interactions, name='Object Interactions')
-    object_independence_node = State(object_independence, name='Object Independence')
-    special_class_method_node = State(special_class_method, name='Special Class Method')
-    simple_programs_node = State(simple_programs, name='Simple Programs')
-    static_modifier_node = State(static_modifier, name='Static Modifier')
-    programs_node = State(programs, name='Programs')
+    variable_scope_node = State(variable_scope, name=OOP.VARIABLE_SCOPE)
+    oop_overview_node = State(oop_overview, name=OOP.OOP_OVERVIEW)
+    multiple_classes_node = State(multiple_classes, name=OOP.MULTIPLE_CLASSES)
+    user_defined_classes_node = State(user_defined_classes, name=OOP.USER_DEFINED_CLASSES)
+    creating_objects_node = State(creating_objects, name=OOP.CREATING_OBJECTS)
+    object_interactions_node = State(object_interactions, name=OOP.OBJECT_INTERACTIONS)
+    object_independence_node = State(object_independence, name=OOP.OBJECT_INDEPENDENCE)
+    special_class_method_node = State(special_class_method, name=OOP.SPECIAL_CLASS_METHOD)
+    simple_programs_node = State(simple_programs, name=OOP.SIMPLE_PROGRAMS)
+    static_modifier_node = State(static_modifier, name=OOP.STATIC_MODIFIER)
+    programs_node = State(programs, name=OOP.PROGRAMS)
     return [variable_scope_node, oop_overview_node, multiple_classes_node, user_defined_classes_node,
             creating_objects_node, object_interactions_node, object_independence_node, special_class_method_node,
             simple_programs_node, static_modifier_node, programs_node]
@@ -44,7 +44,7 @@ def generate_oop_bayesian_network():
     :return: The complete Bayesian Network.
     """
     oop = _get_oop_probability()
-    oop_node = State(oop, name='OOP')
+    oop_node = State(oop, name=ParentCategories.OOP)
     nodes = get_oop_nodes(oop)
     variable_scope_node = nodes[0]
     oop_overview_node = nodes[1]

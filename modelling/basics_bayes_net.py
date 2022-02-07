@@ -1,5 +1,5 @@
 from pomegranate import *
-from constants import success, failure
+from constants import ParentCategories, Basics, success, failure
 
 
 def get_basics_nodes(basics):
@@ -17,13 +17,13 @@ def get_basics_nodes(basics):
     simple_calculation_problems = _get_simple_calculation_problems_probability(basics, data_types, arithmetic_operators,
                                                                                constants)
 
-    variables_node = State(variables, name='Variables')
-    data_types_node = State(data_types, name='Data Types')
-    statements_node = State(statements, name='Statements')
-    constants_node = State(constants, name='Constants')
-    arithmetic_operators_node = State(arithmetic_operators, name='Arithmetic Operators')
-    casting_node = State(casting, name='Casting')
-    simple_calculation_problems_node = State(simple_calculation_problems, name='Simple Calculation Problems')
+    variables_node = State(variables, name=Basics.VARIABLES)
+    data_types_node = State(data_types, name=Basics.DATA_TYPES)
+    statements_node = State(statements, name=Basics.STATEMENTS)
+    constants_node = State(constants, name=Basics.CONSTANTS)
+    arithmetic_operators_node = State(arithmetic_operators, name=Basics.ARITHMETIC_OPERATORS)
+    casting_node = State(casting, name=Basics.CASTING)
+    simple_calculation_problems_node = State(simple_calculation_problems, name=Basics.SIMPLE_CALCULATION_PROBLEMS)
 
     return [variables_node, data_types_node, statements_node, constants_node, arithmetic_operators_node, casting_node,
             simple_calculation_problems_node]
@@ -35,7 +35,7 @@ def generate_basics_bayesian_network():
     :return: The complete Bayesian Network.
     """
     basics = _get_basics_probability()
-    basics_node = State(basics, name='Basics')
+    basics_node = State(basics, name=ParentCategories.BASICS)
     nodes = get_basics_nodes(basics)
     variables_node = nodes[0]
     data_types_node = nodes[1]
