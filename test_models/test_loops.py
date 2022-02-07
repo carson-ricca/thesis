@@ -8,20 +8,21 @@ from util import Timer
 def test_loops():
     model = generate_loops_bayesian_network()
     # Uncomment these lines to visually plot the model.
-    model.plot()
-    plt.show()
-    # # All nodes are success.
-    # _predict_success_in_loops(model, success, success, success, success, success, success, success, success)
-    # # All nodes are failure.
-    # _predict_success_in_loops(model, failure, failure, failure, failure, failure, failure, failure, success)
-    # # Test more successful than failure (failure in more complex topics).
-    # _predict_success_in_loops(model, success, success, success, success, failure, failure, failure, failure)
-    # # Test more successful than failure (failure in easier topics).
-    # _predict_success_in_loops(model, failure, failure, failure, failure, success, success, success, success)
-    # # Test more failure than success (complex topics).
-    # _predict_success_in_loops(model, success, success, success, failure, failure, failure, failure, failure)
-    # # Test more failure than success (easier topics).
-    # _predict_success_in_loops(model, failure, failure, failure, failure, failure, success, success, success)
+    # model.plot()
+    # plt.show()
+    
+    # All nodes are success.
+    _predict_success_in_loops(model, success, success, success, success, success, success, success, success)
+    # All nodes are failure.
+    _predict_success_in_loops(model, failure, failure, failure, failure, failure, failure, failure, success)
+    # Test more successful than failure (failure in more complex topics).
+    _predict_success_in_loops(model, success, success, success, success, failure, failure, failure, failure)
+    # Test more successful than failure (failure in easier topics).
+    _predict_success_in_loops(model, failure, failure, failure, failure, success, success, success, success)
+    # Test more failure than success (complex topics).
+    _predict_success_in_loops(model, success, success, success, failure, failure, failure, failure, failure)
+    # Test more failure than success (easier topics).
+    _predict_success_in_loops(model, failure, failure, failure, failure, failure, success, success, success)
 
 
 def _predict_success_in_loops(model, repetition, decision_diagrams, while_loops, for_loops, variable_scope,
