@@ -1,7 +1,7 @@
 from pomegranate import *
 
 from modelling import get_arrays_nodes, get_basics_nodes, get_conditionals_nodes, get_methods_nodes, get_oop_nodes, \
-    get_pre_defined_classes_nodes
+    get_pre_defined_classes_nodes, get_loops_nodes
 from modelling.parent_categories_bayes_net import _get_basics_probability, _get_conditionals_probability, \
     _get_pre_defined_classes_probability, _get_loops_probability, _get_arrays_probability, _get_methods_probability, \
     _get_oop_probability
@@ -58,6 +58,16 @@ def generate_complete_bayesian_network():
     pre_defined_classes_string_node = pre_defined_classes_nodes[8]
     pre_defined_classes_programs_node = pre_defined_classes_nodes[9]
 
+    loops_nodes = get_loops_nodes(loops)
+    loops_repetition_node = loops_nodes[0]
+    loops_variable_scope_node = loops_nodes[1]
+    loops_decision_diagrams_node = loops_nodes[2]
+    loops_while_loops_node = loops_nodes[3]
+    loops_for_loops_node = loops_nodes[4]
+    loops_simple_programs_node = loops_nodes[5]
+    loops_nested_loops_node = loops_nodes[6]
+    loops_programs_node = loops_nodes[7]
+
     arrays_nodes = get_arrays_nodes(arrays)
     arrays_data_representation_node = arrays_nodes[0]
     arrays_defining_arrays_node = arrays_nodes[1]
@@ -102,6 +112,9 @@ def generate_complete_bayesian_network():
                      pre_defined_classes_math_programs_node,
                      pre_defined_classes_changing_behaviour_programs_node, pre_defined_classes_simple_programs_node,
                      pre_defined_classes_string_node, pre_defined_classes_programs_node,
+                     loops_repetition_node, loops_variable_scope_node, loops_decision_diagrams_node,
+                     loops_while_loops_node, loops_for_loops_node, loops_simple_programs_node, loops_nested_loops_node,
+                     loops_programs_node,
                      arrays_data_representation_node, arrays_defining_arrays_node, arrays_referencing_arrays_node,
                      arrays_multidimensional_arrays_node, arrays_array_with_methods_node,
                      arrays_programs_with_data_sequences_node, arrays_programs_with_multidimensional_data_node,
@@ -181,6 +194,29 @@ def generate_complete_bayesian_network():
     model.add_edge(pre_defined_classes_character_node, pre_defined_classes_string_node)
     model.add_edge(pre_defined_classes_simple_programs_node, pre_defined_classes_programs_node)
     model.add_edge(pre_defined_classes_string_node, pre_defined_classes_programs_node)
+
+    # Loops sub-category edges.
+    model.add_edge(loops_node, loops_repetition_node)
+    model.add_edge(loops_node, loops_decision_diagrams_node)
+    model.add_edge(loops_node, loops_variable_scope_node)
+    model.add_edge(loops_node, loops_for_loops_node)
+    model.add_edge(loops_node, loops_while_loops_node)
+    model.add_edge(loops_node, loops_nested_loops_node)
+    model.add_edge(loops_node, loops_simple_programs_node)
+    model.add_edge(loops_node, loops_programs_node)
+    model.add_edge(loops_repetition_node, loops_while_loops_node)
+    model.add_edge(loops_repetition_node, loops_decision_diagrams_node)
+    model.add_edge(loops_repetition_node, loops_for_loops_node)
+    model.add_edge(loops_decision_diagrams_node, loops_while_loops_node)
+    model.add_edge(loops_decision_diagrams_node, loops_for_loops_node)
+    model.add_edge(loops_while_loops_node, loops_simple_programs_node)
+    model.add_edge(loops_while_loops_node, loops_nested_loops_node)
+    model.add_edge(loops_for_loops_node, loops_simple_programs_node)
+    model.add_edge(loops_for_loops_node, loops_nested_loops_node)
+    model.add_edge(loops_variable_scope_node, loops_simple_programs_node)
+    model.add_edge(loops_variable_scope_node, loops_nested_loops_node)
+    model.add_edge(loops_simple_programs_node, loops_programs_node)
+    model.add_edge(loops_nested_loops_node, loops_programs_node)
 
     # Arrays sub-category edges.
     model.add_edge(arrays_node, arrays_data_representation_node)
