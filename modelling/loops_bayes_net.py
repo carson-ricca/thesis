@@ -3,8 +3,7 @@ from pomegranate import *
 from constants import success, failure
 
 
-def generate_loops_bayesian_network():
-    loops = _get_loops_probability()
+def get_loops_nodes(loops):
     repetition = _get_repetition_probability(loops)
     variable_scope = _get_variable_scope_probability(loops)
     decision_diagrams = _get_decision_diagrams_probability(loops, repetition)
@@ -14,7 +13,6 @@ def generate_loops_bayesian_network():
     nested_loops = _get_nested_loops_probability(loops, while_loops, for_loops, variable_scope)
     programs = _get_programs_with_repetition_probability(loops, simple_programs, nested_loops)
 
-    loops_node = State(loops, name='Loops')
     repetition_node = State(repetition, name='Repetition')
     variable_scope_node = State(variable_scope, name='Variable Scope')
     decision_diagrams_node = State(decision_diagrams, name='Decision Diagrams')
@@ -23,6 +21,22 @@ def generate_loops_bayesian_network():
     simple_programs_node = State(simple_programs, name='Simple Programs')
     nested_loops_node = State(nested_loops, name='Nested Loops')
     programs_node = State(programs, name='Programs')
+    return [repetition_node, variable_scope_node, decision_diagrams_node, while_loops_node, for_loops_node,
+            simple_programs_node, nested_loops_node, programs_node]
+
+
+def generate_loops_bayesian_network():
+    loops = _get_loops_probability()
+    loops_node = State(loops, name='Loops')
+    nodes = get_loops_nodes(loops)
+    repetition_node = nodes[0]
+    variable_scope_node = nodes[1]
+    decision_diagrams_node = nodes[2]
+    while_loops_node = nodes[3]
+    for_loops_node = nodes[4]
+    simple_programs_node = nodes[5]
+    nested_loops_node = nodes[6]
+    programs_node = nodes[7]
 
     model = BayesianNetwork('Loops')
     model.add_states(loops_node, repetition_node, variable_scope_node, decision_diagrams_node, while_loops_node,
