@@ -9,7 +9,7 @@ NODE_ORDER = {
     Conditionals.BOOLEAN: 1,
     Conditionals.DECISION: 2,
     Conditionals.OPERATORS: 3,
-    'Conditionals Statements': 4,
+    Conditionals.CONDITIONAL_STATEMENTS: 4,
     Conditionals.NESTED_CONDITIONAL_STATEMENTS: 5,
     Conditionals.SIMPLE_PROGRAMS: 6,
     Conditionals.PROGRAMS: 7
