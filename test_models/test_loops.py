@@ -1,19 +1,19 @@
 from matplotlib import pyplot as plt
 
 from modelling import generate_loops_bayesian_network
-from constants import success, failure
+from constants import ParentCategories, Loops, success, failure
 from util import Timer
 
 NODE_ORDER = {
-    'Loops': 0,
-    'Repetition': 1,
-    'Variable Scope': 2,
-    'Decision Diagrams': 3,
-    'While Loops': 4,
-    'For Loops': 5,
-    'Simple Programs': 6,
-    'Nested Loops': 7,
-    'Programs': 8
+    ParentCategories.LOOPS: 0,
+    Loops.REPETITION: 1,
+    Loops.VARIABLE_SCOPE: 2,
+    Loops.DECISION_DIAGRAMS: 3,
+    Loops.WHILE_LOOPS: 4,
+    Loops.FOR_LOOPS: 5,
+    Loops.SIMPLE_PROGRAMS: 6,
+    Loops.NESTED_LOOPS: 7,
+    Loops.PROGRAMS: 8
 }
 
 
@@ -36,43 +36,43 @@ def test_loops():
     # Test more failure than success (easier topics).
     _predict_success_in_loops(model, failure, failure, failure, failure, failure, success, success, success)
 
-    print('Loops')
+    print(ParentCategories.LOOPS)
     _run_inference(model, {
-        'Repetition': failure,
-        'Decision Diagrams': failure,
-        'While Loops': success,
-        'For Loops': success,
-        'Variable Scope': success,
-        'Simple Programs': success,
-        'Nested Loops': success,
-        'Programs': success
-    }, 'Loops')
+        Loops.REPETITION: failure,
+        Loops.DECISION_DIAGRAMS: failure,
+        Loops.WHILE_LOOPS: success,
+        Loops.FOR_LOOPS: success,
+        Loops.VARIABLE_SCOPE: success,
+        Loops.SIMPLE_PROGRAMS: success,
+        Loops.NESTED_LOOPS: success,
+        Loops.PROGRAMS: success
+    }, ParentCategories.LOOPS)
 
-    print('Programs')
+    print(Loops.PROGRAMS)
     _run_inference(model, {
-        'Loops': success,
-        'Repetition': success,
-        'Decision Diagrams': failure,
-        'While Loops': success,
-        'For Loops': failure,
-        'Variable Scope': success,
-        'Simple Programs': failure,
-        'Nested Loops': success,
-    }, 'Programs')
+        ParentCategories.LOOPS: success,
+        Loops.REPETITION: success,
+        Loops.DECISION_DIAGRAMS: failure,
+        Loops.WHILE_LOOPS: success,
+        Loops.FOR_LOOPS: failure,
+        Loops.VARIABLE_SCOPE: success,
+        Loops.SIMPLE_PROGRAMS: failure,
+        Loops.NESTED_LOOPS: success,
+    }, Loops.PROGRAMS)
 
-    print('Simple Programs')
+    print(Loops.SIMPLE_PROGRAMS)
     _run_inference(model, {
-        'Loops': success,
-        'Repetition': success,
-        'Decision Diagrams': failure,
-        'Variable Scope': success,
-    }, 'Simple Programs')
+        ParentCategories.LOOPS: success,
+        Loops.REPETITION: success,
+        Loops.DECISION_DIAGRAMS: failure,
+        Loops.VARIABLE_SCOPE: success,
+    }, Loops.SIMPLE_PROGRAMS)
 
-    print('Nested Loops')
+    print(Loops.NESTED_LOOPS)
     _run_inference(model, {
-        'Loops': failure,
-        'Repetition': failure,
-    }, 'Nested Loops')
+        ParentCategories.LOOPS: failure,
+        Loops.REPETITION: failure,
+    }, Loops.NESTED_LOOPS)
 
 
 def _run_inference(model, data, estimated_node):
@@ -89,14 +89,14 @@ def _predict_success_in_loops(model, repetition, decision_diagrams, while_loops,
     timer = Timer()
     timer.start()
     predictions = model.predict_proba({
-        'Repetition': repetition,
-        'Decision Diagrams': decision_diagrams,
-        'While Loops': while_loops,
-        'For Loops': for_loops,
-        'Variable Scope': variable_scope,
-        'Simple Programs': simple_programs,
-        'Nested Loops': nested_loops,
-        'Programs': programs
+        Loops.REPETITION: repetition,
+        Loops.DECISION_DIAGRAMS: decision_diagrams,
+        Loops.WHILE_LOOPS: while_loops,
+        Loops.FOR_LOOPS: for_loops,
+        Loops.VARIABLE_SCOPE: variable_scope,
+        Loops.SIMPLE_PROGRAMS: simple_programs,
+        Loops.NESTED_LOOPS: nested_loops,
+        Loops.PROGRAMS: programs
     })
     overall_success = predictions[0].parameters[0]
     print((

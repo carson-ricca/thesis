@@ -1,18 +1,18 @@
-from constants import success, failure
+from constants import ParentCategories, Basics, success, failure
 from modelling import generate_basics_bayesian_network
 import matplotlib.pyplot as plt
 
 from util import Timer
 
 NODE_ORDER = {
-    'Basics': 0,
-    'Variables': 1,
-    'Data Types': 2,
-    'Statements': 3,
-    'Constants': 4,
-    'Arithmetic Operators': 5,
-    'Casting': 6,
-    'Simple Calculation Problems': 7
+    ParentCategories.BASICS: 0,
+    Basics.VARIABLES: 1,
+    Basics.DATA_TYPES: 2,
+    Basics.STATEMENTS: 3,
+    Basics.CONSTANTS: 4,
+    Basics.ARITHMETIC_OPERATORS: 5,
+    Basics.CASTING: 6,
+    Basics.SIMPLE_CALCULATION_PROBLEMS: 7
 }
 
 
@@ -35,46 +35,46 @@ def test_basics():
     # Test more failure than success (easier topics).
     _predict_success_in_basics(model, failure, failure, failure, failure, success, success, success)
 
-    print('Basics')
+    print(ParentCategories.BASICS)
     _run_inference(model, {
-        'Variables': success,
-        'Data Types': failure,
-        'Statements': success,
-        'Constants': failure,
-        'Arithmetic Operators': success,
-        'Casting': success,
-        'Simple Calculation Problems': success
-    }, 'Basics')
+        Basics.VARIABLES: success,
+        Basics.DATA_TYPES: failure,
+        Basics.STATEMENTS: success,
+        Basics.CONSTANTS: failure,
+        Basics.ARITHMETIC_OPERATORS: success,
+        Basics.CASTING: success,
+        Basics.SIMPLE_CALCULATION_PROBLEMS: success
+    }, ParentCategories.BASICS)
 
-    print('Simple Calculation Problems')
+    print(Basics.SIMPLE_CALCULATION_PROBLEMS)
     _run_inference(model, {
-        'Basics': success,
-        'Variables': success,
-        'Data Types': success,
-        'Statements': failure,
-        'Constants': success,
-        'Arithmetic Operators': failure,
-        'Casting': success,
-    }, 'Simple Calculation Problems')
+        ParentCategories.BASICS: success,
+        Basics.VARIABLES: success,
+        Basics.DATA_TYPES: success,
+        Basics.STATEMENTS: failure,
+        Basics.CONSTANTS: success,
+        Basics.ARITHMETIC_OPERATORS: failure,
+        Basics.CASTING: success,
+    }, Basics.SIMPLE_CALCULATION_PROBLEMS)
 
-    print('Constants')
+    print(Basics.CONSTANTS)
     _run_inference(model, {
-        'Basics': failure,
-        'Variables': failure,
-        'Data Types': success,
-        'Statements': success,
-    }, 'Constants')
+        ParentCategories.BASICS: failure,
+        Basics.VARIABLES: failure,
+        Basics.DATA_TYPES: success,
+        Basics.STATEMENTS: success,
+    }, Basics.CONSTANTS)
 
-    print('Casting')
+    print(Basics.CASTING)
     _run_inference(model, {
-        'Basics': success,
-        'Variables': success,
-        'Data Types': failure,
-        'Statements': failure,
-        'Constants': failure,
-        'Arithmetic Operators': failure,
-        'Simple Calculation Problems': success
-    }, 'Casting')
+        ParentCategories.BASICS: success,
+        Basics.VARIABLES: success,
+        Basics.DATA_TYPES: failure,
+        Basics.STATEMENTS: failure,
+        Basics.CONSTANTS: failure,
+        Basics.ARITHMETIC_OPERATORS: failure,
+        Basics.SIMPLE_CALCULATION_PROBLEMS: success
+    }, Basics.CASTING)
 
 
 def _run_inference(model, data, estimated_node):
@@ -91,13 +91,13 @@ def _predict_success_in_basics(model, variables, data_types, statements, constan
     timer = Timer()
     timer.start()
     predictions = model.predict_proba({
-        'Variables': variables,
-        'Data Types': data_types,
-        'Statements': statements,
-        'Constants': constants,
-        'Arithmetic Operators': arithmetic_operators,
-        'Casting': casting,
-        'Simple Calculation Problems': simple_calculation_problems
+        Basics.VARIABLES: variables,
+        Basics.DATA_TYPES: data_types,
+        Basics.STATEMENTS: statements,
+        Basics.CONSTANTS: constants,
+        Basics.ARITHMETIC_OPERATORS: arithmetic_operators,
+        Basics.CASTING: casting,
+        Basics.SIMPLE_CALCULATION_PROBLEMS: simple_calculation_problems
     })
     overall_success = predictions[0].parameters[0]
     print((

@@ -1,17 +1,17 @@
 import matplotlib.pyplot as plt
 
 from modelling import generate_parent_categories_bayesian_network
-from constants import success, failure
+from constants import ParentCategories, success, failure
 from util import Timer
 
 NODE_ORDER = {
-    'Basics': 0,
-    'Conditionals': 1,
-    'Pre-Defined Classes': 2,
-    'Loops': 3,
-    'Arrays': 4,
-    'Methods': 5,
-    'OOP': 6
+    ParentCategories.BASICS: 0,
+    ParentCategories.CONDITIONALS: 1,
+    ParentCategories.PRE_DEFINED_CLASSES: 2,
+    ParentCategories.LOOPS: 3,
+    ParentCategories.ARRAYS: 4,
+    ParentCategories.METHODS: 5,
+    ParentCategories.OOP: 6
 }
 
 
@@ -28,40 +28,40 @@ def test_parent_categories():
     _make_prediction(model, success, failure, success, failure, success, failure)
     _make_prediction(model, failure, success, success, success, success, failure)
 
-    print('OOP')
+    print(ParentCategories.OOP)
     _run_inference(model, {
-        'Basics': success,
-        'Conditionals': success,
-        'Pre-Defined Classes': success,
-        'Loops': success,
-        'Arrays': success,
-        'Methods': success,
-    }, 'OOP')
+        ParentCategories.BASICS: success,
+        ParentCategories.CONDITIONALS: success,
+        ParentCategories.PRE_DEFINED_CLASSES: success,
+        ParentCategories.LOOPS: success,
+        ParentCategories.ARRAYS: success,
+        ParentCategories.METHODS: success,
+    }, ParentCategories.OOP)
 
-    print('OOP')
+    print(ParentCategories.OOP)
     _run_inference(model, {
-        'Basics': success,
-        'Conditionals': success,
-    }, 'OOP')
+        ParentCategories.BASICS: success,
+        ParentCategories.CONDITIONALS: success,
+    }, ParentCategories.OOP)
 
-    print('Loops')
+    print(ParentCategories.LOOPS)
     _run_inference(model, {
-        'Basics': success,
-        'Conditionals': failure,
-        'Pre-Defined Classes': success,
-        'Arrays': success,
-        'Methods': success,
-        'OOP': failure
-    }, 'Loops')
+        ParentCategories.BASICS: success,
+        ParentCategories.CONDITIONALS: failure,
+        ParentCategories.PRE_DEFINED_CLASSES: success,
+        ParentCategories.ARRAYS: success,
+        ParentCategories.METHODS: success,
+        ParentCategories.OOP: failure
+    }, ParentCategories.LOOPS)
 
-    print('Methods')
+    print(ParentCategories.METHODS)
     _run_inference(model, {
-        'Basics': failure,
-        'Conditionals': failure,
-        'Loops': success,
-        'Arrays': success,
-        'OOP': failure
-    }, 'Methods')
+        ParentCategories.BASICS: failure,
+        ParentCategories.CONDITIONALS: failure,
+        ParentCategories.LOOPS: success,
+        ParentCategories.ARRAYS: success,
+        ParentCategories.OOP: failure
+    }, ParentCategories.METHODS)
 
 
 def _run_inference(model, data, estimated_node):
@@ -77,12 +77,12 @@ def _make_prediction(model, basics, conditionals, pre_defined_classes, loops, ar
     timer = Timer()
     timer.start()
     predictions = model.predict_proba({
-        'Basics': basics,
-        'Conditionals': conditionals,
-        'Pre-Defined Classes': pre_defined_classes,
-        'Loops': loops,
-        'Arrays': arrays,
-        'Methods': methods,
+        ParentCategories.BASICS: basics,
+        ParentCategories.CONDITIONALS: conditionals,
+        ParentCategories.PRE_DEFINED_CLASSES: pre_defined_classes,
+        ParentCategories.LOOPS: loops,
+        ParentCategories.ARRAYS: arrays,
+        ParentCategories.METHODS: methods,
     })
     category_success = predictions[6].parameters[0]
     probable_success = category_success[success]

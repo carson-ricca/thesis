@@ -1,17 +1,17 @@
 from matplotlib import pyplot as plt
 
-from constants import success, failure
+from constants import ParentCategories, Methods, success, failure
 from modelling import generate_methods_bayesian_network
 from util import Timer
 
 NODE_ORDER = {
-    'Methods': 0,
-    'Abstraction': 1,
-    'Variable Scope': 2,
-    'Using Methods': 3,
-    'Defining Methods': 4,
-    'Method Overloading': 5,
-    'Modular Programs': 6
+    ParentCategories.METHODS: 0,
+    Methods.ABSTRACTION: 1,
+    Methods.VARIABLE_SCOPE: 2,
+    Methods.USING_METHODS: 3,
+    Methods.DEFINING_METHODS: 4,
+    Methods.METHOD_OVERLOADING: 5,
+    Methods.MODULAR_PROGRAMS: 6
 }
 
 
@@ -28,42 +28,42 @@ def test_methods():
     _predict_success_in_loops(model, failure, success, failure, success, failure, success)
     _predict_success_in_loops(model, failure, success, success, success, success, failure)
 
-    print('Methods')
+    print(ParentCategories.METHODS)
     _run_inference(model, {
-        'Abstraction': success,
-        'Variable Scope': success,
-        'Using Methods': success,
-        'Defining Methods': success,
-        'Method Overloading': success,
-        'Modular Programs': failure,
-    }, 'Methods')
+        Methods.ABSTRACTION: success,
+        Methods.VARIABLE_SCOPE: success,
+        Methods.USING_METHODS: success,
+        Methods.DEFINING_METHODS: success,
+        Methods.METHOD_OVERLOADING: success,
+        Methods.MODULAR_PROGRAMS: failure,
+    }, ParentCategories.METHODS)
 
-    print('Methods')
+    print(ParentCategories.METHODS)
     _run_inference(model, {
-        'Abstraction': failure,
-        'Variable Scope': failure,
-        'Using Methods': failure,
-        'Defining Methods': failure,
-        'Method Overloading': failure,
-        'Modular Programs': failure,
-    }, 'Methods')
+        Methods.ABSTRACTION: failure,
+        Methods.VARIABLE_SCOPE: failure,
+        Methods.USING_METHODS: failure,
+        Methods.DEFINING_METHODS: failure,
+        Methods.METHOD_OVERLOADING: failure,
+        Methods.MODULAR_PROGRAMS: failure,
+    }, ParentCategories.METHODS)
 
-    print('Modular Programs')
+    print(Methods.MODULAR_PROGRAMS)
     _run_inference(model, {
-        'Using Methods': success,
-        'Defining Methods': failure,
-        'Method Overloading': success,
-    }, 'Modular Programs')
+        Methods.USING_METHODS: success,
+        Methods.DEFINING_METHODS: failure,
+        Methods.METHOD_OVERLOADING: success,
+    }, Methods.MODULAR_PROGRAMS)
 
-    print('Defining Methods')
+    print(Methods.DEFINING_METHODS)
     _run_inference(model, {
-        'Methods': failure,
-        'Abstraction': success,
-        'Variable Scope': failure,
-        'Using Methods': success,
-        'Method Overloading': failure,
-        'Modular Programs': failure,
-    }, 'Defining Methods')
+        ParentCategories.METHODS: failure,
+        Methods.ABSTRACTION: success,
+        Methods.VARIABLE_SCOPE: failure,
+        Methods.USING_METHODS: success,
+        Methods.METHOD_OVERLOADING: failure,
+        Methods.MODULAR_PROGRAMS: failure,
+    }, Methods.DEFINING_METHODS)
 
 
 def _run_inference(model, data, estimated_node):
@@ -80,12 +80,12 @@ def _predict_success_in_loops(model, abstraction, variable_scope, using_methods,
     timer = Timer()
     timer.start()
     predictions = model.predict_proba({
-        'Abstraction': abstraction,
-        'Variable Scope': variable_scope,
-        'Using Methods': using_methods,
-        'Defining Methods': defining_methods,
-        'Method Overloading': method_overloading,
-        'Modular Programs': modular_programs,
+        Methods.ABSTRACTION: abstraction,
+        Methods.VARIABLE_SCOPE: variable_scope,
+        Methods.USING_METHODS: using_methods,
+        Methods.DEFINING_METHODS: defining_methods,
+        Methods.METHOD_OVERLOADING: method_overloading,
+        Methods.MODULAR_PROGRAMS: modular_programs,
     })
     overall_success = predictions[0].parameters[0]
     print((

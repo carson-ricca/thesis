@@ -1,21 +1,21 @@
 from matplotlib import pyplot as plt
 
-from constants import success, failure
+from constants import ParentCategories, PreDefinedClasses, success, failure
 from modelling import generate_pre_defined_classes_bayesian_network
 from util import Timer
 
 NODE_ORDER = {
-    'Pre-Defined Classes': 0,
-    'OOP Overview': 1,
-    'Scanner': 2,
-    'Character': 3,
-    'Math': 4,
-    'Random': 5,
-    'Math Programs': 6,
-    'Changing Behaviour Programs': 7,
-    'Simple Programs': 8,
-    'String': 9,
-    'Programs': 10
+    ParentCategories.PRE_DEFINED_CLASSES: 0,
+    PreDefinedClasses.OOP_OVERVIEW: 1,
+    PreDefinedClasses.SCANNER: 2,
+    PreDefinedClasses.CHARACTER: 3,
+    PreDefinedClasses.MATH: 4,
+    PreDefinedClasses.RANDOM: 5,
+    PreDefinedClasses.MATH_PROGRAMS: 6,
+    PreDefinedClasses.CHANGING_BEHAVIOUR_PROGRAMS: 7,
+    PreDefinedClasses.SIMPLE_PROGRAMS: 8,
+    PreDefinedClasses.STRING: 9,
+    PreDefinedClasses.PROGRAMS: 10
 }
 
 
@@ -40,56 +40,56 @@ def test_pre_defined_classes():
     _predict_pre_defined_classes_success(model, success, success, success, failure, failure, failure, success, success,
                                          success, success)
 
-    print('Pre-Defined Classes')
+    print(ParentCategories.PRE_DEFINED_CLASSES)
     _run_inference(model, {
-        'OOP Overview': success,
-        'Scanner': success,
-        'Character': success,
-        'Math': success,
-        'Random': failure,
-        'Math Programs': success,
-        'Changing Behaviour Programs': success,
-        'Simple Programs': success,
-        'String': failure,
-        'Programs': success
-    }, 'Pre-Defined Classes')
+        PreDefinedClasses.OOP_OVERVIEW: success,
+        PreDefinedClasses.SCANNER: success,
+        PreDefinedClasses.CHARACTER: success,
+        PreDefinedClasses.MATH: success,
+        PreDefinedClasses.RANDOM: failure,
+        PreDefinedClasses.MATH_PROGRAMS: success,
+        PreDefinedClasses.CHANGING_BEHAVIOUR_PROGRAMS: success,
+        PreDefinedClasses.SIMPLE_PROGRAMS: success,
+        PreDefinedClasses.STRING: failure,
+        PreDefinedClasses.PROGRAMS: success
+    }, ParentCategories.PRE_DEFINED_CLASSES)
 
-    print('Programs')
+    print(PreDefinedClasses.PROGRAMS)
     _run_inference(model, {
-        'Pre-Defined Classes': failure,
-        'OOP Overview': failure,
-        'Scanner': failure,
-        'Character': success,
-        'Math': success,
-        'Random': success,
-        'Math Programs': failure,
-        'Changing Behaviour Programs': success,
-        'Simple Programs': success,
-        'String': success,
-    }, 'Programs')
+        ParentCategories.PRE_DEFINED_CLASSES: failure,
+        PreDefinedClasses.OOP_OVERVIEW: failure,
+        PreDefinedClasses.SCANNER: failure,
+        PreDefinedClasses.CHARACTER: success,
+        PreDefinedClasses.MATH: success,
+        PreDefinedClasses.RANDOM: success,
+        PreDefinedClasses.MATH_PROGRAMS: failure,
+        PreDefinedClasses.CHANGING_BEHAVIOUR_PROGRAMS: success,
+        PreDefinedClasses.SIMPLE_PROGRAMS: success,
+        PreDefinedClasses.STRING: success,
+    }, PreDefinedClasses.PROGRAMS)
 
-    print('Scanner')
+    print(PreDefinedClasses.SCANNER)
     _run_inference(model, {
-        'Pre-Defined Classes': failure,
-        'OOP Overview': success,
-        'Character': success,
-        'Math': success,
-        'Random': failure,
-    }, 'Scanner')
+        ParentCategories.PRE_DEFINED_CLASSES: failure,
+        PreDefinedClasses.OOP_OVERVIEW: success,
+        PreDefinedClasses.CHARACTER: success,
+        PreDefinedClasses.MATH: success,
+        PreDefinedClasses.RANDOM: failure,
+    }, PreDefinedClasses.SCANNER)
 
-    print('Math Programs')
+    print(PreDefinedClasses.MATH_PROGRAMS)
     _run_inference(model, {
-        'Pre-Defined Classes': success,
-        'OOP Overview': failure,
-        'Scanner': success,
-        'Character': success,
-        'Math': failure,
-        'Random': success,
-        'Changing Behaviour Programs': success,
-        'Simple Programs': success,
-        'String': success,
-        'Programs': failure
-    }, 'Math Programs')
+        ParentCategories.PRE_DEFINED_CLASSES: success,
+        PreDefinedClasses.OOP_OVERVIEW: failure,
+        PreDefinedClasses.SCANNER: success,
+        PreDefinedClasses.CHARACTER: success,
+        PreDefinedClasses.MATH: failure,
+        PreDefinedClasses.RANDOM: success,
+        PreDefinedClasses.CHANGING_BEHAVIOUR_PROGRAMS: success,
+        PreDefinedClasses.SIMPLE_PROGRAMS: success,
+        PreDefinedClasses.STRING: success,
+        PreDefinedClasses.PROGRAMS: failure
+    }, PreDefinedClasses.MATH_PROGRAMS)
 
 
 def _run_inference(model, data, estimated_node):
@@ -107,16 +107,16 @@ def _predict_pre_defined_classes_success(model, oop_overview, scanner, character
     timer = Timer()
     timer.start()
     predictions = model.predict_proba({
-        'OOP Overview': oop_overview,
-        'Scanner': scanner,
-        'Character': character,
-        'Math': math,
-        'Random': random,
-        'Math Programs': math_programs,
-        'Changing Behaviour Programs': changing_behaviour_programs,
-        'Simple Programs': simple_programs,
-        'String': string,
-        'Programs': programs
+        PreDefinedClasses.OOP_OVERVIEW: oop_overview,
+        PreDefinedClasses.SCANNER: scanner,
+        PreDefinedClasses.CHARACTER: character,
+        PreDefinedClasses.MATH: math,
+        PreDefinedClasses.RANDOM: random,
+        PreDefinedClasses.MATH_PROGRAMS: math_programs,
+        PreDefinedClasses.CHANGING_BEHAVIOUR_PROGRAMS: changing_behaviour_programs,
+        PreDefinedClasses.SIMPLE_PROGRAMS: simple_programs,
+        PreDefinedClasses.STRING: string,
+        PreDefinedClasses.PROGRAMS: programs
     })
     overall_success = predictions[0].parameters[0]
     print((

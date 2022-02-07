@@ -1,18 +1,18 @@
 from matplotlib import pyplot as plt
 
-from constants import success, failure
+from constants import ParentCategories, Arrays, success, failure
 from modelling import generate_arrays_bayesian_network
 from util import Timer
 
 NODE_ORDER = {
-    'Arrays': 0,
-    'Data Representation': 1,
-    'Defining Arrays': 2,
-    'Referencing Arrays': 3,
-    'Multidimensional Arrays': 4,
-    'Array with Methods': 5,
-    'Programs with Data Sequences': 6,
-    'Programs with Multidimensional Data': 7
+    ParentCategories.ARRAYS: 0,
+    Arrays.DATA_REPRESENTATION: 1,
+    Arrays.DEFINING_ARRAYS: 2,
+    Arrays.REFERENCING_ARRAYS: 3,
+    Arrays.MULTIDIMENSIONAL_ARRAYS: 4,
+    Arrays.ARRAYS_WITH_METHODS: 5,
+    Arrays.PROGRAMS_WITH_DATA_SEQUENCES: 6,
+    Arrays.PROGRAMS_WITH_MULTIDIMENSIONAL_DATA: 7
 }
 
 
@@ -30,42 +30,42 @@ def test_arrays():
     _predict_success_in_arrays(model, failure, failure, success, success, success, failure, failure)
     _predict_success_in_arrays(model, failure, success, success, success, success, success, failure)
 
-    print('Programs with Multidimensional Data')
+    print(Arrays.PROGRAMS_WITH_MULTIDIMENSIONAL_DATA)
     _run_inference(model, {
-        'Arrays': success,
-        'Data Representation': success,
-        'Defining Arrays': success,
-        'Referencing Arrays': success,
-        'Multidimensional Arrays': success,
-        'Array with Methods': failure,
-        'Programs with Data Sequences': failure,
-    }, 'Programs with Multidimensional Data')
+        ParentCategories.ARRAYS: success,
+        Arrays.DATA_REPRESENTATION: success,
+        Arrays.DEFINING_ARRAYS: success,
+        Arrays.REFERENCING_ARRAYS: success,
+        Arrays.MULTIDIMENSIONAL_ARRAYS: success,
+        Arrays.ARRAYS_WITH_METHODS: failure,
+        Arrays.PROGRAMS_WITH_DATA_SEQUENCES: failure,
+    }, Arrays.PROGRAMS_WITH_MULTIDIMENSIONAL_DATA)
 
-    print('Data Representation')
+    print(Arrays.DATA_REPRESENTATION)
     _run_inference(model, {
-        'Arrays': success,
-    }, 'Data Representation')
+        ParentCategories.ARRAYS: success,
+    }, Arrays.DATA_REPRESENTATION)
 
-    print('Array with Methods')
+    print(Arrays.ARRAYS_WITH_METHODS)
     _run_inference(model, {
-        'Arrays': success,
-        'Data Representation': success,
-        'Defining Arrays': failure,
-        'Referencing Arrays': failure,
-        'Multidimensional Arrays': success,
-        'Programs with Data Sequences': success,
-        'Programs with Multidimensional Data': success
-    }, 'Array with Methods')
+        ParentCategories.ARRAYS: success,
+        Arrays.DATA_REPRESENTATION: success,
+        Arrays.DEFINING_ARRAYS: failure,
+        Arrays.REFERENCING_ARRAYS: failure,
+        Arrays.MULTIDIMENSIONAL_ARRAYS: success,
+        Arrays.PROGRAMS_WITH_DATA_SEQUENCES: success,
+        Arrays.PROGRAMS_WITH_MULTIDIMENSIONAL_DATA: success
+    }, Arrays.ARRAYS_WITH_METHODS)
 
-    print('Programs with Data Sequences')
+    print(Arrays.PROGRAMS_WITH_DATA_SEQUENCES)
     _run_inference(model, {
-        'Arrays': success,
-        'Data Representation': failure,
-        'Defining Arrays': failure,
-        'Referencing Arrays': failure,
-        'Multidimensional Arrays': success,
-        'Array with Methods': failure,
-    }, 'Programs with Data Sequences')
+        ParentCategories.ARRAYS: success,
+        Arrays.DATA_REPRESENTATION: failure,
+        Arrays.DEFINING_ARRAYS: failure,
+        Arrays.REFERENCING_ARRAYS: failure,
+        Arrays.MULTIDIMENSIONAL_ARRAYS: success,
+        Arrays.ARRAYS_WITH_METHODS: failure,
+    }, Arrays.PROGRAMS_WITH_DATA_SEQUENCES)
 
 
 def _run_inference(model, data, estimated_node):
@@ -83,13 +83,13 @@ def _predict_success_in_arrays(model, data_representation, defining_arrays, refe
     timer = Timer()
     timer.start()
     predictions = model.predict_proba({
-        'Data Representation': data_representation,
-        'Defining Arrays': defining_arrays,
-        'Referencing Arrays': referencing_arrays,
-        'Multidimensional Arrays': multidimensional_arrays,
-        'Array with Methods': array_with_methods,
-        'Programs with Data Sequences': programs_with_data_sequences,
-        'Programs with Multidimensional Data': programs_with_multidimensional_data
+        Arrays.DATA_REPRESENTATION: data_representation,
+        Arrays.DEFINING_ARRAYS: defining_arrays,
+        Arrays.REFERENCING_ARRAYS: referencing_arrays,
+        Arrays.MULTIDIMENSIONAL_ARRAYS: multidimensional_arrays,
+        Arrays.ARRAYS_WITH_METHODS: array_with_methods,
+        Arrays.PROGRAMS_WITH_DATA_SEQUENCES: programs_with_data_sequences,
+        Arrays.PROGRAMS_WITH_MULTIDIMENSIONAL_DATA: programs_with_multidimensional_data
     })
     overall_success = predictions[0].parameters[0]
     print((

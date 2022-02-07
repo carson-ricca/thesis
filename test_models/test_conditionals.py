@@ -1,18 +1,18 @@
 import matplotlib.pyplot as plt
 
 from modelling import generate_conditionals_bayesian_network
-from constants import success, failure
+from constants import ParentCategories, Conditionals, success, failure
 from util import Timer
 
 NODE_ORDER = {
-    'Conditionals': 0,
-    'Boolean': 1,
-    'Decision': 2,
-    'Operators': 3,
+    ParentCategories.CONDITIONALS: 0,
+    Conditionals.BOOLEAN: 1,
+    Conditionals.DECISION: 2,
+    Conditionals.OPERATORS: 3,
     'Conditionals Statements': 4,
-    'Nested Conditional Statements': 5,
-    'Simple Programs': 6,
-    'Programs': 7
+    Conditionals.NESTED_CONDITIONAL_STATEMENTS: 5,
+    Conditionals.SIMPLE_PROGRAMS: 6,
+    Conditionals.PROGRAMS: 7
 }
 
 
@@ -35,42 +35,42 @@ def test_conditionals():
     # Test more failure than success (easier topics).
     _predict_success_in_conditionals(model, failure, failure, failure, failure, success, success, success)
 
-    print('Conditionals')
+    print(ParentCategories.CONDITIONALS)
     _run_inference(model, {
-        'Boolean': success,
-        'Decision': success,
-        'Operators': success,
-        'Conditional Statements': success,
-        'Nested Conditional Statements': success,
-        'Simple Programs': success,
-        'Programs': success
-    }, 'Conditionals')
+        Conditionals.BOOLEAN: success,
+        Conditionals.DECISION: success,
+        Conditionals.OPERATORS: success,
+        Conditionals.CONDITIONAL_STATEMENTS: success,
+        Conditionals.NESTED_CONDITIONAL_STATEMENTS: success,
+        Conditionals.SIMPLE_PROGRAMS: success,
+        Conditionals.PROGRAMS: success
+    }, ParentCategories.CONDITIONALS)
 
-    print('Conditionals')
+    print(ParentCategories.CONDITIONALS)
     _run_inference(model, {
-        'Boolean': failure,
-        'Decision': failure,
-        'Operators': failure,
-        'Conditional Statements': success,
-        'Nested Conditional Statements': success,
-    }, 'Conditionals')
+        Conditionals.BOOLEAN: failure,
+        Conditionals.DECISION: failure,
+        Conditionals.OPERATORS: failure,
+        Conditionals.CONDITIONAL_STATEMENTS: success,
+        Conditionals.NESTED_CONDITIONAL_STATEMENTS: success,
+    }, ParentCategories.CONDITIONALS)
 
-    print('Programs')
+    print(Conditionals.PROGRAMS)
     _run_inference(model, {
-        'Conditionals': success,
-        'Boolean': success,
-    }, 'Programs')
+        ParentCategories.CONDITIONALS: success,
+        Conditionals.BOOLEAN: success,
+    }, Conditionals.PROGRAMS)
 
-    print('Operators')
+    print(Conditionals.OPERATORS)
     _run_inference(model, {
-        'Conditionals': success,
-        'Boolean': failure,
-        'Decision': success,
-        'Conditional Statements': success,
-        'Nested Conditional Statements': success,
-        'Simple Programs': success,
-        'Programs': failure
-    }, 'Operators')
+        ParentCategories.CONDITIONALS: success,
+        Conditionals.BOOLEAN: failure,
+        Conditionals.DECISION: success,
+        Conditionals.CONDITIONAL_STATEMENTS: success,
+        Conditionals.NESTED_CONDITIONAL_STATEMENTS: success,
+        Conditionals.SIMPLE_PROGRAMS: success,
+        Conditionals.PROGRAMS: failure
+    }, Conditionals.OPERATORS)
 
 
 def _run_inference(model, data, estimated_node):
@@ -87,13 +87,13 @@ def _predict_success_in_conditionals(model, boolean, decision, operators, condit
     timer = Timer()
     timer.start()
     predictions = model.predict_proba({
-        'Boolean': boolean,
-        'Decision': decision,
-        'Operators': operators,
-        'Conditional Statements': conditional_statements,
-        'Nested Conditional Statements': nested_conditional_statements,
-        'Simple Programs': simple_programs,
-        'Programs': programs
+        Conditionals.BOOLEAN: boolean,
+        Conditionals.DECISION: decision,
+        Conditionals.OPERATORS: operators,
+        Conditionals.CONDITIONAL_STATEMENTS: conditional_statements,
+        Conditionals.NESTED_CONDITIONAL_STATEMENTS: nested_conditional_statements,
+        Conditionals.SIMPLE_PROGRAMS: simple_programs,
+        Conditionals.PROGRAMS: programs
     })
     overall_success = predictions[0].parameters[0]
     print((
