@@ -7,3 +7,4 @@ from .arrays_bayes_net import generate_arrays_bayesian_network, get_arrays_nodes
 from .methods_bayes_net import generate_methods_bayesian_network, get_methods_nodes
 from .pre_defined_classes_bayes_net import generate_pre_defined_classes_bayesian_network, get_pre_defined_classes_nodes
 from .oop_bayes_net import generate_oop_bayesian_network, get_oop_nodes
+from .complete_bayes_net import generate_complete_bayesian_network

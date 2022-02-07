@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 from modelling import generate_performance_bayesian_network
 from constants import high, medium, low, short, long, success, failure
 from util import Timer
@@ -12,6 +14,10 @@ NODE_ORDER = {
 
 def test_overall_performance():
     model = generate_performance_bayesian_network()
+    # Uncomment these lines to visually plot the model.
+    # model.plot()
+    # plt.show()
+
     # High average success, low skip questions, short time taken.
     _make_prediction(model, high, low, short)
     # Low average success, high skip questions, long time taken.

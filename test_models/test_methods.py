@@ -17,6 +17,7 @@ NODE_ORDER = {
 
 def test_methods():
     model = generate_methods_bayesian_network()
+    # Uncomment these lines to visually plot the model.
     # model.plot()
     # plt.show()
 

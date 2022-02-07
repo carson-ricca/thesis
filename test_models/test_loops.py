@@ -7,6 +7,7 @@ from util import Timer
 
 def test_loops():
     model = generate_loops_bayesian_network()
+    # Uncomment these lines to visually plot the model.
     model.plot()
     plt.show()
     # # All nodes are success.

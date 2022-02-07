@@ -21,6 +21,7 @@ NODE_ORDER = {
 
 def test_pre_defined_classes():
     model = generate_pre_defined_classes_bayesian_network()
+    # Uncomment these lines to visually plot the model.
     # model.plot()
     # plt.show()
 

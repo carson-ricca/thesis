@@ -7,7 +7,7 @@ from modelling.parent_categories_bayes_net import _get_basics_probability, _get_
     _get_oop_probability
 
 
-def generate_complete_bayes_net():
+def generate_complete_bayesian_network():
     """
     Generates the Bayesian Network for the complete model.
     :return: The complete Bayesian Network.
@@ -28,8 +28,6 @@ def generate_complete_bayes_net():
     methods_node = State(methods, name='Methods')
     oop_node = State(oop, name='OOP')
 
-    states = [basics_node, conditionals_node, pre_defined_classes_node, loops_node, arrays_node, methods_node, oop_node]
-
     basics_nodes = get_basics_nodes(basics)
     basics_variables_node = basics_nodes[0]
     basics_data_types_node = basics_nodes[1]
@@ -38,8 +36,6 @@ def generate_complete_bayes_net():
     basics_arithmetic_operators_node = basics_nodes[4]
     basics_casting_node = basics_nodes[5]
     basics_simple_calculation_problems_node = basics_nodes[6]
-    states.extend([basics_variables_node, basics_data_types_node, basics_statements_node, basics_constants_node,
-                   basics_arithmetic_operators_node, basics_casting_node, basics_simple_calculation_problems_node])
 
     conditionals_nodes = get_conditionals_nodes(conditionals)
     conditionals_boolean_node = conditionals_nodes[0]
@@ -49,9 +45,6 @@ def generate_complete_bayes_net():
     conditionals_nested_conditional_statements_node = conditionals_nodes[4]
     conditionals_simple_programs_node = conditionals_nodes[5]
     conditionals_programs_node = conditionals_nodes[6]
-    states.extend([conditionals_boolean_node, conditionals_decision_node, conditionals_operators_node,
-                   conditionals_conditional_statements_node, conditionals_nested_conditional_statements_node,
-                   conditionals_simple_programs_node, conditionals_programs_node])
 
     pre_defined_classes_nodes = get_pre_defined_classes_nodes(pre_defined_classes)
     pre_defined_classes_oop_overview_node = pre_defined_classes_nodes[0]
@@ -64,11 +57,6 @@ def generate_complete_bayes_net():
     pre_defined_classes_simple_programs_node = pre_defined_classes_nodes[7]
     pre_defined_classes_string_node = pre_defined_classes_nodes[8]
     pre_defined_classes_programs_node = pre_defined_classes_nodes[9]
-    states.extend(
-        [pre_defined_classes_oop_overview_node, pre_defined_classes_scanner_node, pre_defined_classes_character_node,
-         pre_defined_classes_math_node, pre_defined_classes_random_node, pre_defined_classes_math_programs_node,
-         pre_defined_classes_changing_behaviour_programs_node, pre_defined_classes_simple_programs_node,
-         pre_defined_classes_string_node, pre_defined_classes_programs_node])
 
     arrays_nodes = get_arrays_nodes(arrays)
     arrays_data_representation_node = arrays_nodes[0]
@@ -78,9 +66,6 @@ def generate_complete_bayes_net():
     arrays_array_with_methods_node = arrays_nodes[4]
     arrays_programs_with_data_sequences_node = arrays_nodes[5]
     arrays_programs_with_multidimensional_data_node = arrays_nodes[6]
-    states.extend([arrays_data_representation_node, arrays_defining_arrays_node, arrays_referencing_arrays_node,
-                   arrays_multidimensional_arrays_node, arrays_array_with_methods_node,
-                   arrays_programs_with_data_sequences_node, arrays_programs_with_multidimensional_data_node])
 
     methods_nodes = get_methods_nodes(methods)
     methods_abstraction_node = methods_nodes[0]
@@ -89,8 +74,6 @@ def generate_complete_bayes_net():
     methods_defining_methods_node = methods_nodes[3]
     methods_method_overloading_node = methods_nodes[4]
     methods_modular_programs_node = methods_nodes[5]
-    states.extend([methods_abstraction_node, methods_variable_scope_node, methods_using_methods_node,
-                   methods_defining_methods_node, methods_method_overloading_node, methods_modular_programs_node])
 
     oop_nodes = get_oop_nodes(oop)
     oop_variable_scope_node = oop_nodes[0]
@@ -104,10 +87,162 @@ def generate_complete_bayes_net():
     oop_simple_programs_node = oop_nodes[8]
     oop_static_modifier_node = oop_nodes[9]
     oop_programs_node = oop_nodes[10]
-    states.extend(
-        [oop_variable_scope_node, oop_oop_overview_node, oop_multiple_classes_node, oop_user_defined_classes_node,
-         oop_creating_objects_node, oop_object_interactions_node, oop_object_independence_node,
-         oop_special_class_method_node, oop_simple_programs_node, oop_static_modifier_node, oop_programs_node])
 
     model = BayesianNetwork('Learning Model')
-    model.add_states(states)
+    model.add_states(basics_node, conditionals_node, pre_defined_classes_node, loops_node, arrays_node, methods_node,
+                     oop_node, basics_variables_node, basics_data_types_node, basics_statements_node,
+                     basics_constants_node,
+                     basics_arithmetic_operators_node, basics_casting_node, basics_simple_calculation_problems_node,
+                     conditionals_boolean_node, conditionals_decision_node, conditionals_operators_node,
+                     conditionals_conditional_statements_node, conditionals_nested_conditional_statements_node,
+                     conditionals_simple_programs_node, conditionals_programs_node,
+                     pre_defined_classes_oop_overview_node, pre_defined_classes_scanner_node,
+                     pre_defined_classes_character_node,
+                     pre_defined_classes_math_node, pre_defined_classes_random_node,
+                     pre_defined_classes_math_programs_node,
+                     pre_defined_classes_changing_behaviour_programs_node, pre_defined_classes_simple_programs_node,
+                     pre_defined_classes_string_node, pre_defined_classes_programs_node,
+                     arrays_data_representation_node, arrays_defining_arrays_node, arrays_referencing_arrays_node,
+                     arrays_multidimensional_arrays_node, arrays_array_with_methods_node,
+                     arrays_programs_with_data_sequences_node, arrays_programs_with_multidimensional_data_node,
+                     methods_abstraction_node, methods_variable_scope_node, methods_using_methods_node,
+                     methods_defining_methods_node, methods_method_overloading_node, methods_modular_programs_node,
+                     oop_variable_scope_node, oop_oop_overview_node, oop_multiple_classes_node,
+                     oop_user_defined_classes_node,
+                     oop_creating_objects_node, oop_object_interactions_node, oop_object_independence_node,
+                     oop_special_class_method_node, oop_simple_programs_node, oop_static_modifier_node,
+                     oop_programs_node)
+
+    # Parent categories edges.
+    model.add_edge(basics_node, conditionals_node)
+    model.add_edge(basics_node, pre_defined_classes_node)
+    model.add_edge(conditionals_node, loops_node)
+    model.add_edge(loops_node, arrays_node)
+    model.add_edge(loops_node, methods_node)
+    model.add_edge(arrays_node, oop_node)
+    model.add_edge(methods_node, oop_node)
+    model.add_edge(pre_defined_classes_node, oop_node)
+
+    # Basics sub-category edges.
+    model.add_edge(basics_node, basics_variables_node)
+    model.add_edge(basics_node, basics_data_types_node)
+    model.add_edge(basics_node, basics_statements_node)
+    model.add_edge(basics_node, basics_constants_node)
+    model.add_edge(basics_node, basics_arithmetic_operators_node)
+    model.add_edge(basics_node, basics_casting_node)
+    model.add_edge(basics_node, basics_simple_calculation_problems_node)
+    model.add_edge(basics_variables_node, basics_data_types_node)
+    model.add_edge(basics_variables_node, basics_statements_node)
+    model.add_edge(basics_variables_node, basics_constants_node)
+    model.add_edge(basics_data_types_node, basics_arithmetic_operators_node)
+    model.add_edge(basics_data_types_node, basics_casting_node)
+    model.add_edge(basics_data_types_node, basics_simple_calculation_problems_node)
+    model.add_edge(basics_statements_node, basics_arithmetic_operators_node)
+    model.add_edge(basics_arithmetic_operators_node, basics_simple_calculation_problems_node)
+    model.add_edge(basics_constants_node, basics_simple_calculation_problems_node)
+
+    # Conditionals sub-category edges.
+    model.add_edge(conditionals_node, conditionals_boolean_node)
+    model.add_edge(conditionals_node, conditionals_decision_node)
+    model.add_edge(conditionals_node, conditionals_operators_node)
+    model.add_edge(conditionals_node, conditionals_conditional_statements_node)
+    model.add_edge(conditionals_node, conditionals_nested_conditional_statements_node)
+    model.add_edge(conditionals_node, conditionals_simple_programs_node)
+    model.add_edge(conditionals_node, conditionals_programs_node)
+    model.add_edge(conditionals_boolean_node, conditionals_decision_node)
+    model.add_edge(conditionals_boolean_node, conditionals_operators_node)
+    model.add_edge(conditionals_boolean_node, conditionals_conditional_statements_node)
+    model.add_edge(conditionals_decision_node, conditionals_conditional_statements_node)
+    model.add_edge(conditionals_operators_node, conditionals_conditional_statements_node)
+    model.add_edge(conditionals_conditional_statements_node, conditionals_nested_conditional_statements_node)
+    model.add_edge(conditionals_conditional_statements_node, conditionals_simple_programs_node)
+    model.add_edge(conditionals_nested_conditional_statements_node, conditionals_programs_node)
+    model.add_edge(conditionals_simple_programs_node, conditionals_programs_node)
+
+    # Pre-Defined classes sub-category edges.
+    model.add_edge(pre_defined_classes_node, pre_defined_classes_oop_overview_node)
+    model.add_edge(pre_defined_classes_node, pre_defined_classes_scanner_node)
+    model.add_edge(pre_defined_classes_node, pre_defined_classes_character_node)
+    model.add_edge(pre_defined_classes_node, pre_defined_classes_math_node)
+    model.add_edge(pre_defined_classes_node, pre_defined_classes_random_node)
+    model.add_edge(pre_defined_classes_node, pre_defined_classes_simple_programs_node)
+    model.add_edge(pre_defined_classes_node, pre_defined_classes_string_node)
+    model.add_edge(pre_defined_classes_node, pre_defined_classes_math_programs_node)
+    model.add_edge(pre_defined_classes_node, pre_defined_classes_changing_behaviour_programs_node)
+    model.add_edge(pre_defined_classes_node, pre_defined_classes_programs_node)
+    model.add_edge(pre_defined_classes_oop_overview_node, pre_defined_classes_math_node)
+    model.add_edge(pre_defined_classes_oop_overview_node, pre_defined_classes_random_node)
+    model.add_edge(pre_defined_classes_oop_overview_node, pre_defined_classes_scanner_node)
+    model.add_edge(pre_defined_classes_oop_overview_node, pre_defined_classes_character_node)
+    model.add_edge(pre_defined_classes_math_node, pre_defined_classes_math_programs_node)
+    model.add_edge(pre_defined_classes_random_node, pre_defined_classes_changing_behaviour_programs_node)
+    model.add_edge(pre_defined_classes_scanner_node, pre_defined_classes_simple_programs_node)
+    model.add_edge(pre_defined_classes_character_node, pre_defined_classes_simple_programs_node)
+    model.add_edge(pre_defined_classes_character_node, pre_defined_classes_string_node)
+    model.add_edge(pre_defined_classes_simple_programs_node, pre_defined_classes_programs_node)
+    model.add_edge(pre_defined_classes_string_node, pre_defined_classes_programs_node)
+
+    # Arrays sub-category edges.
+    model.add_edge(arrays_node, arrays_data_representation_node)
+    model.add_edge(arrays_node, arrays_defining_arrays_node)
+    model.add_edge(arrays_node, arrays_referencing_arrays_node)
+    model.add_edge(arrays_node, arrays_multidimensional_arrays_node)
+    model.add_edge(arrays_node, arrays_array_with_methods_node)
+    model.add_edge(arrays_node, arrays_programs_with_data_sequences_node)
+    model.add_edge(arrays_node, arrays_programs_with_multidimensional_data_node)
+    model.add_edge(arrays_data_representation_node, arrays_defining_arrays_node)
+    model.add_edge(arrays_data_representation_node, arrays_referencing_arrays_node)
+    model.add_edge(arrays_data_representation_node, arrays_multidimensional_arrays_node)
+    model.add_edge(arrays_defining_arrays_node, arrays_referencing_arrays_node)
+    model.add_edge(arrays_defining_arrays_node, arrays_multidimensional_arrays_node)
+    model.add_edge(arrays_referencing_arrays_node, arrays_array_with_methods_node)
+    model.add_edge(arrays_referencing_arrays_node, arrays_programs_with_data_sequences_node)
+    model.add_edge(arrays_multidimensional_arrays_node, arrays_array_with_methods_node)
+    model.add_edge(arrays_multidimensional_arrays_node, arrays_programs_with_multidimensional_data_node)
+    model.add_edge(arrays_array_with_methods_node, arrays_programs_with_data_sequences_node)
+    model.add_edge(arrays_array_with_methods_node, arrays_programs_with_multidimensional_data_node)
+    model.add_edge(arrays_programs_with_data_sequences_node, arrays_programs_with_multidimensional_data_node)
+
+    # Methods sub-category edges.
+    model.add_edge(methods_node, methods_abstraction_node)
+    model.add_edge(methods_node, methods_variable_scope_node)
+    model.add_edge(methods_node, methods_using_methods_node)
+    model.add_edge(methods_node, methods_defining_methods_node)
+    model.add_edge(methods_node, methods_method_overloading_node)
+    model.add_edge(methods_node, methods_modular_programs_node)
+    model.add_edge(methods_abstraction_node, methods_using_methods_node)
+    model.add_edge(methods_abstraction_node, methods_defining_methods_node)
+    model.add_edge(methods_variable_scope_node, methods_defining_methods_node)
+    model.add_edge(methods_using_methods_node, methods_defining_methods_node)
+    model.add_edge(methods_defining_methods_node, methods_method_overloading_node)
+    model.add_edge(methods_defining_methods_node, methods_modular_programs_node)
+    model.add_edge(methods_method_overloading_node, methods_modular_programs_node)
+
+    # OOP sub-category edges.
+    model.add_edge(oop_node, oop_variable_scope_node)
+    model.add_edge(oop_node, oop_oop_overview_node)
+    model.add_edge(oop_node, oop_multiple_classes_node)
+    model.add_edge(oop_node, oop_user_defined_classes_node)
+    model.add_edge(oop_node, oop_creating_objects_node)
+    model.add_edge(oop_node, oop_object_interactions_node)
+    model.add_edge(oop_node, oop_object_independence_node)
+    model.add_edge(oop_node, oop_special_class_method_node)
+    model.add_edge(oop_node, oop_simple_programs_node)
+    model.add_edge(oop_node, oop_static_modifier_node)
+    model.add_edge(oop_node, oop_programs_node)
+    model.add_edge(oop_variable_scope_node, oop_multiple_classes_node)
+    model.add_edge(oop_variable_scope_node, oop_user_defined_classes_node)
+    model.add_edge(oop_oop_overview_node, oop_multiple_classes_node)
+    model.add_edge(oop_oop_overview_node, oop_user_defined_classes_node)
+    model.add_edge(oop_multiple_classes_node, oop_creating_objects_node)
+    model.add_edge(oop_user_defined_classes_node, oop_creating_objects_node)
+    model.add_edge(oop_user_defined_classes_node, oop_special_class_method_node)
+    model.add_edge(oop_creating_objects_node, oop_object_independence_node)
+    model.add_edge(oop_object_interactions_node, oop_simple_programs_node)
+    model.add_edge(oop_object_independence_node, oop_simple_programs_node)
+    model.add_edge(oop_special_class_method_node, oop_simple_programs_node)
+    model.add_edge(oop_simple_programs_node, oop_programs_node)
+    model.add_edge(oop_static_modifier_node, oop_programs_node)
+
+    model.bake()
+    return model

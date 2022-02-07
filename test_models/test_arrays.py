@@ -18,6 +18,7 @@ NODE_ORDER = {
 
 def test_arrays():
     model = generate_arrays_bayesian_network()
+    # Uncomment these lines to visually plot the model.
     # model.plot()
     # plt.show()
 

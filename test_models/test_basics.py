@@ -18,6 +18,7 @@ NODE_ORDER = {
 
 def test_basics():
     model = generate_basics_bayesian_network()
+    # Uncomment these lines to visually plot the model.
     # model.plot()
     # plt.show()
 

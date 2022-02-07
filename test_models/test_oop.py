@@ -22,6 +22,7 @@ NODE_ORDER = {
 
 def test_oop():
     model = generate_oop_bayesian_network()
+    # Uncomment these lines to visually plot the model.
     # model.plot()
     # plt.show()
     _predict_oop_success(model, success, success, success, success, success, success, success, success, success,

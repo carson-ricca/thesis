@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 from modelling import generate_conditionals_bayesian_network
 from constants import success, failure
 from util import Timer
@@ -16,6 +18,10 @@ NODE_ORDER = {
 
 def test_conditionals():
     model = generate_conditionals_bayesian_network()
+    # Uncomment these lines to visually plot the model.
+    # model.plot()
+    # plt.show()
+
     # All nodes are success.
     _predict_success_in_conditionals(model, success, success, success, success, success, success, success)
     # All nodes are failure.
