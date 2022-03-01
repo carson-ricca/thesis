@@ -1,69 +1,58 @@
 import pgmpy.models as md
 import pgmpy.inference as inf
 from pgmpy.factors.discrete import TabularCPD
+from pgmpy.models import BayesianNetwork
 
 from constants import success, failure
 
 
-def main():
-    model = md.DynamicBayesianNetwork(
-        [(('Overall Performance', 0), ('Success', 0)), (('Overall Performance', 0), ('Skipped Question', 0)),
-         (('Overall Performance', 0), ('Time Taken', 0)), (('Overall Performance', 0), ('Overall Performance', 1))])
+def performance_dbn():
+    """
+    Generates the normal bayes net for the performance model (orange).
 
-    overall_performance_cpt = TabularCPD(('Overall Performance', 0), 2, [
+    CPD KEY NAMES:
+    Performance: 0 - Success, 1 - Failure
+    Correctness: 0 - Success, 1 - Failure
+    Skipped Question: 0 - Yes, 1 - No
+    Time Taken: Long - 0, Medium - 1, Short - 2
+    :return: The generated model.
+    """
+    performance_node = 'Performance'
+    correctness_node = 'Correctness'
+    skipped_question_node = 'Skipped Question'
+    time_taken_node = 'Time Taken'
+
+    model = BayesianNetwork([
+        (performance_node, correctness_node),
+        (performance_node, skipped_question_node),
+        (performance_node, time_taken_node)
+    ])
+
+    performance_cpd = TabularCPD(performance_node, 2, [
         [0.5], [0.5]
     ])
 
-    success_cpt = TabularCPD(('Success', 0), 2, [
-        [0.8, 0.1],
-        [0.2, 0.9]
-    ], evidence=[('Overall Performance', 0)], evidence_card=[2])
+    correctness_cpd = TabularCPD(correctness_node, 2, [
+        [0.9, 0.2],
+        [0.1, 0.8]
+    ], evidence=[performance_node], evidence_card=[2])
 
-    skipped_question_cpt = TabularCPD(('Skipped Question', 0), 2, [
-        [0.8, 0.1],
-        [0.2, 0.9]
-    ], evidence=[('Overall Performance', 0)], evidence_card=[2])
+    skipped_question_cpd = TabularCPD(skipped_question_node, 2, [
+        [0.1, 0.7],
+        [0.9, 0.2]
+    ], evidence=[performance_node], evidence_card=[2])
 
-    time_taken_cpt = TabularCPD(('Time Taken', 0), 3, [
-        [0.2, 0.6],
-        [0.4, 0.3],
-        [0.4, 0.1]
-    ], evidence=[('Overall Performance', 0)], evidence_card=[2])
+    time_taken_cpd = TabularCPD(time_taken_node, 3, [
+        [0.1, 0.4],
+        [0.3, 0.4],
+        [0.6, 0.2]
+    ], evidence=[performance_node], evidence_card=[2])
 
-    overall_performance_transition_cpt = TabularCPD(('Overall Performance', 1), 2, [
-        [0.7, 0.3],
-        [0.3, 0.7]
-    ], evidence=[('Overall Performance', 0)], evidence_card=[2])
+    model.add_cpds(performance_cpd, correctness_cpd, skipped_question_cpd, time_taken_cpd)
 
-    model.add_cpds(overall_performance_cpt, success_cpt, skipped_question_cpt, time_taken_cpt,
-                   overall_performance_transition_cpt)
-    model.initialize_initial_state()
-    model.check_model()
-
-    dbn_inf = inf.DBNInference(model)
-
-    # Successful on a question.
-    print(
-        dbn_inf.forward_inference([('Overall Performance', 1)], {('Success', 0): 1})[('Overall Performance', 1)].values
-    )
-
-    # Not successful on a question.
-    print(
-        dbn_inf.forward_inference([('Overall Performance', 1)], {('Success', 0): 0})[('Overall Performance', 1)].values
-    )
-
-    # Successful on a question no skipped question.
-    print(
-        dbn_inf.forward_inference([('Overall Performance', 1)], {('Success', 0): 1, ('Skipped Question', 0): 0})[
-            ('Overall Performance', 1)].values
-    )
-
-    # Skipped the question.
-    print(
-        dbn_inf.forward_inference([('Overall Performance', 1)], {('Skipped Question', 1): 0})[
-            ('Overall Performance', 1)].values
-    )
+    for cpd in model.get_cpds():
+        print(cpd)
 
 
 if __name__ == '__main__':
-    main()
+    performance_dbn()
