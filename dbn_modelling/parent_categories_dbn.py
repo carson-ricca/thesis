@@ -1,96 +1,222 @@
-import pgmpy.models as md
-import pgmpy.inference as inf
 from pgmpy.factors.discrete import TabularCPD
+from pgmpy.inference import DBNInference
+from pgmpy.models import DynamicBayesianNetwork
+
+basics_node_0 = ('Basics', 0)
+basics_node_1 = ('Basics', 1)
+conditionals_node_0 = ('Conditionals', 0)
+conditionals_node_1 = ('Conditionals', 1)
+loops_node_0 = ('Loops', 0)
+loops_node_1 = ('Loops', 1)
+arrays_node_0 = ('Arrays', 0)
+arrays_node_1 = ('Arrays', 1)
+methods_node_0 = ('Methods', 0)
+methods_node_1 = ('Methods', 1)
+pre_defined_classes_node_0 = ('Pre-Defined Classes', 0)
+pre_defined_classes_node_1 = ('Pre-Defined Classes', 1)
+oop_node_0 = ('OOP', 0)
+oop_node_1 = ('OOP', 1)
 
 
-def main():
-    overall_performance_node_0 = ('Overall Performance', 0)
-    overall_performance_node_1 = ('Overall Performance', 1)
-    success_node_0 = ('Success', 0)
-    success_node_1 = ('Success', 1)
-    skipped_question_node_0 = ('Skipped Question', 0)
-    skipped_question_node_1 = ('Skipped Question', 1)
-    time_taken_node_0 = ('Time Taken', 0)
-    time_taken_node_1 = ('Time Taken', 1)
+def parent_categories():
+    """
+    Generates the DBN for the parent categories model.
 
-    model = md.DynamicBayesianNetwork(
-        [(overall_performance_node_0, success_node_0), (overall_performance_node_0, skipped_question_node_0),
-         (overall_performance_node_0, time_taken_node_0), (overall_performance_node_0, overall_performance_node_1),
-         (success_node_0, success_node_1), (skipped_question_node_0, skipped_question_node_1),
-         (time_taken_node_0, time_taken_node_1), (overall_performance_node_1, success_node_1),
-         (overall_performance_node_1, skipped_question_node_1), (overall_performance_node_1, time_taken_node_1)])
+    CPD Key Names:
+    All Nodes: 0 - Success, 1 - Failure
+    :return: The generated model.
+    """
+    model = DynamicBayesianNetwork([
+        (basics_node_0, conditionals_node_0),
+        (basics_node_0, pre_defined_classes_node_0),
+        (conditionals_node_0, loops_node_0),
+        (loops_node_0, arrays_node_0),
+        (loops_node_0, methods_node_0),
+        (arrays_node_0, oop_node_0),
+        (methods_node_0, oop_node_0),
+        (pre_defined_classes_node_0, oop_node_0),
+        (basics_node_0, basics_node_1),
+        (conditionals_node_0, conditionals_node_1),
+        (loops_node_0, loops_node_1),
+        (arrays_node_0, arrays_node_1),
+        (methods_node_0, methods_node_1),
+        (pre_defined_classes_node_0, pre_defined_classes_node_1),
+        (oop_node_0, oop_node_1),
+        (basics_node_1, conditionals_node_1),
+        (basics_node_1, pre_defined_classes_node_1),
+        (conditionals_node_1, loops_node_1),
+        (loops_node_1, arrays_node_1),
+        (loops_node_1, methods_node_1),
+        (arrays_node_1, oop_node_1),
+        (methods_node_1, oop_node_1),
+        (pre_defined_classes_node_1, oop_node_1)
+    ])
 
-    overall_performance_cpt = TabularCPD(overall_performance_node_0, 2, [
+    basics_cpd = TabularCPD(basics_node_0, 2, [
         [0.5], [0.5]
     ])
 
-    success_cpt = TabularCPD(success_node_0, 2, [
-        [0.8, 0.1],
-        [0.2, 0.9]
-    ], evidence=[overall_performance_node_0], evidence_card=[2])
+    conditionals_cpd = TabularCPD(conditionals_node_0, 2, [
+        [0.75, 0.25],
+        [0.25, 0.75]
+    ], evidence=[basics_node_0], evidence_card=[2])
 
-    skipped_question_cpt = TabularCPD(skipped_question_node_0, 2, [
-        [0.3, 0.9],
-        [0.7, 0.1]
-    ], evidence=[overall_performance_node_0], evidence_card=[2])
+    pre_defined_classes_cpd = TabularCPD(pre_defined_classes_node_0, 2, [
+        [0.75, 0.25],
+        [0.25, 0.75]
+    ], evidence=[basics_node_0], evidence_card=[2])
 
-    time_taken_cpt = TabularCPD(time_taken_node_0, 3, [
-        [0.2, 0.6],
-        [0.4, 0.3],
-        [0.4, 0.1]
-    ], evidence=[overall_performance_node_0], evidence_card=[2])
+    loops_cpd = TabularCPD(loops_node_0, 2, [
+        [0.75, 0.25],
+        [0.25, 0.75]
+    ], evidence=[conditionals_node_0], evidence_card=[2])
 
-    overall_performance_transition_cpt = TabularCPD(overall_performance_node_1, 2, [
-        [0.7, 0.3],
-        [0.3, 0.7]
-    ], evidence=[overall_performance_node_0], evidence_card=[2])
+    arrays_cpd = TabularCPD(arrays_node_0, 2, [
+        [0.75, 0.25],
+        [0.25, 0.75]
+    ], evidence=[loops_node_0], evidence_card=[2])
 
-    success_transition_cpt = TabularCPD(success_node_1, 2, [
-        [0.7, 0.3],
-        [0.3, 0.7]
-    ], evidence=[success_node_0], evidence_card=[2])
+    methods_cpd = TabularCPD(methods_node_0, 2, [
+        [0.75, 0.25],
+        [0.25, 0.75]
+    ], evidence=[loops_node_0], evidence_card=[2])
 
-    skipped_question_transitional_cpt = TabularCPD(skipped_question_node_1, 2, [
-        [0.6, 0.4],
-        [0.4, 0.6]
-    ], evidence=[skipped_question_node_0], evidence_card=[2])
+    oop_cpd = TabularCPD(oop_node_0, 2, [
+        [0.9, 0.75, 0.6, 0.3, 0.7, 0.4, 0.4, 0.1],
+        [0.1, 0.25, 0.4, 0.7, 0.3, 0.6, 0.6, 0.9]
+    ], evidence=[arrays_node_0, methods_node_0, pre_defined_classes_node_0], evidence_card=[2, 2, 2])
 
-    time_taken_transitional_cpt = TabularCPD(time_taken_node_1, 3, [
-        [0.6, 0.2, 0.1],
-        [0.3, 0.5, 0.2],
-        [0.1, 0.3, 0.7]
-    ], evidence=[time_taken_node_0], evidence_card=[3])
+    basics_transitional_cpd = TabularCPD(basics_node_1, 2, [
+        [0.8, 0.2],
+        [0.2, 0.8]
+    ], evidence=[basics_node_0], evidence_card=[2])
 
-    model.add_cpds(overall_performance_cpt, success_cpt, skipped_question_cpt, time_taken_cpt,
-                   overall_performance_transition_cpt, success_transition_cpt, skipped_question_transitional_cpt,
-                   time_taken_transitional_cpt)
+    conditionals_transitional_cpd = TabularCPD(conditionals_node_1, 2, [
+        [0.9, 0.8, 0.5, 0.1],
+        [0.1, 0.2, 0.5, 0.9]
+    ], evidence=[conditionals_node_0, basics_node_1], evidence_card=[2, 2])
+
+    pre_defined_classes_transitional_cpd = TabularCPD(pre_defined_classes_node_1, 2, [
+        [0.9, 0.8, 0.5, 0.1],
+        [0.1, 0.2, 0.5, 0.9]
+    ], evidence=[pre_defined_classes_node_0, basics_node_1], evidence_card=[2, 2])
+
+    loops_transitional_cpd = TabularCPD(loops_node_1, 2, [
+        [0.9, 0.8, 0.5, 0.1],
+        [0.1, 0.2, 0.5, 0.9]
+    ], evidence=[loops_node_0, conditionals_node_1], evidence_card=[2, 2])
+
+    arrays_transitional_cpd = TabularCPD(arrays_node_1, 2, [
+        [0.9, 0.8, 0.5, 0.1],
+        [0.1, 0.2, 0.5, 0.9]
+    ], evidence=[arrays_node_0, loops_node_1], evidence_card=[2, 2])
+
+    methods_transitional_cpd = TabularCPD(methods_node_1, 2, [
+        [0.9, 0.8, 0.5, 0.1],
+        [0.1, 0.2, 0.5, 0.9]
+    ], evidence=[methods_node_0, loops_node_1], evidence_card=[2, 2])
+
+    oop_transitional_cpd = (TabularCPD(oop_node_1, 2, [
+        [0.95, 0.9, 0.9, 0.7, 0.9, 0.7, 0.7, 0.6, 0.7, 0.6, 0.6, 0.4, 0.6, 0.4, 0.4, 0.1],
+        [0.05, 0.1, 0.1, 0.3, 0.1, 0.3, 0.3, 0.4, 0.3, 0.4, 0.4, 0.6, 0.4, 0.6, 0.6, 0.9]
+    ], evidence=[oop_node_0, arrays_node_1, methods_node_1, pre_defined_classes_node_1], evidence_card=[2, 2, 2, 2]))
+
+    model.add_cpds(basics_cpd, conditionals_cpd, pre_defined_classes_cpd, loops_cpd, arrays_cpd, methods_cpd, oop_cpd,
+                   basics_transitional_cpd, conditionals_transitional_cpd, pre_defined_classes_transitional_cpd,
+                   loops_transitional_cpd, arrays_transitional_cpd, methods_transitional_cpd, oop_transitional_cpd)
     model.initialize_initial_state()
     model.check_model()
+    return model
 
-    dbn_inf = inf.DBNInference(model)
 
-    # Successful on a question.
+def test_inference(model):
+    dbn_inf = DBNInference(model)
+
+    # Success in all categories in previous timestamp.
     print(
-        dbn_inf.forward_inference([overall_performance_node_1], {success_node_0: 1})[overall_performance_node_1].values
+        dbn_inf.forward_inference([basics_node_1], {
+            basics_node_0: 0,
+            conditionals_node_0: 0,
+            loops_node_0: 0,
+            arrays_node_0: 0,
+            methods_node_0: 0,
+            pre_defined_classes_node_0: 0,
+            oop_node_0: 0
+        })[basics_node_1].values
     )
 
-    # Not successful on a question.
+    # Failure in all categories in previous timestamp.
     print(
-        dbn_inf.forward_inference([overall_performance_node_1], {success_node_0: 0})[overall_performance_node_1].values
+        dbn_inf.forward_inference([basics_node_1], {
+            basics_node_0: 1,
+            conditionals_node_0: 1,
+            loops_node_0: 1,
+            arrays_node_0: 1,
+            methods_node_0: 1,
+            pre_defined_classes_node_0: 1,
+            oop_node_0: 1
+        })[basics_node_1].values
     )
 
-    # Successful on a question no skipped question.
+    # Below is a variety of different tests using
     print(
-        dbn_inf.forward_inference([overall_performance_node_1], {success_node_0: 1, skipped_question_node_0: 0})[
-            overall_performance_node_1].values
+        dbn_inf.forward_inference([oop_node_1], {
+            basics_node_0: 1,
+            conditionals_node_0: 1,
+            loops_node_0: 1,
+            arrays_node_0: 1,
+            methods_node_0: 1,
+            pre_defined_classes_node_0: 1,
+        })[oop_node_1].values
     )
 
-    # Skipped the question.
     print(
-        dbn_inf.forward_inference([overall_performance_node_1], {skipped_question_node_0: 1})[
-            overall_performance_node_1].values
+        dbn_inf.forward_inference([oop_node_1], {
+            basics_node_0: 0,
+            conditionals_node_0: 0,
+            loops_node_0: 0,
+            arrays_node_0: 0,
+            methods_node_0: 0,
+            pre_defined_classes_node_0: 0,
+        })[oop_node_1].values
+    )
+
+    print(
+        dbn_inf.forward_inference([oop_node_1], {
+            basics_node_0: 0,
+            conditionals_node_0: 0,
+            loops_node_0: 0,
+            arrays_node_0: 0,
+            methods_node_0: 0,
+            pre_defined_classes_node_0: 0,
+            oop_node_0: 1
+        })[oop_node_1].values
+    )
+
+    print(
+        dbn_inf.forward_inference([oop_node_1], {
+            basics_node_0: 0,
+            conditionals_node_0: 1,
+            loops_node_0: 0,
+            arrays_node_0: 1,
+            methods_node_0: 0,
+            pre_defined_classes_node_0: 1,
+        })[oop_node_1].values
+    )
+
+    print(
+        dbn_inf.forward_inference([oop_node_1], {
+            basics_node_0: 1,
+            conditionals_node_0: 1,
+            loops_node_0: 1,
+            arrays_node_0: 1,
+            methods_node_0: 1,
+            pre_defined_classes_node_0: 1,
+            oop_node_0: 0
+        })[oop_node_1].values
     )
 
 
 if __name__ == '__main__':
-    main()
+    parent_categories_model = parent_categories()
+    test_inference(parent_categories_model)

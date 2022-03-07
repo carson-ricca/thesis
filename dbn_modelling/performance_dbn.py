@@ -2,8 +2,6 @@ from pgmpy.factors.discrete import TabularCPD
 from pgmpy.inference import BeliefPropagation
 from pgmpy.models import BayesianNetwork
 
-from constants import success, failure
-
 performance_node = 'Performance'
 correctness_node = 'Correctness'
 skipped_question_node = 'Skipped Question'
