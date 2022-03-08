@@ -158,7 +158,7 @@ def test_inference(model):
         })[basics_node_1].values
     )
 
-    # Below is a variety of different tests using
+    # Below is a variety of different tests.
     print(
         dbn_inf.forward_inference([oop_node_1], {
             basics_node_0: 1,
