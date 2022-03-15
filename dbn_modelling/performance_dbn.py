@@ -43,8 +43,8 @@ def performance_dbn():
     ], evidence=[performance_node_0], evidence_card=[2])
 
     skipped_question_cpd = TabularCPD(skipped_question_node_0, 2, [
-        [0.3, 0.7],
-        [0.7, 0.3]
+        [0.5, 0.5],
+        [0.5, 0.5]
     ], evidence=[performance_node_0], evidence_card=[2])
 
     time_taken_cpd = TabularCPD(time_taken_node_0, 3, [
