@@ -73,7 +73,7 @@ def loops():
         (variable_scope_node_1, simple_programs_node_1),
         (variable_scope_node_1, nested_loops_node_1),
         (simple_programs_node_1, programs_node_1),
-        (nested_loops_node_1, programs_node_1),
+        (nested_loops_node_1, programs_node_1)
     ])
 
     loops_cpd = TabularCPD(loops_node_0, 2, [
