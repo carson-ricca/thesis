@@ -59,67 +59,67 @@ def parent_categories():
     conditionals_cpd = TabularCPD(conditionals_node_0, 2, [
         [0.75, 0.25],
         [0.25, 0.75]
-    ], evidence=[basics_node_0], evidence_card=[2])
+    ], [basics_node_0], [2])
 
     pre_defined_classes_cpd = TabularCPD(pre_defined_classes_node_0, 2, [
         [0.75, 0.25],
         [0.25, 0.75]
-    ], evidence=[basics_node_0], evidence_card=[2])
+    ], [basics_node_0], [2])
 
     loops_cpd = TabularCPD(loops_node_0, 2, [
         [0.75, 0.25],
         [0.25, 0.75]
-    ], evidence=[conditionals_node_0], evidence_card=[2])
+    ], [conditionals_node_0], [2])
 
     arrays_cpd = TabularCPD(arrays_node_0, 2, [
         [0.75, 0.25],
         [0.25, 0.75]
-    ], evidence=[loops_node_0], evidence_card=[2])
+    ], [loops_node_0], [2])
 
     methods_cpd = TabularCPD(methods_node_0, 2, [
         [0.75, 0.25],
         [0.25, 0.75]
-    ], evidence=[loops_node_0], evidence_card=[2])
+    ], [loops_node_0], [2])
 
     oop_cpd = TabularCPD(oop_node_0, 2, [
         [0.9, 0.75, 0.6, 0.3, 0.7, 0.4, 0.4, 0.1],
         [0.1, 0.25, 0.4, 0.7, 0.3, 0.6, 0.6, 0.9]
-    ], evidence=[arrays_node_0, methods_node_0, pre_defined_classes_node_0], evidence_card=[2, 2, 2])
+    ], [arrays_node_0, methods_node_0, pre_defined_classes_node_0], [2, 2, 2])
 
     basics_transitional_cpd = TabularCPD(basics_node_1, 2, [
         [0.8, 0.2],
         [0.2, 0.8]
-    ], evidence=[basics_node_0], evidence_card=[2])
+    ], [basics_node_0], [2])
 
     conditionals_transitional_cpd = TabularCPD(conditionals_node_1, 2, [
         [0.9, 0.8, 0.5, 0.1],
         [0.1, 0.2, 0.5, 0.9]
-    ], evidence=[conditionals_node_0, basics_node_1], evidence_card=[2, 2])
+    ], [conditionals_node_0, basics_node_1], [2, 2])
 
     pre_defined_classes_transitional_cpd = TabularCPD(pre_defined_classes_node_1, 2, [
         [0.9, 0.8, 0.5, 0.1],
         [0.1, 0.2, 0.5, 0.9]
-    ], evidence=[pre_defined_classes_node_0, basics_node_1], evidence_card=[2, 2])
+    ], [pre_defined_classes_node_0, basics_node_1], [2, 2])
 
     loops_transitional_cpd = TabularCPD(loops_node_1, 2, [
         [0.9, 0.8, 0.5, 0.1],
         [0.1, 0.2, 0.5, 0.9]
-    ], evidence=[loops_node_0, conditionals_node_1], evidence_card=[2, 2])
+    ], [loops_node_0, conditionals_node_1], [2, 2])
 
     arrays_transitional_cpd = TabularCPD(arrays_node_1, 2, [
         [0.9, 0.8, 0.5, 0.1],
         [0.1, 0.2, 0.5, 0.9]
-    ], evidence=[arrays_node_0, loops_node_1], evidence_card=[2, 2])
+    ], [arrays_node_0, loops_node_1], [2, 2])
 
     methods_transitional_cpd = TabularCPD(methods_node_1, 2, [
         [0.9, 0.8, 0.5, 0.1],
         [0.1, 0.2, 0.5, 0.9]
-    ], evidence=[methods_node_0, loops_node_1], evidence_card=[2, 2])
+    ], [methods_node_0, loops_node_1], [2, 2])
 
     oop_transitional_cpd = (TabularCPD(oop_node_1, 2, [
         [0.95, 0.9, 0.9, 0.7, 0.9, 0.7, 0.7, 0.6, 0.7, 0.6, 0.6, 0.4, 0.6, 0.4, 0.4, 0.1],
         [0.05, 0.1, 0.1, 0.3, 0.1, 0.3, 0.3, 0.4, 0.3, 0.4, 0.4, 0.6, 0.4, 0.6, 0.6, 0.9]
-    ], evidence=[oop_node_0, arrays_node_1, methods_node_1, pre_defined_classes_node_1], evidence_card=[2, 2, 2, 2]))
+    ], [oop_node_0, arrays_node_1, methods_node_1, pre_defined_classes_node_1], [2, 2, 2, 2]))
 
     model.add_cpds(basics_cpd, conditionals_cpd, pre_defined_classes_cpd, loops_cpd, arrays_cpd, methods_cpd, oop_cpd,
                    basics_transitional_cpd, conditionals_transitional_cpd, pre_defined_classes_transitional_cpd,

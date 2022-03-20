@@ -40,23 +40,23 @@ def performance_dbn():
     correctness_cpd = TabularCPD(correctness_node_0, 2, [
         [0.9, 0.2],
         [0.1, 0.8]
-    ], evidence=[performance_node_0], evidence_card=[2])
+    ], [performance_node_0], [2])
 
     skipped_question_cpd = TabularCPD(skipped_question_node_0, 2, [
         [0.5, 0.5],
         [0.5, 0.5]
-    ], evidence=[performance_node_0], evidence_card=[2])
+    ], [performance_node_0], [2])
 
     time_taken_cpd = TabularCPD(time_taken_node_0, 3, [
         [0.1, 0.3],
         [0.4, 0.4],
         [0.5, 0.3]
-    ], evidence=[performance_node_0], evidence_card=[2])
+    ], [performance_node_0], [2])
 
     performance_transitional_cpd = TabularCPD(performance_node_1, 2, [
         [0.8, 0.3],
         [0.2, 0.7]
-    ], evidence=[performance_node_0], evidence_card=[2])
+    ], [performance_node_0], [2])
 
     model.add_cpds(performance_cpd, correctness_cpd, skipped_question_cpd, time_taken_cpd, performance_transitional_cpd)
     model.initialize_initial_state()

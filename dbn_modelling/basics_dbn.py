@@ -70,82 +70,82 @@ def basics():
     variables_cpd = TabularCPD(variables_node_0, 2, [
         [0.8, 0.2],
         [0.2, 0.8]
-    ], evidence=[basics_node_0], evidence_card=[2])
+    ], [basics_node_0], [2])
 
     data_types_cpd = TabularCPD(data_types_node_0, 2, [
         [0.9, 0.6, 0.6, 0.2],
         [0.1, 0.4, 0.4, 0.8]
-    ], evidence=[basics_node_0, variables_node_0], evidence_card=[2, 2])
+    ], [basics_node_0, variables_node_0], [2, 2])
 
     statements_cpd = TabularCPD(statements_node_0, 2, [
         [0.9, 0.6, 0.6, 0.1],
         [0.1, 0.4, 0.4, 0.9]
-    ], evidence=[basics_node_0, variables_node_0], evidence_card=[2, 2])
+    ], [basics_node_0, variables_node_0], [2, 2])
 
     constants_cpd = TabularCPD(constants_node_0, 2, [
         [0.9, 0.6, 0.6, 0.1],
         [0.1, 0.4, 0.4, 0.9]
-    ], evidence=[basics_node_0, variables_node_0], evidence_card=[2, 2])
+    ], [basics_node_0, variables_node_0], [2, 2])
 
     arithmetic_operators_cpd = TabularCPD(arithmetic_operators_node_0, 2, [
         [0.95, 0.8, 0.4, 0.6, 0.7, 0.3, 0.2, 0.1],
         [0.05, 0.2, 0.6, 0.4, 0.3, 0.7, 0.8, 0.9]
-    ], evidence=[basics_node_0, data_types_node_0, statements_node_0], evidence_card=[2, 2, 2])
+    ], [basics_node_0, data_types_node_0, statements_node_0], [2, 2, 2])
 
     casting_cpd = TabularCPD(casting_node_0, 2, [
         [0.9, 0.6, 0.7, 0.2],
         [0.1, 0.4, 0.3, 0.8]
-    ], evidence=[basics_node_0, data_types_node_0], evidence_card=[2, 2])
+    ], [basics_node_0, data_types_node_0], [2, 2])
 
     simple_calculation_programs_cpd = TabularCPD(simple_calculation_programs_node_0, 2, [
         [0.9, 0.8, 0.8, 0.7, 0.8, 0.6, 0.6, 0.2, 0.8, 0.6, 0.5, 0.2, 0.6, 0.2, 0.3, 0.1],
         [0.1, 0.2, 0.2, 0.3, 0.2, 0.4, 0.4, 0.8, 0.2, 0.4, 0.5, 0.8, 0.4, 0.8, 0.7, 0.9]
-    ], evidence=[basics_node_0, data_types_node_0, arithmetic_operators_node_0, constants_node_0],
-                                                 evidence_card=[2, 2, 2, 2])
+    ], [basics_node_0, data_types_node_0, arithmetic_operators_node_0, constants_node_0],
+                                                 [2, 2, 2, 2])
 
     basics_transitional_cpd = TabularCPD(basics_node_1, 2, [
         [0.8, 0.2],
         [0.2, 0.8]
-    ], evidence=[basics_node_0], evidence_card=[2])
+    ], [basics_node_0], [2])
 
     variables_transitional_cpd = TabularCPD(variables_node_1, 2, [
         [0.9, 0.8, 0.8, 0.1],
         [0.1, 0.2, 0.2, 0.9]
-    ], evidence=[variables_node_0, basics_node_1], evidence_card=[2, 2])
+    ], [variables_node_0, basics_node_1], [2, 2])
 
     data_types_transitional_cpd = TabularCPD(data_types_node_1, 2, [
         [0.9, 0.8, 0.8, 0.8, 0.8, 0.6, 0.6, 0.1],
         [0.1, 0.2, 0.2, 0.2, 0.2, 0.4, 0.4, 0.9]
-    ], evidence=[data_types_node_0, basics_node_1, variables_node_1], evidence_card=[2, 2, 2])
+    ], [data_types_node_0, basics_node_1, variables_node_1], [2, 2, 2])
 
     statements_transitional_cpd = TabularCPD(statements_node_1, 2, [
         [0.9, 0.8, 0.8, 0.8, 0.8, 0.6, 0.6, 0.1],
         [0.1, 0.2, 0.2, 0.2, 0.2, 0.4, 0.4, 0.9]
-    ], evidence=[statements_node_0, basics_node_1, variables_node_1], evidence_card=[2, 2, 2])
+    ], [statements_node_0, basics_node_1, variables_node_1], [2, 2, 2])
 
     constants_transitional_cpd = TabularCPD(constants_node_1, 2, [
         [0.9, 0.8, 0.8, 0.8, 0.8, 0.6, 0.6, 0.1],
         [0.1, 0.2, 0.2, 0.2, 0.2, 0.4, 0.4, 0.9]
-    ], evidence=[constants_node_0, basics_node_1, variables_node_1], evidence_card=[2, 2, 2])
+    ], [constants_node_0, basics_node_1, variables_node_1], [2, 2, 2])
 
     arithmetic_operators_transitional_cpd = TabularCPD(arithmetic_operators_node_1, 2, [
         [0.9, 0.9, 0.9, 0.8, 0.9, 0.8, 0.8, 0.7, 0.8, 0.6, 0.6, 0.3, 0.6, 0.3, 0.3, 0.1],
         [0.1, 0.1, 0.1, 0.2, 0.1, 0.2, 0.2, 0.3, 0.2, 0.4, 0.4, 0.7, 0.4, 0.7, 0.7, 0.9]
-    ], evidence=[arithmetic_operators_node_0, basics_node_1, data_types_node_1, statements_node_1],
-                                                       evidence_card=[2, 2, 2, 2])
+    ], [arithmetic_operators_node_0, basics_node_1, data_types_node_1, statements_node_1],
+                                                       [2, 2, 2, 2])
 
     casting_transitional_cpd = TabularCPD(casting_node_1, 2, [
         [0.9, 0.8, 0.8, 0.7, 0.8, 0.3, 0.3, 0.1],
         [0.1, 0.2, 0.2, 0.3, 0.2, 0.7, 0.7, 0.9]
-    ], evidence=[casting_node_0, basics_node_1, data_types_node_1], evidence_card=[2, 2, 2])
+    ], [casting_node_0, basics_node_1, data_types_node_1], [2, 2, 2])
 
     simple_calculation_programs_transitional_cpd = TabularCPD(simple_calculation_programs_node_1, 2, [
         [0.9, 0.9, 0.9, 0.8, 0.9, 0.8, 0.8, 0.7, 0.8, 0.8, 0.8, 0.7, 0.8, 0.7, 0.7, 0.6, 0.8, 0.7, 0.7, 0.4, 0.7, 0.4,
          0.4, 0.2, 0.7, 0.4, 0.4, 0.2, 0.4, 0.3, 0.2, 0.1],
         [0.1, 0.1, 0.1, 0.2, 0.1, 0.2, 0.2, 0.3, 0.2, 0.2, 0.2, 0.3, 0.2, 0.3, 0.3, 0.4, 0.2, 0.3, 0.3, 0.6, 0.3, 0.6,
          0.6, 0.8, 0.3, 0.6, 0.6, 0.8, 0.6, 0.7, 0.8, 0.9]
-    ], evidence=[simple_calculation_programs_node_0, basics_node_1, data_types_node_1, arithmetic_operators_node_1,
-                 constants_node_1], evidence_card=[2, 2, 2, 2, 2])
+    ], [simple_calculation_programs_node_0, basics_node_1, data_types_node_1, arithmetic_operators_node_1,
+                 constants_node_1], [2, 2, 2, 2, 2])
 
     model.add_cpds(basics_cpd, variables_cpd, data_types_cpd, statements_cpd, constants_cpd, arithmetic_operators_cpd,
                    casting_cpd, simple_calculation_programs_cpd, basics_transitional_cpd, variables_transitional_cpd,
