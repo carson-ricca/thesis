@@ -68,6 +68,7 @@ def plot_data(user_results):
     df.plot(kind='line', x='Question #', y='User 5', ax=ax, x_compat=True)
     plt.xticks(data['Question #'])
     plt.ylabel('Probability of Success')
+    plt.ylim(0, 100)
     plt.show()
 
 
