@@ -335,7 +335,7 @@ def _user_five(dbn_inf, timer):
         performance_node_0: 1,
         correctness_node_1: 0,
         skipped_question_node_1: 1,
-        time_taken_node_1: 1
+        time_taken_node_1: 2
     })
     elapsed_time = timer.stop()
     results.append((inference_value, elapsed_time))
@@ -345,7 +345,7 @@ def _user_five(dbn_inf, timer):
         performance_node_0: 0,
         correctness_node_1: 1,
         skipped_question_node_1: 1,
-        time_taken_node_1: 1
+        time_taken_node_1: 0
     })
     elapsed_time = timer.stop()
     results.append((inference_value, elapsed_time))
