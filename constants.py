@@ -7,6 +7,14 @@ long = 'Long'
 short = 'Short'
 
 
+class Difficulties:
+    DIFFICULTIES = {
+        'EASY': 1,
+        'MEDIUM': 2,
+        'HARD': 3
+    }
+
+
 class ParentCategories:
     BASICS = 'Basics'
     CONDITIONALS = 'Conditionals'

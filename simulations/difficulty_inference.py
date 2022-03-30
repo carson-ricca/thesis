@@ -1,10 +1,3 @@
-difficulties = {
-    0: 'EASY',
-    1: 'MEDIUM',
-    2: 'HARD'
-}
-
-
 def infer_question_difficulty(probability, current_difficulty):
     """
     Infers the difficulty of question for the user to practice based on the probability returned from the DBN.
