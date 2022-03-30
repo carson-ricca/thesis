@@ -15,6 +15,9 @@ time_taken_node_1 = ('Time Taken', 1)
 
 
 def run_simulation():
+    """
+    Run the simulation to test the overall performance (orange nodes) for any sub-category (blue node).
+    """
     model = performance_dbn()
     timer = Timer()
     dbn_inf = DBNInference(model)
@@ -48,6 +51,10 @@ def run_simulation():
 
 
 def plot_data(user_results):
+    """
+    Plot the overall performance data on a graph.
+    :param user_results: The results of the simulation.
+    """
     user_number = 1
     data = {
         'Question #': [0, 1, 2, 3, 4, 5]
@@ -433,6 +440,10 @@ def _user_six(dbn_inf, timer):
 
 
 def _display_results(results):
+    """
+    Display the results to the terminal.
+    :param results: The results of the simulation.
+    """
     for result, time in results:
         print(
             f'Predicted Chance the Student is Successful: '
