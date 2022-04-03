@@ -72,7 +72,7 @@ def _plot_probability_data(user_results, output_path):
     }
     for user in user_results:
         probabilities = [50]
-        for probability, time, difficulty in user:
+        for probability, time, current_difficulty, difficulty in user:
             probabilities.append(probability[performance_node_1].values[0] * 100)
         data[f'User {user_number}'] = probabilities
         user_number += 1
@@ -97,9 +97,13 @@ def _difficulty_data_table(results):
     :param results: The results of the simulation.
     """
     user_number = 1
-    table = PrettyTable(['Question', 'Probability of Success', 'Recommended Difficulty for Next Question'])
+    table = PrettyTable(
+        ['Question', 'Probability of Success', 'Current Difficulty', 'Recommended Difficulty for Next Question']
+    )
     for question in results:
-        table.add_row([user_number, f'{(question[0][performance_node_1].values[0] * 100):.2f}%', question[2]])
+        table.add_row(
+            [user_number, f'{(question[0][performance_node_1].values[0] * 100):.2f}%', question[2], question[3]]
+        )
         user_number += 1
     print(table)
 
@@ -112,7 +116,7 @@ def _user_one(dbn_inf, timer):
     :return: A dictionary containing the probabilities and times for this user.
     """
     results = []
-    difficulty = 'EASY'
+    current_difficulty = 'EASY'
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -121,19 +125,9 @@ def _user_one(dbn_inf, timer):
         time_taken_node_1: 2
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
-
-    timer.start()
-    inference_value = dbn_inf.forward_inference([performance_node_1], {
-        performance_node_0: 0,
-        correctness_node_1: 0,
-        skipped_question_node_1: 1,
-        time_taken_node_1: 2
-    })
-    elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -143,8 +137,9 @@ def _user_one(dbn_inf, timer):
         time_taken_node_1: 2
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -154,8 +149,9 @@ def _user_one(dbn_inf, timer):
         time_taken_node_1: 2
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -165,8 +161,20 @@ def _user_one(dbn_inf, timer):
         time_taken_node_1: 2
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
+
+    timer.start()
+    inference_value = dbn_inf.forward_inference([performance_node_1], {
+        performance_node_0: 0,
+        correctness_node_1: 0,
+        skipped_question_node_1: 1,
+        time_taken_node_1: 2
+    })
+    elapsed_time = timer.stop()
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
     return results
 
 
@@ -178,7 +186,7 @@ def _user_two(dbn_inf, timer):
     :return: A dictionary containing the probabilities and times for this user.
     """
     results = []
-    difficulty = 'EASY'
+    current_difficulty = 'EASY'
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -187,19 +195,9 @@ def _user_two(dbn_inf, timer):
         time_taken_node_1: 0
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
-
-    timer.start()
-    inference_value = dbn_inf.forward_inference([performance_node_1], {
-        performance_node_0: 0,
-        correctness_node_1: 0,
-        skipped_question_node_1: 1,
-        time_taken_node_1: 0
-    })
-    elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -209,8 +207,9 @@ def _user_two(dbn_inf, timer):
         time_taken_node_1: 0
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -220,8 +219,9 @@ def _user_two(dbn_inf, timer):
         time_taken_node_1: 0
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -231,8 +231,20 @@ def _user_two(dbn_inf, timer):
         time_taken_node_1: 0
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
+
+    timer.start()
+    inference_value = dbn_inf.forward_inference([performance_node_1], {
+        performance_node_0: 0,
+        correctness_node_1: 0,
+        skipped_question_node_1: 1,
+        time_taken_node_1: 0
+    })
+    elapsed_time = timer.stop()
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
     return results
 
 
@@ -244,7 +256,7 @@ def _user_three(dbn_inf, timer):
     :return: A dictionary containing the probabilities and times for this user.
     """
     results = []
-    difficulty = 'EASY'
+    current_difficulty = 'EASY'
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -253,19 +265,9 @@ def _user_three(dbn_inf, timer):
         time_taken_node_1: 2
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
-
-    timer.start()
-    inference_value = dbn_inf.forward_inference([performance_node_1], {
-        performance_node_0: 1,
-        correctness_node_1: 1,
-        skipped_question_node_1: 1,
-        time_taken_node_1: 2
-    })
-    elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -275,8 +277,9 @@ def _user_three(dbn_inf, timer):
         time_taken_node_1: 2
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -286,8 +289,9 @@ def _user_three(dbn_inf, timer):
         time_taken_node_1: 2
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -297,8 +301,20 @@ def _user_three(dbn_inf, timer):
         time_taken_node_1: 2
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
+
+    timer.start()
+    inference_value = dbn_inf.forward_inference([performance_node_1], {
+        performance_node_0: 1,
+        correctness_node_1: 1,
+        skipped_question_node_1: 1,
+        time_taken_node_1: 2
+    })
+    elapsed_time = timer.stop()
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
     return results
 
 
@@ -310,7 +326,7 @@ def _user_four(dbn_inf, timer):
     :return: A dictionary containing the probabilities and times for this user.
     """
     results = []
-    difficulty = 'EASY'
+    current_difficulty = 'EASY'
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -319,19 +335,9 @@ def _user_four(dbn_inf, timer):
         time_taken_node_1: 0
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
-
-    timer.start()
-    inference_value = dbn_inf.forward_inference([performance_node_1], {
-        performance_node_0: 1,
-        correctness_node_1: 1,
-        skipped_question_node_1: 1,
-        time_taken_node_1: 0
-    })
-    elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -341,8 +347,9 @@ def _user_four(dbn_inf, timer):
         time_taken_node_1: 0
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -352,8 +359,9 @@ def _user_four(dbn_inf, timer):
         time_taken_node_1: 0
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -363,8 +371,20 @@ def _user_four(dbn_inf, timer):
         time_taken_node_1: 0
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
+
+    timer.start()
+    inference_value = dbn_inf.forward_inference([performance_node_1], {
+        performance_node_0: 1,
+        correctness_node_1: 1,
+        skipped_question_node_1: 1,
+        time_taken_node_1: 0
+    })
+    elapsed_time = timer.stop()
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
     return results
 
 
@@ -376,7 +396,7 @@ def _user_five(dbn_inf, timer):
     :return: A dictionary containing the probabilities and times for this user.
     """
     results = []
-    difficulty = 'EASY'
+    current_difficulty = 'EASY'
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -385,8 +405,9 @@ def _user_five(dbn_inf, timer):
         time_taken_node_1: 1
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -396,8 +417,9 @@ def _user_five(dbn_inf, timer):
         time_taken_node_1: 2
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -407,8 +429,9 @@ def _user_five(dbn_inf, timer):
         time_taken_node_1: 0
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -418,8 +441,9 @@ def _user_five(dbn_inf, timer):
         time_taken_node_1: 1
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -429,8 +453,8 @@ def _user_five(dbn_inf, timer):
         time_taken_node_1: 1
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
     return results
 
 
@@ -442,7 +466,7 @@ def _user_six(dbn_inf, timer):
     :return: A dictionary containing the probabilities and times for this user.
     """
     results = []
-    difficulty = 'EASY'
+    current_difficulty = 'EASY'
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -451,19 +475,9 @@ def _user_six(dbn_inf, timer):
         time_taken_node_1: 1
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
-
-    timer.start()
-    inference_value = dbn_inf.forward_inference([performance_node_1], {
-        performance_node_0: 1,
-        correctness_node_1: 1,
-        skipped_question_node_1: 0,
-        time_taken_node_1: 1
-    })
-    elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -473,8 +487,9 @@ def _user_six(dbn_inf, timer):
         time_taken_node_1: 1
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -484,8 +499,9 @@ def _user_six(dbn_inf, timer):
         time_taken_node_1: 1
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
 
     timer.start()
     inference_value = dbn_inf.forward_inference([performance_node_1], {
@@ -495,8 +511,20 @@ def _user_six(dbn_inf, timer):
         time_taken_node_1: 1
     })
     elapsed_time = timer.stop()
-    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, difficulty)
-    results.append((inference_value, elapsed_time, difficulty))
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
+    current_difficulty = difficulty
+
+    timer.start()
+    inference_value = dbn_inf.forward_inference([performance_node_1], {
+        performance_node_0: 1,
+        correctness_node_1: 1,
+        skipped_question_node_1: 0,
+        time_taken_node_1: 1
+    })
+    elapsed_time = timer.stop()
+    difficulty = infer_question_difficulty(inference_value[performance_node_1].values[0] * 100, current_difficulty)
+    results.append((inference_value, elapsed_time, current_difficulty, difficulty))
     return results
 
 
@@ -505,10 +533,11 @@ def _display_results(results):
     Display the results to the terminal.
     :param results: The results of the simulation.
     """
-    for result, time, difficulty in results:
+    for result, time, current_difficulty, difficulty in results:
         print(
             f'Predicted Chance the Student is Successful: '
-            f'{(result[performance_node_1].values[0] * 100):.2f}%, Suggested Difficulty: {difficulty}'
+            f'{(result[performance_node_1].values[0] * 100):.2f}%, Current Difficulty: {current_difficulty}'
+            f', Suggested Difficulty: {difficulty}'
             f', and Elapsed Time: {time:0.4f} seconds'
         )
 
