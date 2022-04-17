@@ -83,6 +83,7 @@ def _plot_probability_data(user_results, output_path):
     df.plot(kind='line', x='Question #', y='User 3', ax=ax, x_compat=True)
     df.plot(kind='line', x='Question #', y='User 4', ax=ax, x_compat=True)
     df.plot(kind='line', x='Question #', y='User 5', ax=ax, x_compat=True)
+    df.plot(kind='line', x='Question #', y='User 6', ax=ax, x_compat=True)
     plt.xticks(data['Question #'])
     plt.ylabel('Probability of Success')
     plt.ylim(0, 100)
